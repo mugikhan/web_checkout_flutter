@@ -33,4 +33,5 @@ This covers all prose: docs, specs, commit bodies, PR text, comments, release no
 - Implement one slice at a time. Do not start the next slice until the user signs off the current one.
 - Read the decisions in `docs/adr/` before you change architecture. Ask the user before a new foundational decision, then add an ADR.
 - Use the terms in `docs/GLOSSARY.md`.
+- Follow `DESIGN.md` for every screen. Use `packages/ui` tokens and widgets, never raw colours or text styles.
 - Run every `flutter` and `dart` command through `fvm`.

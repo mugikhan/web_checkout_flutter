@@ -6,6 +6,7 @@ environment:
 
 workspace:
   - apps/web_checkout
+  - packages/ui
 
 dev_dependencies:
   flutter_lints: ^6.0.0
@@ -13,11 +14,10 @@ dev_dependencies:
 
 melos:
   scripts:
+    # Filters sit on melos exec, not in packageFilters, which prompts for a package.
     analyze:
       description: Analyze every Flutter member.
-      exec: flutter analyze --no-pub
-      packageFilters:
-        flutter: true
+      run: melos exec -c 1 --flutter -- flutter analyze --no-pub
 
     format:check:
       description: Fail when a source, test or patrol test file needs formatting.
@@ -28,23 +28,14 @@ melos:
     # Check source folders and *_test.dart journeys, so patrol's generated test_bundle.dart stays out.
     format:check:lib:
       private: true
-      exec: dart format --output=none --set-exit-if-changed lib
-      packageFilters:
-        dirExists: lib
+      run: melos exec --dir-exists=lib -- dart format --output=none --set-exit-if-changed lib
     format:check:test:
       private: true
-      exec: dart format --output=none --set-exit-if-changed test
-      packageFilters:
-        dirExists: test
+      run: melos exec --dir-exists=test -- dart format --output=none --set-exit-if-changed test
     format:check:patrol_test:
       private: true
-      exec: dart format --output=none --set-exit-if-changed patrol_test/*_test.dart
-      packageFilters:
-        dirExists: patrol_test
+      run: melos exec --dir-exists=patrol_test -- "dart format --output=none --set-exit-if-changed patrol_test/*_test.dart"
 
     test:
       description: Run unit and widget tests in every Flutter member with a test directory.
-      exec: flutter test --no-pub
-      packageFilters:
-        flutter: true
-        dirExists: test
+      run: melos exec -c 1 --flutter --dir-exists=test -- flutter test --no-pub

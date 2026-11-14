@@ -13,7 +13,7 @@ Each slice must be verified before the next starts.
 - Write `bloc_test` tests for every bloc.
 - Write a patrol journey for every slice. Run it on Chrome, and on one mobile target before delivery.
 - Give every interactive widget a key, defined as a constant per module, and a semantic label.
-- CI runs analyze and unit tests on pull requests to `main`. Patrol runs locally only.
+- CI runs analyze and unit tests on pull requests to `main` that change code, tooling or `DESIGN.md`. Docs, ADR and OpenSpec changes skip CI. Patrol runs locally only.
 
 ## Consequences
 

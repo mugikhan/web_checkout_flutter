@@ -4,3 +4,5 @@ include: package:flutter_lints/flutter.yaml
 analyzer:
   exclude:
     - .agents/**
+    # Patrol regenerates these on every run; a stale copy imports deleted journeys.
+    - "**/test_bundle.dart"
