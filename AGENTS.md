@@ -26,3 +26,11 @@ This covers all prose: docs, specs, commit bodies, PR text, comments, release no
 - Write a TODO with an owner, not a ticket: `// TODO (<git config user.name>):`.
 - When you change code, update its comment or delete it.
 - Re-read the comments you added and delete any that repeat the code. Confusing code needs a rename or a split, not a comment.
+
+## Project workflow
+
+- Work spec first with OpenSpec. Project rules and the slice roadmap live in `openspec/config.yaml`.
+- Implement one slice at a time. Do not start the next slice until the user signs off the current one.
+- Read the decisions in `docs/adr/` before you change architecture. Ask the user before a new foundational decision, then add an ADR.
+- Use the terms in `docs/GLOSSARY.md`.
+- Run every `flutter` and `dart` command through `fvm`.

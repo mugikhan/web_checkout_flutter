@@ -1,0 +1,57 @@
+schema: spec-driven
+
+context: |
+  Take-home assignment: a web-first checkout slice in Flutter, also running on iOS and Android.
+  Decisions live in docs/adr/. Terms live in docs/GLOSSARY.md. Link them; do not restate them.
+  Follow the prose and comment rules in AGENTS.md for every artifact.
+
+  Stack (fixed, see ADRs 0001-0016):
+  - Flutter 3.47.9 pinned with FVM. Run every flutter and dart command through `fvm`.
+  - Material/cupertino split: depend on material_ui only. Modules never import it directly; they use packages/ui.
+  - Pub workspace with Melos 7. Default flutter_lints analysis options.
+  - graphql_codegen + build_runner, bloc + bloc_concurrency, go_router with path URLs, plain get_it.
+  - Tests: bloc_test for every bloc, patrol for every slice journey.
+
+  Workspace rules:
+  - packages/ (ui, storage, api) are shared. modules/ (auth, catalog, checkout, orders) build features.
+    apps/web_checkout composes modules into journeys.
+  - A module never imports another module. Only the app wires modules together.
+  - Modules import package:api/domain/domain.dart only. Only the app imports package:api/data/data.dart.
+  - Blocs call repositories directly. No use-case layer.
+  - Add a package, module or UI atom only in the slice that first uses it.
+
+  Domain rules:
+  - The URL holds the draft (bags, slot). The in-app "server" holds sessions, payment methods and orders.
+  - Checkout session id is the idempotency key: one order per session.
+  - Mutation failures are typed GraphQL result unions, never error maps.
+
+  Process:
+  - One OpenSpec change per slice. Implement one slice at a time.
+  - Do not start a slice until the user signs off the previous one. The user decides what counts as sign-off.
+  - Branch feat/<change-name> off develop, PR back to develop. Conventional Commits in small logical steps.
+  - Ask the user before any new foundational decision, then record it as an ADR in docs/adr/.
+
+  Roadmap (write each proposal only after the previous slice is verified):
+  1. bootstrap-workspace
+  2. design-system
+  3. simulated-auth
+  4. bag-catalog
+  5. checkout
+  6. order-details
+  7. docs-and-delivery
+
+rules:
+  proposal:
+    - Link the ADRs the change relies on instead of restating them.
+    - State what is out of scope.
+  design:
+    - Name every new package, module or atom the change adds, and why this slice needs it.
+  tasks:
+    - End with a "Verification" section that drafts patrol journeys, bloc tests and manual checks.
+    - Make the final task "User verifies the slice". Implementation stops there until the user signs off.
+
+operations:
+  apply:
+    guidance:
+      - Stop after the last implementation task and wait for user sign-off.
+      - Commit in small logical steps with Conventional Commits.
