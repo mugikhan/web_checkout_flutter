@@ -8,8 +8,8 @@
 
 ## 2. packages/storage
 
-- [ ] 2.1 Create `packages/storage` as a workspace member with `shared_preferences` and `get_it`, and verify `fvm flutter pub get` resolves and `melos run analyze` includes it
-- [ ] 2.2 Add `KeyValueStore`, `SharedPreferencesStore`, `MemoryStore`, `AppStorage` and `registerStorage`, and verify tests for namespaces, read, write, delete and persistence across store instances
+- [x] 2.1 Create `packages/storage` as a workspace member with `shared_preferences` and `get_it`, and verify `fvm flutter pub get` resolves and `melos run analyze` includes it
+- [x] 2.2 Add `KeyValueStore`, `SharedPreferencesStore`, `MemoryStore`, `AppStorage` and `registerStorage`, and verify tests for namespaces, read, write, delete and persistence across store instances
 
 ## 3. packages/api
 
