@@ -9,11 +9,11 @@
 
 ## 2. App member
 
-- [ ] 2.1 Create `apps/web_checkout` for web, iOS and Android, add it to the workspace, and verify `fvm flutter pub get` resolves one lockfile at the root
-- [ ] 2.2 Opt in to the material split: add `material_ui`, replace every `package:flutter/material.dart` import, and verify `grep -r "flutter/material.dart" apps/` returns nothing
-- [ ] 2.3 Replace the counter app with a placeholder home screen titled "Bag Checkout", and replace the default widget test with one that finds the title; verify `fvm flutter test` passes
+- [x] 2.1 Create `apps/web_checkout` for web, iOS and Android, add it to the workspace, and verify `fvm flutter pub get` resolves one lockfile at the root
+- [x] 2.2 Opt in to the material split: add `material_ui`, replace every `package:flutter/material.dart` import, and verify `grep -r "flutter/material.dart" apps/` returns nothing
+- [x] 2.3 Replace the counter app with a placeholder home screen titled "Bag Checkout", and replace the default widget test with one that finds the title; verify `fvm flutter test` passes
 - [ ] 2.4 Call `usePathUrlStrategy()` in `main`, and verify the Chrome address bar shows `/` with no `#`
-- [ ] 2.5 Set the display name "Bag Checkout" and bundle id `dev.mugikhan.bagcheckout` on web, iOS and Android, and verify with `grep` across the platform files
+- [x] 2.5 Set the display name "Bag Checkout" and bundle id `dev.mugikhan.bagcheckout` on web, iOS and Android, and verify with `grep` across the platform files
 - [ ] 2.6 Verify `fvm flutter build web`, `fvm flutter build ios --simulator --no-codesign` and `fvm flutter build apk --debug` all succeed
 
 ## 3. Melos scripts
