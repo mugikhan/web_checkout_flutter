@@ -52,3 +52,21 @@ CI SHALL run workspace analysis and tests on every pull request that targets `ma
 #### Scenario: Pull request to develop
 - **WHEN** a pull request targets `develop`
 - **THEN** CI does not run
+
+### Requirement: Patrol journeys on every target platform
+The same patrol journeys SHALL run on Chrome, an Android emulator and an iOS simulator.
+
+#### Scenario: Run on each platform
+- **WHEN** a developer runs the smoke journey on Chrome, an Android emulator or an iOS simulator
+- **THEN** the journey passes on each of them
+
+### Requirement: Recorded patrol runs
+A developer SHALL be able to record a video of a patrol run, and the video SHALL be kept in the repository.
+
+#### Scenario: Record a run
+- **WHEN** a developer records the smoke journey with the run-patrol-test skill on any target platform
+- **THEN** a video file appears in `apps/web_checkout/patrol_test/recordings/`
+
+#### Scenario: Videos are tracked
+- **WHEN** a recording exists in `apps/web_checkout/patrol_test/recordings/`
+- **THEN** git shows it as a file to commit, not an ignored file

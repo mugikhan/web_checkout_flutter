@@ -31,20 +31,30 @@
 - [x] 5.1 Add `.github/workflows/ci.yml` triggered only on pull requests to `main`, and verify the YAML with `actionlint` or a dry review
 - [x] 5.2 Add a "Run locally" section to `README.md` covering FVM, Melos 7.8.2, `melos run` scripts and `patrol test`, and verify each documented command runs as written
 
-## 6. Verification
+## 6. Patrol on mobile and recordings
+
+- [ ] 6.1 Make the smoke journey's web-only checks run on web only, and verify it still passes on Chrome
+- [ ] 6.2 Add patrol's Android native setup (Kotlin DSL), and verify the smoke journey passes on the Pixel 10 Pro emulator
+- [ ] 6.3 Add patrol's iOS native setup (`RunnerUITests` target), and verify the smoke journey passes on an iPhone 18 Pro simulator
+- [ ] 6.4 Install the run-patrol-test skill with `~/Documents/run-patrol-test/install.sh`, set `.patrol-runner.json` to `apps/web_checkout` and `fvm flutter`, and verify `plan --test app_smoke` prints `PLAN_STATUS=ready`
+- [ ] 6.5 Record the smoke journey on web, Android and iOS with the skill, and verify the videos land in `apps/web_checkout/patrol_test/recordings/` and `git status` shows them as untracked, not ignored
+- [ ] 6.6 Write ADR-0017 on how patrol tests run and how to record them with the skill, link it from the README, and verify the README commands run as written
+
+## 7. Verification
 
 Draft checks for the user to accept, change or replace:
 
 - **Toolchain**: `fvm flutter --version` shows 3.47.9.
 - **Scripts**: `melos run analyze`, `melos run format:check` and `melos run test` all exit 0.
-- **Patrol**: `patrol test --device chrome` passes the smoke journey.
+- **Patrol**: the smoke journey passes on Chrome, the Android emulator and the iOS simulator.
+- **Recordings**: one smoke-journey video per platform sits in `apps/web_checkout/patrol_test/recordings/` and is committed.
 - **Web, manual**: `fvm flutter run -d chrome` shows "Bag Checkout" at `/`, the tab title reads "Bag Checkout", and a refresh reloads the same screen.
 - **Mobile, manual**: the app launches on an iOS simulator and an Android emulator with the launcher name "Bag Checkout".
 - **Scope**: no `packages/` or `modules/` directory exists, and `grep -r "flutter/material.dart" apps/` returns nothing.
 - **CI**: the workflow triggers only on pull requests to `main`. Its first real run happens on the first release PR.
 
-- [ ] 6.1 Run every automated check above and paste the output in the PR description
-- [ ] 6.2 User verifies the slice
+- [ ] 7.1 Run every automated check above and paste the output in the PR description
+- [ ] 7.2 User verifies the slice
 
 ## Workflow follow-up
 

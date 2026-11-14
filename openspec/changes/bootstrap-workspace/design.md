@@ -81,3 +81,19 @@ Found during implementation:
 - [patrol web support is newer than mobile] → The smoke journey proves it in this slice, before any feature depends on it.
 - [CI runs without FVM] → `subosito/flutter-action` reads the same `.fvmrc`, so the version cannot drift.
 - [The `fvm` prefix in scripts breaks in CI] → Handle it with the env var described above, and prove it on the first pull request to `main`.
+
+### Patrol on mobile
+
+Follow patrol's setup guide for both native sides:
+- Android (Kotlin DSL): add `MainActivityTest.java` under `androidTest/java/dev/mugikhan/bagcheckout/`. Set `PatrolJUnitRunner` with `clearPackageData`, the test orchestrator and its `androidTestUtil` dependency in `android/app/build.gradle.kts`.
+- iOS: add a `RunnerUITests` UI testing target with the patrol runner macro, both `xcode_backend` build phases, no user script sandboxing, the Runner build configurations, and parallel testing turned off. The guide does these steps in the Xcode UI. We script them with the `xcodeproj` Ruby gem, so the result is repeatable and reviewable as a diff.
+
+The smoke journey keeps its web-only checks (URL strategy, page URL) behind `kIsWeb`, so one file runs on every platform.
+
+Alternative: separate journeys per platform. Rejected, because every later slice should write one journey that runs everywhere.
+
+### Recording patrol runs
+
+Install the user's run-patrol-test skill with its `install.sh`, at `.agents/skills/run-patrol-test` with a link from `.claude/skills`. That matches where OpenSpec put its skills. `.patrol-runner.json` sets `defaultProject: apps/web_checkout` and `flutterCommand: fvm flutter`, so patrol builds with the pinned Flutter. Videos go to the skill's default folder, `apps/web_checkout/patrol_test/recordings/`, and are committed. ADR-0017 records the process.
+
+Alternative: Git LFS for the videos. Not adopted now. The user wants plain committed files, and the videos are short.
