@@ -38,4 +38,4 @@ melos:
 
     test:
       description: Run unit and widget tests in every Flutter member with a test directory.
-      run: melos exec --flutter --dir-exists=test -- flutter test --no-pub
+      run: melos exec -c 1 --flutter --dir-exists=test -- flutter test --no-pub
