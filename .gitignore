@@ -22,7 +22,9 @@ migrate_working_dir/
 .idea/
 
 # VS Code
-.vscode/
+.vscode/*
+!.vscode/launch.json
+!.vscode/settings.json
 
 # Flutter and Dart
 **/doc/api/

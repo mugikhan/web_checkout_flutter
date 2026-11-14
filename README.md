@@ -28,6 +28,8 @@ fvm flutter run -d chrome
 
 Use `-d` with an iOS simulator or Android emulator id to run on mobile. `fvm flutter devices` lists them.
 
+In VS Code, pick **Web (Chrome)**, **Mobile (selected device)** or **Web + mobile** in Run and Debug. `.vscode/settings.json` points the Dart extension at `.fvm/flutter_sdk`.
+
 ### Check the workspace
 
 Run Melos through `fvm exec`, so it uses the pinned Flutter even when another version is on your PATH.
