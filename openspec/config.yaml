@@ -29,7 +29,7 @@ context: |
   Process:
   - One OpenSpec change per slice. Implement one slice at a time.
   - Do not start a slice until the user signs off the previous one. The user decides what counts as sign-off.
-  - Branch feat/<change-name> off develop, PR back to develop. Conventional Commits in small logical steps.
+  - Branch feat/<change-name> off main, one PR back to main (ADR-0019). Conventional Commits in small logical steps.
   - Ask the user before any new foundational decision, then record it as an ADR in docs/adr/.
 
   Roadmap (write each proposal only after the previous slice is verified):

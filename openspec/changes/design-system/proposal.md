@@ -32,7 +32,9 @@ Every later slice builds screens. Without shared tokens, a theme and a navigatio
 
 ### Modified Capabilities
 
-None. `app-platforms` keeps its requirements: the app still launches showing "Bag Checkout", and path URLs and refresh still work.
+- `workspace-tooling`: the CI scenario for pull requests to `develop` becomes one for stacked pull requests, because `develop` was removed ([ADR-0019](../../../docs/adr/0019-feature-branches-into-main.md)).
+
+`app-platforms` keeps its requirements: the app still launches showing "Bag Checkout", and path URLs and refresh still work.
 
 ## Impact
 

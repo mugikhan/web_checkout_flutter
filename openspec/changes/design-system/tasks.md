@@ -47,5 +47,5 @@ Sign-off: a patrol recording of the navigation journey on web, Android and iOS, 
 
 ## Workflow follow-up
 
-- Open a PR from `feat/design-system` to `develop` after the user signs off.
+- Merge PR #6 from `feat/design-system` to `main` after CI passes (ADR-0019).
 - Archive the change with `openspec archive design-system` after the merge.
