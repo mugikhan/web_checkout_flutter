@@ -1,0 +1,17 @@
+{
+  "defaultProject": "apps/web_checkout",
+  "platform": null,
+  "outputDir": null,
+  "flutterCommand": "fvm flutter",
+  "projects": {
+    "apps/web_checkout": {
+      "testDir": "patrol_test",
+      "patrolArgs": {
+        "all": [],
+        "android": [],
+        "ios": [],
+        "web": []
+      }
+    }
+  }
+}

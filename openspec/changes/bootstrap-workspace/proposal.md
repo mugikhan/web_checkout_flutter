@@ -11,7 +11,8 @@ The repo has no Flutter code yet. Every later slice needs a pinned toolchain, a 
 - Create `apps/web_checkout` for web, iOS and Android, opted in to the material/cupertino split with `material_ui` only ([ADR-0002](../../../docs/adr/0002-material-ui-split.md)).
 - Show a placeholder home screen titled "Bag Checkout", with path URLs on web.
 - Set the bundle id `dev.mugikhan.bagcheckout` and the display name "Bag Checkout" on every platform.
-- Set up patrol with one smoke journey on Chrome ([ADR-0015](../../../docs/adr/0015-testing-strategy.md)).
+- Set up patrol with one smoke journey that runs on Chrome, Android and iOS, including patrol's native Android and iOS setup ([ADR-0015](../../../docs/adr/0015-testing-strategy.md)).
+- Install the run-patrol-test skill, which records a video of each patrol run. Commit the videos under `apps/web_checkout/patrol_test/recordings/` ([ADR-0017](../../../docs/adr/0017-running-and-recording-patrol-tests.md)).
 - Add a GitHub Actions workflow that runs analyze and unit tests on pull requests to `main`.
 - Add a minimal README section on running the app locally.
 
@@ -22,6 +23,7 @@ The repo has no Flutter code yet. Every later slice needs a pinned toolchain, a 
 - The codegen script and the import-boundary check. Both arrive with `packages/api` in `simulated-auth`.
 - Theme, tokens and `DESIGN.md`. They arrive in `design-system`.
 - Patrol in CI.
+- Patrol on physical iOS devices.
 
 ## Capabilities
 
@@ -36,7 +38,9 @@ None.
 
 ## Impact
 
-- New files: `.fvmrc`, root `pubspec.yaml`, `analysis_options.yaml`, `apps/web_checkout/**`, `.github/workflows/ci.yml`, `README.md`.
+- New files: `.fvmrc`, root `pubspec.yaml`, `analysis_options.yaml`, `apps/web_checkout/**`, `.github/workflows/ci.yml`, `README.md`, `.patrol-runner.json`, `.agents/skills/run-patrol-test/**`, `docs/adr/0017-*.md`.
+- Native test runners: `android/app/src/androidTest/**` and an iOS `RunnerUITests` target.
+- Recorded videos under `apps/web_checkout/patrol_test/recordings/` grow the repo with every recording.
 - `.gitignore` gains FVM entries.
 - New dependencies: `material_ui`, `melos` (dev), `patrol` (dev), `flutter_lints` (dev).
 - Reviewers need FVM and Melos 7.8.2 installed.
