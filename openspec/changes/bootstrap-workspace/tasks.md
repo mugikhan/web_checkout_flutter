@@ -28,8 +28,8 @@
 
 ## 5. CI and docs
 
-- [ ] 5.1 Add `.github/workflows/ci.yml` triggered only on pull requests to `main`, and verify the YAML with `actionlint` or a dry review
-- [ ] 5.2 Add a "Run locally" section to `README.md` covering FVM, Melos 7.8.2, `melos run` scripts and `patrol test`, and verify each documented command runs as written
+- [x] 5.1 Add `.github/workflows/ci.yml` triggered only on pull requests to `main`, and verify the YAML with `actionlint` or a dry review
+- [x] 5.2 Add a "Run locally" section to `README.md` covering FVM, Melos 7.8.2, `melos run` scripts and `patrol test`, and verify each documented command runs as written
 
 ## 6. Verification
 

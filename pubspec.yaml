@@ -17,8 +17,9 @@ melos:
       description: Analyze every workspace member.
       exec: flutter analyze --no-pub
     format:check:
-      description: Fail when any Dart file needs formatting.
-      exec: dart format --output=none --set-exit-if-changed .
+      description: Fail when any tracked Dart file needs formatting.
+      # Check tracked files only, so generated test bundles never fail the check.
+      run: dart format --output=none --set-exit-if-changed $(git ls-files '*.dart')
     test:
       description: Run unit and widget tests in every member with a test directory.
       exec: flutter test --no-pub

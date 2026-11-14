@@ -36,7 +36,7 @@ Alternative: a standalone `melos.yaml`. Melos 7 reads config from the root `pubs
 | Script | Runs |
 |---|---|
 | `analyze` | `flutter analyze` in every member |
-| `format:check` | `dart format --set-exit-if-changed .` in every member |
+| `format:check` | `dart format --set-exit-if-changed` on every git-tracked Dart file, once from the root. Generated files such as patrol's `test_bundle.dart` stay out. |
 | `test` | `flutter test` in every member with a `test` directory |
 
 Scripts call plain `flutter` and `dart`. Locally, run Melos as `fvm exec melos run <script>`, so the pinned SDK is first on PATH. CI installs the pinned version on PATH and runs `melos run <script>` directly.
