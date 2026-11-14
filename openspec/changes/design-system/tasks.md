@@ -14,9 +14,9 @@
 
 ## 3. Atoms
 
-- [ ] 3.1 Add `AppButton` (primary, secondary, ghost, loading), and verify widget tests for each variant's colours in both themes and for taps ignored while loading
-- [ ] 3.2 Add `AppCard` and `StateView` (empty, error, loading, optional action), and verify widget tests render each state and fire the action
-- [ ] 3.3 Add `AdaptiveScaffold` with `AdaptiveDestination`, and verify widget tests show a bottom bar at 599px, an icon rail at 600px and 839px, and an extended rail with labels at 840px, each with semantic labels
+- [x] 3.1 Add `AppButton` (primary, secondary, ghost, loading), and verify widget tests for each variant's colours in both themes and for taps ignored while loading
+- [x] 3.2 Add `AppCard` and `StateView` (empty, error, loading, optional action), and verify widget tests render each state and fire the action
+- [x] 3.3 Add `AdaptiveScaffold` with `AdaptiveDestination`, and verify widget tests show a bottom bar at 599px, an icon rail at 600px and 839px, and an extended rail with labels at 840px, each with semantic labels
 
 ## 4. Routing and pages
 
