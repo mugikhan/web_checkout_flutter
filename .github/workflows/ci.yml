@@ -8,6 +8,7 @@ on:
       - apps/**
       - packages/**
       - modules/**
+      - tool/**
       - pubspec.yaml
       - pubspec.lock
       - analysis_options.yaml

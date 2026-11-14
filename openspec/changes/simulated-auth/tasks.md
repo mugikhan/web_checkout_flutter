@@ -2,9 +2,9 @@
 
 ## 1. Tooling for generated code and the import boundary
 
-- [ ] 1.1 Exclude `**/*.graphql.dart` and `**/*.g.dart` in `analysis_options.yaml`, and make `format:check:lib` and `format:check:test` skip them; verify `melos run format:check` still exits 0 and fails on a deliberately unformatted file
-- [ ] 1.2 Add `tool/check_imports.dart` and run it from `melos run analyze`; add `tool/**` to the CI `paths`; verify it exits 0 with no `modules/` directory
-- [ ] 1.3 Add the Melos `codegen` script with `--depends-on=build_runner`, and verify `melos run codegen` runs without a prompt
+- [x] 1.1 Exclude `**/*.graphql.dart` and `**/*.g.dart` in `analysis_options.yaml`, and make `format:check:lib` and `format:check:test` skip them; verify `melos run format:check` still exits 0 and fails on a deliberately unformatted file
+- [x] 1.2 Add `tool/check_imports.dart` and run it from `melos run analyze`; add `tool/**` to the CI `paths`; verify it exits 0 with no `modules/` directory
+- [x] 1.3 Add the Melos `codegen` script with `--depends-on=build_runner`, and verify `melos run codegen` runs without a prompt
 
 ## 2. packages/storage
 

@@ -16,8 +16,20 @@ melos:
   scripts:
     # Filters sit on melos exec, not in packageFilters, which prompts for a package.
     analyze:
-      description: Analyze every Flutter member.
+      description: Analyze every Flutter member, then check the module import boundary.
+      steps:
+        - analyze:flutter
+        - check:imports
+    analyze:flutter:
+      private: true
       run: melos exec -c 1 --flutter -- flutter analyze --no-pub
+    check:imports:
+      description: Fail when a module imports package:api/data or package:api/src (ADR-0005).
+      run: dart run tool/check_imports.dart
+
+    codegen:
+      description: Run build_runner in every member that depends on it.
+      run: melos exec -c 1 --depends-on=build_runner -- dart run build_runner build --delete-conflicting-outputs
 
     format:check:
       description: Fail when a source, test or patrol test file needs formatting.
@@ -25,16 +37,28 @@ melos:
         - format:check:lib
         - format:check:test
         - format:check:patrol_test
+        - format:check:tool
     # Check source folders and *_test.dart journeys, so patrol's generated test_bundle.dart stays out.
+    # dart format has no exclude flag, so find skips the committed generated files.
     format:check:lib:
       private: true
-      run: melos exec --dir-exists=lib -- dart format --output=none --set-exit-if-changed lib
+      run: >-
+        melos exec --dir-exists=lib --
+        "find lib -name '*.dart' ! -name '*.graphql.dart' ! -name '*.g.dart' -print0
+        | xargs -0 dart format --output=none --set-exit-if-changed"
     format:check:test:
       private: true
-      run: melos exec --dir-exists=test -- dart format --output=none --set-exit-if-changed test
+      run: >-
+        melos exec --dir-exists=test --
+        "find test -name '*.dart' ! -name '*.graphql.dart' ! -name '*.g.dart' -print0
+        | xargs -0 dart format --output=none --set-exit-if-changed"
     format:check:patrol_test:
       private: true
       run: melos exec --dir-exists=patrol_test -- "dart format --output=none --set-exit-if-changed patrol_test/*_test.dart"
+
+    format:check:tool:
+      private: true
+      run: dart format --output=none --set-exit-if-changed tool
 
     test:
       description: Run unit and widget tests in every Flutter member with a test directory.
