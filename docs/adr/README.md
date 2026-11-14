@@ -23,3 +23,4 @@ Each file records one foundational decision. Copy the header of an existing ADR 
 | [0017](0017-running-and-recording-patrol-tests.md) | Running and recording patrol tests |
 | [0018](0018-unknown-urls.md) | Show "Page not found" for unknown URLs |
 | [0019](0019-feature-branches-into-main.md) | Merge feature branches straight into main |
+| [0020](0020-commit-generated-code.md) | Commit generated GraphQL code |
