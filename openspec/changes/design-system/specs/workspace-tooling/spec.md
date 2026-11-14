@@ -3,11 +3,15 @@
 ## ADDED Requirements
 
 ### Requirement: CI gate on pull requests into main
-CI SHALL run workspace analysis and tests on every pull request that targets `main`, and on no other branch.
+CI SHALL run workspace analysis and tests on pull requests that target `main` and change code, tooling or design tokens. It SHALL NOT run on any other branch.
 
 #### Scenario: Pull request to main
-- **WHEN** a pull request targets `main`
+- **WHEN** a pull request targets `main` and changes a file under `apps/`, `packages/` or `modules/`, a root pubspec, `analysis_options.yaml`, `.fvmrc`, `DESIGN.md` or the CI workflow
 - **THEN** CI runs `melos run analyze` and `melos run test` with the pinned Flutter version and reports the result on the pull request
+
+#### Scenario: Docs-only pull request
+- **WHEN** a pull request targets `main` and changes only docs, ADRs, OpenSpec files or agent skills
+- **THEN** CI does not run, and nothing blocks the merge
 
 #### Scenario: Stacked pull request
 - **WHEN** a pull request targets another feature branch
