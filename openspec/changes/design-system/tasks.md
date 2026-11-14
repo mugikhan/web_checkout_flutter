@@ -20,9 +20,9 @@
 
 ## 4. Routing and pages
 
-- [ ] 4.1 Add `go_router` and `ui` to the app, build `buildRouter` with the Bags and Account shell branches and the not-found view, and switch `BagCheckoutApp` to `MaterialApp.router` with both themes and `ThemeMode.system`; verify `fvm flutter build web` succeeds
-- [ ] 4.2 Add `BagsPlaceholderPage`, `AccountPlaceholderPage`, `NotFoundPage` and `AppKeys`, and verify widget tests for `/`, `/account`, `/does-not-exist`, and "Go to Bags" returning to `/`
-- [ ] 4.3 Update `test/app_test.dart` for the new shell, and verify `melos run test` passes in both members
+- [x] 4.1 Add `go_router` and `ui` to the app, build `buildRouter` with the Bags and Account shell branches and the not-found view, and switch `BagCheckoutApp` to `MaterialApp.router` with both themes and `ThemeMode.system`; verify `fvm flutter build web` succeeds
+- [x] 4.2 Add `BagsPlaceholderPage`, `AccountPlaceholderPage`, `NotFoundPage` and `AppKeys`, and verify widget tests for `/`, `/account`, `/does-not-exist`, and "Go to Bags" returning to `/`
+- [x] 4.3 Update `test/app_test.dart` for the new shell, and verify `melos run test` passes in both members
 
 ## 5. Patrol
 
