@@ -35,7 +35,7 @@
 
 - [x] 6.1 Make the smoke journey's web-only checks run on web only, and verify it still passes on Chrome
 - [x] 6.2 Add patrol's Android native setup (Kotlin DSL), and verify the smoke journey passes on the Pixel 10 Pro emulator
-- [ ] 6.3 Add patrol's iOS native setup (`RunnerUITests` target), and verify the smoke journey passes on an iPhone 18 Pro simulator
+- [x] 6.3 Add patrol's iOS native setup (`RunnerUITests` target), and verify the smoke journey passes on an iPhone 18 Pro simulator
 - [ ] 6.4 Install the run-patrol-test skill with `~/Documents/run-patrol-test/install.sh`, set `.patrol-runner.json` to `apps/web_checkout` and `fvm flutter`, and verify `plan --test app_smoke` prints `PLAN_STATUS=ready`
 - [ ] 6.5 Record the smoke journey on web, Android and iOS with the skill, and verify the videos land in `apps/web_checkout/patrol_test/recordings/` and `git status` shows them as untracked, not ignored
 - [ ] 6.6 Write ADR-0017 on how patrol tests run and how to record them with the skill, link it from the README, and verify the README commands run as written

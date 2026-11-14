@@ -86,7 +86,7 @@ Found during implementation:
 
 Follow patrol's setup guide for both native sides:
 - Android (Kotlin DSL): add `MainActivityTest.java` under `androidTest/java/dev/mugikhan/bagcheckout/`. Set `PatrolJUnitRunner` with `clearPackageData`, the test orchestrator and its `androidTestUtil` dependency in `android/app/build.gradle.kts`.
-- iOS: add a `RunnerUITests` UI testing target with the patrol runner macro, both `xcode_backend` build phases, no user script sandboxing, the Runner build configurations, and parallel testing turned off. The guide does these steps in the Xcode UI. We script them with the `xcodeproj` Ruby gem, so the result is repeatable and reviewable as a diff.
+- iOS: add a `RunnerUITests` UI testing target with the patrol runner macro, both `xcode_backend` build phases, no user script sandboxing, the Runner build configurations, and parallel testing turned off. The guide does these steps in the Xcode UI. We applied them with a one-off `xcodeproj` Ruby script, so the result is reviewable as a `project.pbxproj` diff. The project uses Swift Package Manager, so `RunnerUITests` links `FlutterGeneratedPluginSwiftPackage` in place of a Podfile entry.
 
 The smoke journey keeps its web-only checks (URL strategy, page URL) behind `kIsWeb`, so one file runs on every platform.
 
