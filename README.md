@@ -47,6 +47,19 @@ fvm exec patrol test --device chrome
 
 Add `--web-headless` to run without a browser window. The first run installs Playwright.
 
+For Android or iOS, pass the emulator id from `adb devices` or the simulator UDID from `xcrun simctl list devices` to `--device`.
+
+### Record patrol tests
+
+In Claude Code, run `/run-patrol-test` and name the test and device. Without an agent, run these from the repo root:
+
+```sh
+fvm dart run .agents/skills/run-patrol-test/scripts/run_patrol_test.dart plan --test app_smoke
+fvm exec dart run .agents/skills/run-patrol-test/scripts/run_patrol_test.dart run --test app_smoke --device chrome
+```
+
+Videos land in `apps/web_checkout/patrol_test/recordings/`. Commit them. [ADR-0017](docs/adr/0017-running-and-recording-patrol-tests.md) covers the details. Install ffmpeg to convert web videos to MP4.
+
 ## Docs
 
 - [Architecture decisions](docs/adr/README.md)

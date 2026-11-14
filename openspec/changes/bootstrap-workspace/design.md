@@ -97,3 +97,7 @@ Alternative: separate journeys per platform. Rejected, because every later slice
 Install the user's run-patrol-test skill with its `install.sh`, at `.agents/skills/run-patrol-test` with a link from `.claude/skills`. That matches where OpenSpec put its skills. `.patrol-runner.json` sets `defaultProject: apps/web_checkout` and `flutterCommand: fvm flutter`, so patrol builds with the pinned Flutter. Videos go to the skill's default folder, `apps/web_checkout/patrol_test/recordings/`, and are committed. ADR-0017 records the process.
 
 Alternative: Git LFS for the videos. Not adopted now. The user wants plain committed files, and the videos are short.
+
+Found during implementation:
+- The smoke journey ends in under a second. Web recorded the loading page, iOS recorded patrol's "Test finished." screen, and Android saved a 0-byte file. With a 3-second hold at the end of the journey, Android recorded a valid clip of the home screen. The user chose to commit no smoke-journey videos and to record from `simulated-auth` on, where journeys last longer.
+- The skill's scripts and printed `COMMAND=` use plain `dart`. The global Dart (3.10) rejects the workspace's 3.13 language version, so the installed `SKILL.md` carries a marked project patch: script commands use `fvm dart`, and `COMMAND=` runs under `fvm exec`.
