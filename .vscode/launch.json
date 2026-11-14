@@ -1,0 +1,45 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Web (Chrome)",
+      "type": "dart",
+      "request": "launch",
+      "cwd": "apps/web_checkout",
+      "program": "lib/main.dart",
+      "deviceId": "chrome",
+      "args": ["--web-port", "8080"]
+    },
+    {
+      "name": "Web (Chrome, profile)",
+      "type": "dart",
+      "request": "launch",
+      "cwd": "apps/web_checkout",
+      "program": "lib/main.dart",
+      "deviceId": "chrome",
+      "flutterMode": "profile",
+      "args": ["--web-port", "8080"]
+    },
+    {
+      "name": "Mobile (selected device)",
+      "type": "dart",
+      "request": "launch",
+      "cwd": "apps/web_checkout",
+      "program": "lib/main.dart"
+    },
+    {
+      "name": "Mobile (selected device, profile)",
+      "type": "dart",
+      "request": "launch",
+      "cwd": "apps/web_checkout",
+      "program": "lib/main.dart",
+      "flutterMode": "profile"
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Web + mobile",
+      "configurations": ["Web (Chrome)", "Mobile (selected device)"]
+    }
+  ]
+}
