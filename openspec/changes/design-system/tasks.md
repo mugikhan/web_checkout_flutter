@@ -26,8 +26,8 @@
 
 ## 5. Patrol
 
-- [ ] 5.1 Replace the smoke journey with a navigation journey: Bags to Account and back, checking the URL on web; verify it passes on Chrome, the Android emulator and the iOS simulator
-- [ ] 5.2 On web, extend the journey to resize the window to 500, 700 and 1200px and to turn on dark mode, checking the layout and theme at each step; verify it passes on Chrome
+- [x] 5.1 Replace the smoke journey with a navigation journey: Bags to Account and back, checking the URL on web; verify it passes on Chrome, the Android emulator and the iOS simulator
+- [x] 5.2 On web, extend the journey to resize the window to 500, 700 and 1200px and to turn on dark mode, checking the layout and theme at each step; verify it passes on Chrome
 
 ## 6. Verification
 
