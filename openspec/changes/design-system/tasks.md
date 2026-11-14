@@ -31,7 +31,7 @@
 
 ## 6. Verification
 
-Draft checks for the user to accept, change or replace:
+Sign-off: a patrol recording of the navigation journey on web, Android and iOS, each showing the Bags and Account screens. The checks below support it.
 
 - **Scripts**: `melos run analyze`, `melos run format:check` and `melos run test` all exit 0, with `packages/ui` included.
 - **Patrol**: the navigation journey passes on Chrome, the Android emulator and the iOS simulator.
@@ -41,8 +41,9 @@ Draft checks for the user to accept, change or replace:
 - **Dark mode, manual**: switching the OS to dark mode switches the app live.
 - **Mobile, manual**: iOS and Android show the bottom bar, both destinations work, and dark mode follows the device.
 
-- [ ] 6.1 Run every automated check above and paste the output in the PR description
-- [ ] 6.2 User verifies the slice
+- [x] 6.1 Record the navigation journey with `/run-patrol-test` on web, Android and iOS, check each video shows Bags and Account, and commit the videos under `apps/web_checkout/patrol_test/recordings/`
+- [ ] 6.2 Run every automated check above and paste the output in the PR description
+- [ ] 6.3 User verifies the slice
 
 ## Workflow follow-up
 
