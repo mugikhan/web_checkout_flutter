@@ -2,10 +2,10 @@
 
 ## 1. Toolchain and workspace root
 
-- [ ] 1.1 Create branch `feat/bootstrap-workspace` off `develop` and verify with `git branch --show-current`
-- [ ] 1.2 Run `fvm install 3.47.9` and `fvm use 3.47.9`, add `.fvm/` to `.gitignore`, and verify `fvm flutter --version` reports 3.47.9
-- [ ] 1.3 Add the root `pubspec.yaml` with the workspace block, SDK constraint and `melos: ^7.8.2`, and verify `fvm dart pub get` succeeds at the root
-- [ ] 1.4 Add the root `analysis_options.yaml` with the `flutter create` default, and verify `fvm dart analyze` finds no issues
+- [x] 1.1 Create branch `feat/bootstrap-workspace` off `develop` and verify with `git branch --show-current`
+- [x] 1.2 Run `fvm install 3.47.9` and `fvm use 3.47.9`, add `.fvm/` to `.gitignore`, and verify `fvm flutter --version` reports 3.47.9
+- [x] 1.3 Add the root `pubspec.yaml` with the workspace block, SDK constraint and `melos: ^7.8.2`, and verify `fvm dart pub get` succeeds at the root
+- [x] 1.4 Add the root `analysis_options.yaml` with the `flutter create` default, and verify `fvm dart analyze` finds no issues
 
 ## 2. App member
 

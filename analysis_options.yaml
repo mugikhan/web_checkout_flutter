@@ -1,0 +1,2 @@
+# Shared by every workspace member. Members carry no own file.
+include: package:flutter_lints/flutter.yaml
