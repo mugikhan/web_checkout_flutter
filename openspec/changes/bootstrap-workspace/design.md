@@ -39,7 +39,9 @@ Alternative: a standalone `melos.yaml`. Melos 7 reads config from the root `pubs
 | `format:check` | `dart format --set-exit-if-changed .` in every member |
 | `test` | `flutter test` in every member with a `test` directory |
 
-Scripts call `fvm flutter` and `fvm dart` so the pinned version runs even when a global Flutter exists. CI has no FVM, so it sets an env var that drops the `fvm` prefix. The exact mechanism is fixed during implementation.
+Scripts call plain `flutter` and `dart`. Locally, run Melos as `fvm exec melos run <script>`, so the pinned SDK is first on PATH. CI installs the pinned version on PATH and runs `melos run <script>` directly.
+
+Found during implementation: a global Melos launcher runs `flutter pub get` from PATH before it reads the config. With a different global Flutter, plain `melos` fails on the SDK constraint. Melos's `sdkPath` setting does not help, because the launcher runs first. `fvm exec` fixes both, and the launcher then hands off to the workspace's Melos 7.8.2.
 
 ### Analysis options
 

@@ -14,12 +14,12 @@
 - [x] 2.3 Replace the counter app with a placeholder home screen titled "Bag Checkout", and replace the default widget test with one that finds the title; verify `fvm flutter test` passes
 - [ ] 2.4 Call `usePathUrlStrategy()` in `main`, and verify the Chrome address bar shows `/` with no `#`
 - [x] 2.5 Set the display name "Bag Checkout" and bundle id `dev.mugikhan.bagcheckout` on web, iOS and Android, and verify with `grep` across the platform files
-- [ ] 2.6 Verify `fvm flutter build web`, `fvm flutter build ios --simulator --no-codesign` and `fvm flutter build apk --debug` all succeed
+- [x] 2.6 Verify `fvm flutter build web`, `fvm flutter build ios --simulator --no-codesign` and `fvm flutter build apk --debug` all succeed
 
 ## 3. Melos scripts
 
-- [ ] 3.1 Add the `analyze`, `format:check` and `test` scripts to the root `pubspec.yaml`, and verify each one exits 0
-- [ ] 3.2 Break formatting in one file on purpose, verify `melos run format:check` fails and names it, then revert
+- [x] 3.1 Add the `analyze`, `format:check` and `test` scripts to the root `pubspec.yaml`, and verify each one exits 0
+- [x] 3.2 Break formatting in one file on purpose, verify `melos run format:check` fails and names it, then revert
 
 ## 4. Patrol
 
