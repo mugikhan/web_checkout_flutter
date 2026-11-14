@@ -41,17 +41,6 @@ One command SHALL report unformatted Dart files in every member.
 - **WHEN** a member contains a Dart file that `dart format` would change
 - **THEN** `melos run format:check` exits with a non-zero code and names the file
 
-### Requirement: CI gate on pull requests to main
-CI SHALL run workspace analysis and tests on every pull request that targets `main`, and on no other branch.
-
-#### Scenario: Pull request to main
-- **WHEN** a pull request targets `main`
-- **THEN** CI runs `melos run analyze` and `melos run test` with the pinned Flutter version and reports the result on the pull request
-
-#### Scenario: Pull request to develop
-- **WHEN** a pull request targets `develop`
-- **THEN** CI does not run
-
 ### Requirement: Patrol journeys on every target platform
 The same patrol journeys SHALL run on Chrome, an Android emulator and an iOS simulator.
 
@@ -69,3 +58,18 @@ A developer SHALL be able to record a video of a patrol run, and the video SHALL
 #### Scenario: Videos are tracked
 - **WHEN** a recording exists in `apps/web_checkout/patrol_test/recordings/`
 - **THEN** git shows it as a file to commit, not an ignored file
+
+### Requirement: CI gate on pull requests into main
+CI SHALL run workspace analysis and tests on pull requests that target `main` and change code, tooling or design tokens. It SHALL NOT run on any other branch.
+
+#### Scenario: Pull request to main
+- **WHEN** a pull request targets `main` and changes a file under `apps/`, `packages/` or `modules/`, a root pubspec, `analysis_options.yaml`, `.fvmrc`, `DESIGN.md` or the CI workflow
+- **THEN** CI runs `melos run analyze` and `melos run test` with the pinned Flutter version and reports the result on the pull request
+
+#### Scenario: Docs-only pull request
+- **WHEN** a pull request targets `main` and changes only docs, ADRs, OpenSpec files or agent skills
+- **THEN** CI does not run, and nothing blocks the merge
+
+#### Scenario: Stacked pull request
+- **WHEN** a pull request targets another feature branch
+- **THEN** CI does not run
