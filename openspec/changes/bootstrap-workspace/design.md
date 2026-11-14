@@ -65,6 +65,12 @@ Call `usePathUrlStrategy()` from `flutter_web_plugins` in `main`. go_router read
 
 Add `patrol` as a dev dependency of the app and the `patrol:` config block in its `pubspec.yaml`. Put one smoke journey in `apps/web_checkout/patrol_test/` that launches the app and finds the title. Check `patrol` 4.11.0 against patrol_cli 4.9.0 in patrol's compatibility table. Upgrade the CLI only if the table demands it.
 
+Found during implementation:
+- The compatibility table pairs patrol_cli 4.7.0+ with patrol 4.9.0+, so patrol_cli 4.9.0 and patrol 4.11.0 work together. No upgrade needed.
+- Patrol web runs through Playwright and needs Node.js. The first run installs Playwright by itself.
+- Without a router, the hash strategy never rewrites `/`, so the address bar can't tell the strategies apart. The journey asserts `urlStrategy is PathUrlStrategy` instead. A run with `usePathUrlStrategy()` removed fails as expected.
+- Patrol on Android and iOS needs native test-runner setup. This slice runs patrol on Chrome only. The native setup lands before the first mobile patrol run.
+
 ### CI
 
 `.github/workflows/ci.yml` triggers on `pull_request` with `branches: [main]`. It installs Flutter from `.fvmrc` through `subosito/flutter-action` (`flutter-version-file`), activates Melos 7.8.2, runs `flutter pub get` at the root, then `melos run analyze` and `melos run test`.

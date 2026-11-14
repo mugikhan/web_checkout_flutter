@@ -17,6 +17,14 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  patrol: ^4.11.0
 
 flutter:
   uses-material-design: true
+
+patrol:
+  app_name: Bag Checkout
+  android:
+    package_name: dev.mugikhan.bagcheckout
+  ios:
+    bundle_id: dev.mugikhan.bagcheckout
