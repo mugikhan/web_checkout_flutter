@@ -33,11 +33,13 @@ Alternative: a standalone `melos.yaml`. Melos 7 reads config from the root `pubs
 
 ### Melos scripts
 
-| Script | Runs |
-|---|---|
-| `analyze` | `flutter analyze` in every member |
-| `format:check` | `dart format --set-exit-if-changed` on every git-tracked Dart file, once from the root. Generated files such as patrol's `test_bundle.dart` stay out. |
-| `test` | `flutter test` in every member with a `test` directory |
+| Script | Runs | Package filter |
+|---|---|---|
+| `analyze` | `flutter analyze` | `flutter: true` |
+| `format:check` | Steps: `dart format --set-exit-if-changed` on `lib`, on `test`, and on `patrol_test/*_test.dart` | `dirExists` on each folder |
+| `test` | `flutter test` | `flutter: true`, `dirExists: test` |
+
+Each script runs only in the packages its filters match. The format steps check source folders and patrol journeys only, because patrol writes an unformatted `test_bundle.dart` into the app root and into `patrol_test/`. The `*_test.dart` glob covers the top level of `patrol_test/`; widen it when journeys move into subfolders. Pure Dart packages get their own `dart analyze` and `dart test` scripts in the slice that adds the first one.
 
 Scripts call plain `flutter` and `dart`. Locally, run Melos as `fvm exec melos run <script>`, so the pinned SDK is first on PATH. CI installs the pinned version on PATH and runs `melos run <script>` directly.
 

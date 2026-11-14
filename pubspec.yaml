@@ -14,15 +14,37 @@ dev_dependencies:
 melos:
   scripts:
     analyze:
-      description: Analyze every workspace member.
+      description: Analyze every Flutter member.
       exec: flutter analyze --no-pub
+      packageFilters:
+        flutter: true
+
     format:check:
-      description: Fail when any tracked Dart file needs formatting.
-      # Check tracked files only, so generated test bundles never fail the check.
-      # Skip vendored agent skills; a reinstall overwrites them.
-      run: dart format --output=none --set-exit-if-changed $(git ls-files '*.dart' ':!:.agents/**')
+      description: Fail when a source, test or patrol test file needs formatting.
+      steps:
+        - format:check:lib
+        - format:check:test
+        - format:check:patrol_test
+    # Check source folders and *_test.dart journeys, so patrol's generated test_bundle.dart stays out.
+    format:check:lib:
+      private: true
+      exec: dart format --output=none --set-exit-if-changed lib
+      packageFilters:
+        dirExists: lib
+    format:check:test:
+      private: true
+      exec: dart format --output=none --set-exit-if-changed test
+      packageFilters:
+        dirExists: test
+    format:check:patrol_test:
+      private: true
+      exec: dart format --output=none --set-exit-if-changed patrol_test/*_test.dart
+      packageFilters:
+        dirExists: patrol_test
+
     test:
-      description: Run unit and widget tests in every member with a test directory.
+      description: Run unit and widget tests in every Flutter member with a test directory.
       exec: flutter test --no-pub
       packageFilters:
+        flutter: true
         dirExists: test
