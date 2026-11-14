@@ -80,7 +80,7 @@ Alternative: bundle the DM Sans files. Rejected, because the user chose `google_
 
 ### DESIGN.md and its tests
 
-`DESIGN.md` holds one colour table per theme, with role, hex and the reason for any change from the site. A test in `packages/ui` parses those tables and compares every row to `AppColors`. A second test computes WCAG contrast for every `on*`/base pair in both schemes and fails below 4.5:1.
+`DESIGN.md` holds one colour table with a light and a dark column, plus a note on any change from the site. The three brand colours sit in the same table. A test in `packages/ui` parses those tables and compares every row to `AppColors`. A second test computes WCAG contrast for every `on*`/base pair in both schemes and fails below 4.5:1.
 
 ### Window size classes
 

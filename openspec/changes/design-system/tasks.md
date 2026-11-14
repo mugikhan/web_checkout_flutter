@@ -2,8 +2,8 @@
 
 ## 1. DESIGN.md
 
-- [ ] 1.1 Write `DESIGN.md` at the repo root: source and pull date, light and dark colour tables (role, hex, reason for any change), DM Sans type scale, spacing, radius, elevation, motion, breakpoints, component rules and rules for agents; verify every hex matches the design.md colour-role table
-- [ ] 1.2 Link `DESIGN.md` from `AGENTS.md` and `openspec/config.yaml`, and verify both links resolve
+- [x] 1.1 Write `DESIGN.md` at the repo root: source and pull date, light and dark colour tables (role, hex, reason for any change), DM Sans type scale, spacing, radius, elevation, motion, breakpoints, component rules and rules for agents; verify every hex matches the design.md colour-role table
+- [x] 1.2 Link `DESIGN.md` from `AGENTS.md` and `openspec/config.yaml`, and verify both links resolve
 
 ## 2. Tokens and themes in packages/ui
 
