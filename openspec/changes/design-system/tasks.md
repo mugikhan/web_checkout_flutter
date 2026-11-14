@@ -42,8 +42,8 @@ Sign-off: a patrol recording of the navigation journey on web, Android and iOS, 
 - **Mobile, manual**: iOS and Android show the bottom bar, both destinations work, and dark mode follows the device.
 
 - [x] 6.1 Record the navigation journey with `/run-patrol-test` on web, Android and iOS, check each video shows Bags and Account, and commit the videos under `apps/web_checkout/patrol_test/recordings/`
-- [ ] 6.2 Run every automated check above and paste the output in the PR description
-- [ ] 6.3 User verifies the slice
+- [x] 6.2 Run every automated check above and paste the output in the PR description
+- [x] 6.3 User verifies the slice
 
 ## Workflow follow-up
 
