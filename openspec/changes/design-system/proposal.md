@@ -11,7 +11,7 @@ Every later slice builds screens. Without shared tokens, a theme and a navigatio
 - Add the atoms this slice uses: `AdaptiveScaffold`, `AppButton`, `AppCard` and `StateView`. The other atoms wait for the slice that first needs them.
 - Add go_router with path URLs and a two-branch shell for Bags and Account ([ADR-0009](../../../docs/adr/0009-go-router-url-holds-draft.md), [ADR-0014](../../../docs/adr/0014-adaptive-navigation.md)).
 - Switch the navigation by window size: a bottom bar under 600px, a rail from 600px to 839px, and an extended rail with labels from 840px.
-- Show placeholder Bags and Account pages, and a "Page not found" view for unknown URLs.
+- Show placeholder Bags and Account pages, and a "Page not found" view for unknown URLs ([ADR-0018](../../../docs/adr/0018-unknown-urls.md)).
 - Follow the system light or dark setting.
 - Fix the reference site's colour pairs that fail WCAG AA contrast, and record each fix in `DESIGN.md`.
 

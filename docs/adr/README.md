@@ -21,3 +21,4 @@ Each file records one foundational decision. Copy the header of an existing ADR 
 | [0015](0015-testing-strategy.md) | Testing with bloc_test and patrol per slice |
 | [0016](0016-openspec-workflow.md) | OpenSpec spec-first workflow with user-verified slices |
 | [0017](0017-running-and-recording-patrol-tests.md) | Running and recording patrol tests |
+| [0018](0018-unknown-urls.md) | Show "Page not found" for unknown URLs |
