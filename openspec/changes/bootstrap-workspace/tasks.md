@@ -53,7 +53,7 @@ Draft checks for the user to accept, change or replace:
 - **Scope**: no `packages/` or `modules/` directory exists, and `grep -r "flutter/material.dart" apps/` returns nothing.
 - **CI**: the workflow triggers only on pull requests to `main`. Its first real run happens on the first release PR.
 
-- [ ] 7.1 Run every automated check above and paste the output in the PR description
+- [x] 7.1 Run every automated check above and paste the output in the PR description
 - [ ] 7.2 User verifies the slice
 
 ## Workflow follow-up
