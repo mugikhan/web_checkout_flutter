@@ -11,7 +11,7 @@ The design language for Bag Checkout. It applies on web, iOS and Android. `packa
 
 ## Colour
 
-Colours map onto Material 3 `ColorScheme` roles, plus three brand colours in the `AppTokens` theme extension.
+Colours map onto Material 3 `ColorScheme` roles. The brand colours sit in the `AppTokens` theme extension.
 
 Keep this table's format: one row per role, the role and hex values in backticks. A test in `packages/ui` parses it and fails when `AppColors` differs.
 
@@ -33,7 +33,8 @@ Keep this table's format: one row per role, the role and hex values in backticks
 | `onErrorContainer` | `#1D2B24` | `#FAFAFA` | Light changed from white for contrast |
 | `outline` | `#C7D1CC` | `#2B3B33` | Site border |
 | `outlineVariant` | `#C7D1CC` | `#2B3B33` | Site border |
-| `brandLime` | `#E7F54D` | `#E7F54D` | Brand accent |
+| `brandLime` | `#E7F54D` | `#E7F54D` | Brand accent; navigation indicator |
+| `onBrandLime` | `#1D2B24` | `#1D2B24` | Icons and text on lime |
 | `brandSage` | `#BCCBCD` | `#BCCBCD` | Brand secondary |
 | `brandOrange` | `#FF791A` | `#FF791A` | Brand highlight |
 
@@ -128,7 +129,7 @@ Later slices add components here when they first use them.
 ## Rules for agents
 
 - Use `packages/ui` widgets and tokens. Never write a raw `Color`, `TextStyle`, `EdgeInsets` value or `BorderRadius` in an app or module.
-- Read colours from `Theme.of(context).colorScheme` and brand colours, spacing and radius from `context.tokens`.
+- Read colours from `Theme.of(context).colorScheme` and brand colours from `context.tokens`. Use `AppSpacing` and `AppRadius` constants for spacing and radius.
 - Add a token or component here first, then in `packages/ui`, in the same change.
 - Check any new colour pair against AA before adding it.
 - Give every interactive widget a key and a semantic label.

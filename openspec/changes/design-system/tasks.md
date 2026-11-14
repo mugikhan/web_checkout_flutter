@@ -7,10 +7,10 @@
 
 ## 2. Tokens and themes in packages/ui
 
-- [ ] 2.1 Create `packages/ui` as a workspace member with `material_ui` and `google_fonts`, and verify `fvm flutter pub get` resolves and `melos run analyze` includes it
-- [ ] 2.2 Add `AppColors` (light and dark), `AppSpacing`, `AppRadius` and `AppBreakpoints`, and verify a test parses the `DESIGN.md` colour tables and matches every row to `AppColors`
-- [ ] 2.3 Add `AppTheme.light` and `AppTheme.dark` with the colour roles, DM Sans text theme and `AppTokens` extension, and verify a test checks every `on*`/base pair in both schemes at 4.5:1 or more
-- [ ] 2.4 Add `WindowSizeClass.fromWidth`, and verify tests at 599, 600, 839 and 840
+- [x] 2.1 Create `packages/ui` as a workspace member with `material_ui` and `google_fonts`, and verify `fvm flutter pub get` resolves and `melos run analyze` includes it
+- [x] 2.2 Add `AppColors` (light and dark), `AppSpacing`, `AppRadius` and `AppBreakpoints`, and verify a test parses the `DESIGN.md` colour tables and matches every row to `AppColors`
+- [x] 2.3 Add `AppTheme.light` and `AppTheme.dark` with the colour roles, DM Sans text theme and `AppTokens` extension, and verify a test checks every `on*`/base pair in both schemes at 4.5:1 or more
+- [x] 2.4 Add `WindowSizeClass.fromWidth`, and verify tests at 599, 600, 839 and 840
 
 ## 3. Atoms
 

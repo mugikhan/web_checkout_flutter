@@ -70,7 +70,7 @@ Alternative: `ColorScheme.fromSeed`. Rejected, because it generates tones that d
 
 ### Theme extension
 
-`AppTokens` is a `ThemeExtension` with spacing (4, 8, 12, 16, 24, 32, 48), radius (8, 12 from the site's `.75rem`, and 999 for pills) and the brand colours Material has no slot for: lime, sage and highlight orange. Widgets read it through `context.tokens`.
+`AppTokens` is a `ThemeExtension` with the brand colours Material has no slot for: lime, the forest that sits on lime, sage and highlight orange. Widgets read it through `context.tokens`. Spacing (4, 8, 12, 16, 24, 32, 48) and radius (8, 12 from the site's `.75rem`, and 999 for pills) are `static const` values on `AppSpacing` and `AppRadius`, so `const` widgets can use them.
 
 ### Typography
 
@@ -128,3 +128,9 @@ Only the atoms this slice renders:
 - [go_router pulls `cupertino_ui` in transitively] → Allowed: ADR-0002 bans it as a direct dependency only. Nothing in our code imports it.
 - [Patrol's `resizeWindow` exists on web only] → Mobile runs check the compact layout. Widget tests cover the medium and expanded layouts on every platform.
 - [The DESIGN.md parity test parses Markdown tables] → Keep a fixed table format, which `DESIGN.md` states. The test fails loudly on a malformed row.
+
+## Found during implementation
+
+- Melos 7 prompts for a package when a script's `packageFilters` match more than one package. Adding `packages/ui` made the prompt appear, and without a terminal Melos crashed. The scripts now pass the same filters as `melos exec` flags (`--flutter`, `--dir-exists`), which skip the prompt.
+- Forest icons on the lime navigation indicator needed a role of their own. `onBrandLime` (`#1D2B24` in both themes) joined `DESIGN.md`, `AppColors` and `AppTokens`.
+- Spacing and radius are `static const` values, not `AppTokens` fields, so `const` widgets can use them.
