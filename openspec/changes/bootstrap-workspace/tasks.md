@@ -54,7 +54,7 @@ Draft checks for the user to accept, change or replace:
 - **CI**: the workflow triggers only on pull requests to `main`. Its first real run happens on the first release PR.
 
 - [x] 7.1 Run every automated check above and paste the output in the PR description
-- [ ] 7.2 User verifies the slice
+- [x] 7.2 User verifies the slice
 
 ## Workflow follow-up
 
