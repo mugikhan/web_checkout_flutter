@@ -2,7 +2,8 @@ schema: spec-driven
 
 context: |
   Take-home assignment: a web-first checkout slice in Flutter, also running on iOS and Android.
-  Decisions live in docs/adr/. Terms live in docs/GLOSSARY.md. Design rules live in DESIGN.md.
+  Decisions live in docs/adr/. User answers live in docs/ORACLE.md. Terms live in docs/GLOSSARY.md.
+  Design rules live in DESIGN.md. Slice briefs live in docs/briefs/.
   Link them; do not restate them.
   Follow the prose and comment rules in AGENTS.md for every artifact.
 

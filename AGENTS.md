@@ -31,6 +31,7 @@ This covers all prose: docs, specs, commit bodies, PR text, comments, release no
 
 - Work spec first with OpenSpec. Project rules and the slice roadmap live in `openspec/config.yaml`.
 - Implement one slice at a time. Do not start the next slice until the user signs off the current one.
+- Read `docs/ORACLE.md` before you plan a slice. It holds every user answer from planning onward.
 - Read the decisions in `docs/adr/` before you change architecture. Ask the user before a new foundational decision, then add an ADR.
 - Use the terms in `docs/GLOSSARY.md`.
 - Follow `DESIGN.md` for every screen. Use `packages/ui` tokens and widgets, never raw colours or text styles.
