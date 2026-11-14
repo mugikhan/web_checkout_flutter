@@ -17,7 +17,7 @@ melos:
     # Filters sit on melos exec, not in packageFilters, which prompts for a package.
     analyze:
       description: Analyze every Flutter member.
-      run: melos exec --flutter -- flutter analyze --no-pub
+      run: melos exec -c 1 --flutter -- flutter analyze --no-pub
 
     format:check:
       description: Fail when a source, test or patrol test file needs formatting.
