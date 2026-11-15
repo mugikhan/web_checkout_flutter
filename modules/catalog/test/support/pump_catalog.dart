@@ -6,10 +6,16 @@ import 'package:ui/ui.dart';
 
 /// UrlHost stands in for the router: it feeds each requested selection back as bagIds.
 class UrlHost extends StatefulWidget {
-  const UrlHost({super.key, required this.initialIds, required this.changes});
+  const UrlHost({
+    super.key,
+    required this.initialIds,
+    required this.changes,
+    this.continues,
+  });
 
   final List<String> initialIds;
   final List<List<String>> changes;
+  final List<List<String>>? continues;
 
   @override
   State<UrlHost> createState() => _UrlHostState();
@@ -25,6 +31,7 @@ class _UrlHostState extends State<UrlHost> {
       widget.changes.add(ids);
       setState(() => _ids = ids);
     },
+    onContinue: (ids) => widget.continues?.add(ids),
   );
 }
 
@@ -35,6 +42,7 @@ Future<List<List<String>>> pumpCatalog(
   List<String> bagIds = const [],
   Size size = const Size(400, 900),
   bool settle = true,
+  List<List<String>>? continues,
 }) async {
   tester.view.physicalSize = size;
   tester.view.devicePixelRatio = 1;
@@ -49,7 +57,11 @@ Future<List<List<String>>> pumpCatalog(
           create: (_) =>
               CatalogBloc(catalogRepository: repository)
                 ..add(const CatalogLoadRequested()),
-          child: UrlHost(initialIds: bagIds, changes: changes),
+          child: UrlHost(
+            initialIds: bagIds,
+            changes: changes,
+            continues: continues,
+          ),
         ),
       ),
     ),

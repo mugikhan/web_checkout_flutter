@@ -182,4 +182,43 @@ void main() {
       expect(tester.getSize(cafe).height, tester.getSize(grocery).height);
     }
   });
+
+  AppButton continueButton(WidgetTester tester) =>
+      tester.widget<AppButton>(find.byKey(CatalogKeys.continueButton));
+
+  testWidgets('Continue is disabled with nothing picked', (tester) async {
+    await pumpCatalog(tester, repository);
+
+    expect(continueButton(tester).onPressed, isNull);
+  });
+
+  testWidgets('Continue hands the picks to the app', (tester) async {
+    final continues = <List<String>>[];
+    await pumpCatalog(tester, repository, continues: continues);
+
+    await tap(tester, 'bag_cafe');
+    expect(continueButton(tester).onPressed, isNotNull);
+    await tap(tester, 'bag_bakery');
+    await tester.tap(find.byKey(CatalogKeys.continueButton));
+
+    expect(continues, [
+      ['bag_cafe', 'bag_bakery'],
+    ]);
+  });
+
+  testWidgets('Continue announces its label and enabled state', (tester) async {
+    final semantics = tester.ensureSemantics();
+    await pumpCatalog(tester, repository, bagIds: ['bag_cafe']);
+
+    expect(
+      tester.getSemantics(find.bySemanticsLabel('Continue')),
+      isSemantics(
+        label: 'Continue',
+        isButton: true,
+        hasEnabledState: true,
+        isEnabled: true,
+      ),
+    );
+    semantics.dispose();
+  });
 }

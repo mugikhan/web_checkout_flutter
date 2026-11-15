@@ -14,6 +14,7 @@ class CatalogPage extends StatefulWidget {
     super.key,
     required this.bagIds,
     required this.onSelectionChanged,
+    required this.onContinue,
   });
 
   /// bagIds holds the bag ids from the URL, as written.
@@ -21,6 +22,9 @@ class CatalogPage extends StatefulWidget {
 
   /// onSelectionChanged asks the app to replace the URL with these picks.
   final ValueChanged<List<String>> onSelectionChanged;
+
+  /// onContinue asks the app to start checkout with these picks.
+  final ValueChanged<List<String>> onContinue;
 
   @override
   State<CatalogPage> createState() => _CatalogPageState();
@@ -68,6 +72,7 @@ class _CatalogPageState extends State<CatalogPage> {
           state: state,
           onToggle: (id) =>
               widget.onSelectionChanged(BagSelection.toggle(state.picked, id)),
+          onContinue: () => widget.onContinue(state.picked),
         ),
       },
     );
@@ -75,12 +80,17 @@ class _CatalogPageState extends State<CatalogPage> {
 }
 
 class _Catalog extends StatelessWidget {
-  const _Catalog({required this.state, required this.onToggle});
+  const _Catalog({
+    required this.state,
+    required this.onToggle,
+    required this.onContinue,
+  });
 
   static const _maxWidth = 960.0;
 
   final CatalogState state;
   final ValueChanged<String> onToggle;
+  final VoidCallback onContinue;
 
   @override
   Widget build(BuildContext context) {
@@ -140,7 +150,12 @@ class _Catalog extends StatelessWidget {
           ),
         ),
         const Divider(height: 1),
-        _Summary(state: state, padding: padding, maxWidth: _maxWidth),
+        _Summary(
+          state: state,
+          padding: padding,
+          maxWidth: _maxWidth,
+          onContinue: onContinue,
+        ),
       ],
     );
   }
@@ -181,11 +196,13 @@ class _Summary extends StatelessWidget {
     required this.state,
     required this.padding,
     required this.maxWidth,
+    required this.onContinue,
   });
 
   final CatalogState state;
   final double padding;
   final double maxWidth;
+  final VoidCallback onContinue;
 
   @override
   Widget build(BuildContext context) {
@@ -196,40 +213,52 @@ class _Summary extends StatelessWidget {
       final n => '$n bags',
     };
 
-    return Semantics(
-      container: true,
-      liveRegion: true,
-      child: Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: padding,
-          vertical: AppSpacing.md,
-        ),
-        child: Center(
-          child: ConstrainedBox(
-            constraints: BoxConstraints(maxWidth: maxWidth),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    count,
-                    key: CatalogKeys.summaryCount,
-                    style: theme.textTheme.titleMedium,
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: padding,
+        vertical: AppSpacing.md,
+      ),
+      child: Center(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(maxWidth: maxWidth),
+          child: Row(
+            children: [
+              Expanded(
+                child: Semantics(
+                  container: true,
+                  liveRegion: true,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          count,
+                          key: CatalogKeys.summaryCount,
+                          style: theme.textTheme.titleMedium,
+                        ),
+                      ),
+                      Text(
+                        'Total',
+                        style: theme.textTheme.bodyMedium?.copyWith(
+                          color: theme.colorScheme.onSurfaceVariant,
+                        ),
+                      ),
+                      const SizedBox(width: AppSpacing.sm),
+                      Text(
+                        formatZar(state.total.cents),
+                        key: CatalogKeys.summaryTotal,
+                        style: theme.textTheme.titleMedium,
+                      ),
+                    ],
                   ),
                 ),
-                Text(
-                  'Total',
-                  style: theme.textTheme.bodyMedium?.copyWith(
-                    color: theme.colorScheme.onSurfaceVariant,
-                  ),
-                ),
-                const SizedBox(width: AppSpacing.sm),
-                Text(
-                  formatZar(state.total.cents),
-                  key: CatalogKeys.summaryTotal,
-                  style: theme.textTheme.titleMedium,
-                ),
-              ],
-            ),
+              ),
+              const SizedBox(width: AppSpacing.lg),
+              AppButton(
+                key: CatalogKeys.continueButton,
+                label: 'Continue',
+                onPressed: state.picked.isEmpty ? null : onContinue,
+              ),
+            ],
           ),
         ),
       ),

@@ -26,7 +26,7 @@
 
 ## 5. Catalog Continue
 
-- [ ] 5.1 Add the Continue action and `onContinue` to `CatalogPage`, and verify widget tests: disabled with nothing picked, enabled with 1 or 2 picks, and the callback receives the picks
+- [x] 5.1 Add the Continue action and `onContinue` to `CatalogPage`, and verify widget tests: disabled with nothing picked, enabled with 1 or 2 picks, and the callback receives the picks
 
 ## 6. App wiring
 
