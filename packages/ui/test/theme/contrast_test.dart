@@ -35,6 +35,8 @@ void main() {
           s.errorContainer,
         ),
         'error / surface': (s.error, s.surface),
+        'primary / surfaceContainer': (s.primary, s.surfaceContainer),
+        'error / surfaceContainer': (s.error, s.surfaceContainer),
         'onBrandLime / brandLime': (t.onBrandLime, t.brandLime),
       };
       for (final MapEntry(key: label, value: (fg, bg)) in pairs.entries) {

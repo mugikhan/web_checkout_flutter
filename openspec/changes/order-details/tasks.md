@@ -10,8 +10,8 @@
 
 ## 2. UI: StatusTimeline
 
-- [ ] 2.1 Add the `StatusTimeline` row to `DESIGN.md`, then the atom in `packages/ui`; verify widget tests for reached, upcoming and failed colours in both themes, the step times, the animation and its absence when animations are disabled
-- [ ] 2.2 Add any missing timeline colour pairs to the contrast test and verify it passes
+- [x] 2.1 Add the `StatusTimeline` row to `DESIGN.md`, then the atom in `packages/ui`; verify widget tests for reached, upcoming and failed colours in both themes, the step times, the animation and its absence when animations are disabled
+- [x] 2.2 Add any missing timeline colour pairs to the contrast test and verify it passes
 
 ## 3. Orders module
 
