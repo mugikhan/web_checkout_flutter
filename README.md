@@ -28,6 +28,14 @@ fvm flutter run -d chrome
 
 Use `-d` with an iOS simulator or Android emulator id to run on mobile. `fvm flutter devices` lists them.
 
+### Try it
+
+- Sign in with any name of 4 or more characters. No password.
+- Pick up to 2 bags, then Continue to checkout. Pick a collection window and a card.
+- "Visa •••• 4242" confirms the order 3 seconds after you place it. "Mastercard •••• 0002" declines it.
+- Data lives in an in-app "server" in browser or device storage. Clear site data to start fresh.
+- To see the bad-link handling, open `/?bags=bag_cafe,bag_cafe,bag_unknown`.
+
 ### Check the workspace
 
 Run Melos through `fvm exec`, so it uses the pinned Flutter even when another version is on your PATH.
@@ -55,7 +63,7 @@ cd apps/web_checkout
 fvm exec patrol test --device chrome
 ```
 
-This runs every journey in `patrol_test/`: `navigation_test.dart` and `sign_in_test.dart`. Add `--target patrol_test/sign_in_test.dart` to run one. Add `--web-headless` to run without a browser window. The first run installs Playwright.
+This runs every journey in `patrol_test/`: navigation, sign-in, catalog, checkout and order. Add `--target patrol_test/order_test.dart` to run one. Add `--web-headless` to run without a browser window. The first run installs Playwright.
 
 For Android or iOS, pass the emulator id from `adb devices` or the simulator UDID from `xcrun simctl list devices` to `--device`.
 
@@ -72,5 +80,9 @@ Videos land in `apps/web_checkout/patrol_test/recordings/`. Commit them. [the or
 
 ## Docs
 
+- [SOLUTION.md](SOLUTION.md): design, trade-offs and AI usage
 - [Architecture decisions](docs/adr/README.md)
-- [Glossary](docs/GLOSSARY.md)
+- [Oracle](docs/ORACLE.md): every product and process decision
+- [Specs](openspec/specs/): current behaviour, one folder per capability
+- [Design language](DESIGN.md) and [glossary](docs/GLOSSARY.md)
+- [Assignment brief](docs/assignment-brief.pdf)
