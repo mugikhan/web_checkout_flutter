@@ -13,8 +13,8 @@
 
 ## 3. UI atoms
 
-- [ ] 3.1 Add `formatClock`, and verify tests for 09:05, 14:00 and 00:00
-- [ ] 3.2 Add the `WindowChip` and `SavedCardTile` rows to `DESIGN.md`, then the atoms in `packages/ui`; verify widget tests for picked and unpicked colours, busy state, taps and semantics in both themes
+- [x] 3.1 Add `formatClock`, and verify tests for 09:05, 14:00 and 00:00
+- [x] 3.2 Add the `WindowChip` and `SavedCardTile` rows to `DESIGN.md`, then the atoms in `packages/ui`; verify widget tests for picked and unpicked colours, busy state, taps and semantics in both themes
 
 ## 4. modules/checkout
 
