@@ -1,6 +1,7 @@
 // Modules import Material through ui only (ADR-0001).
 export 'package:material_ui/material_ui.dart';
 
+export 'src/format/money_format.dart';
 export 'src/layout/window_size_class.dart';
 export 'src/theme/app_theme.dart';
 export 'src/theme/app_tokens.dart';

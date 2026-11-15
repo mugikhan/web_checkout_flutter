@@ -10,7 +10,7 @@
 
 ## 2. UI atoms
 
-- [ ] 2.1 Add `intl` to `packages/ui` and `formatZar`, and verify tests for 5999, 123450 and 0 cents
+- [x] 2.1 Add `intl` to `packages/ui` and `formatZar`, and verify tests for 5999, 123450 and 0 cents
 - [ ] 2.2 Add the `PriceText`, `BagTile` and `InlineNotice` rows to `DESIGN.md`, then the atoms in `packages/ui`; verify widget tests for the crossed-out worth, the price semantics, the picked, disabled and hint states, tile semantics, and the notice dismiss and live region
 - [ ] 2.3 Add the `onSurfaceVariant` / `surfaceContainer` and picked-border pairs to the contrast test, and verify it passes in both themes
 
