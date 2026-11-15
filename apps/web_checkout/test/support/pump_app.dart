@@ -1,6 +1,7 @@
 import 'package:api/domain/domain.dart';
 import 'package:auth/auth.dart';
 import 'package:catalog/catalog.dart';
+import 'package:checkout/checkout.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
@@ -11,6 +12,8 @@ import 'package:web_checkout/app.dart';
 class MockAuthRepository extends Mock implements AuthRepository {}
 
 class MockCatalogRepository extends Mock implements CatalogRepository {}
+
+class MockCheckoutRepository extends Mock implements CheckoutRepository {}
 
 const _store = Store(id: 'store_corner_pantry', name: 'Corner Pantry');
 
@@ -60,6 +63,30 @@ MockCatalogRepository mockCatalogRepository() {
 
 const naledi = Viewer(id: 'viewer:naledi', name: 'Naledi');
 
+const visa = SavedCard(id: 'card_visa_4242', brand: 'Visa', last4: '4242');
+
+/// openSession is session `cs_1`, open, with the windows offered now.
+CheckoutSession openSession({SavedCard? card}) => CheckoutSession(
+  id: 'cs_1',
+  status: CheckoutSessionStatus.open,
+  expiresAt: DateTime.now().toUtc().add(const Duration(minutes: 15)),
+  paymentMethod: card,
+  windows: CollectionWindow.offered(DateTime.now()),
+);
+
+/// mockCheckoutRepository stubs a repository that starts and serves session `cs_1`.
+MockCheckoutRepository mockCheckoutRepository({CheckoutSession? session}) {
+  final repository = MockCheckoutRepository();
+  when(() => repository.createSession())
+      .thenAnswer((_) async => const CheckoutStarted('cs_1'));
+  when(() => repository.session(any()))
+      .thenAnswer((_) async => const SessionNotFound());
+  when(() => repository.session('cs_1')).thenAnswer(
+    (_) async => CheckoutSessionLoaded(session ?? openSession(), const [visa]),
+  );
+  return repository;
+}
+
 /// mockAuthRepository stubs a repository that starts with [viewer] signed in.
 MockAuthRepository mockAuthRepository({Viewer? viewer}) {
   final repository = MockAuthRepository();
@@ -77,6 +104,7 @@ Future<void> pumpApp(
   Size size = const Size(400, 800),
   AuthRepository? repository,
   CatalogRepository? catalog,
+  CheckoutRepository? checkout,
   bool settle = true,
 }) async {
   tester.view.physicalSize = size;
@@ -85,9 +113,13 @@ Future<void> pumpApp(
 
   final sl = GetIt.asNewInstance()
     ..registerSingleton<AuthRepository>(repository ?? mockAuthRepository())
-    ..registerSingleton<CatalogRepository>(catalog ?? mockCatalogRepository());
+    ..registerSingleton<CatalogRepository>(catalog ?? mockCatalogRepository())
+    ..registerSingleton<CheckoutRepository>(
+      checkout ?? mockCheckoutRepository(),
+    );
   registerAuthModule(sl);
   registerCatalogModule(sl);
+  registerCheckoutModule(sl);
 
   await tester.pumpWidget(
     BagCheckoutApp(

@@ -30,9 +30,9 @@
 
 ## 6. App wiring
 
-- [ ] 6.1 Add `AppRoutes.isGuarded`, `checkoutStart`, `checkoutLocation`, `orderLocation` and `slotFrom`, and use `isGuarded` in `authRedirect`; verify unit tests for guarded paths, builders and the `from` for a checkout URL
-- [ ] 6.2 Add the `/checkout/new`, `/checkout/:sessionId` and `/orders/:orderId` routes, `OrderPlaceholderPage`, `registerCheckoutModule`, and Continue on Bags; verify router tests for the signed-in start, the signed-out redirect, the placeholder in the shell, the completed redirect and close
-- [ ] 6.3 Refresh the router from `SessionBloc` in the app, with `Router.neglect` on sign-in; verify the router and auth redirect tests still pass and `fvm flutter build web` succeeds
+- [x] 6.1 Add `AppRoutes.isGuarded`, `checkoutStart`, `checkoutLocation`, `orderLocation` and `slotFrom`, and use `isGuarded` in `authRedirect`; verify unit tests for guarded paths, builders and the `from` for a checkout URL
+- [x] 6.2 Add the `/checkout/new`, `/checkout/:sessionId` and `/orders/:orderId` routes, `OrderPlaceholderPage`, `registerCheckoutModule`, and Continue on Bags; verify router tests for the signed-in start, the signed-out redirect, the placeholder in the shell, the completed redirect and close
+- [x] 6.3 Refresh the router from `SessionBloc` in the app, with `Router.neglect` on sign-in; verify the router and auth redirect tests still pass and `fvm flutter build web` succeeds
 
 ## 7. Patrol
 

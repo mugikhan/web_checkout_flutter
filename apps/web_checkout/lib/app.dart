@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:auth/auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -6,7 +8,6 @@ import 'package:ui/ui.dart';
 
 import 'router/app_router.dart';
 import 'router/app_routes.dart';
-import 'router/stream_listenable.dart';
 
 class BagCheckoutApp extends StatefulWidget {
   const BagCheckoutApp({
@@ -29,18 +30,33 @@ class BagCheckoutApp extends StatefulWidget {
 class _BagCheckoutAppState extends State<BagCheckoutApp> {
   late final SessionBloc _session = widget.sl<SessionBloc>()
     ..add(const SessionCheckRequested());
-  late final StreamListenable _refresh = StreamListenable(_session.stream);
   late final GoRouter _router = buildRouter(
     sl: widget.sl,
     session: _session,
-    refresh: _refresh,
     initialLocation: widget.initialLocation,
   );
+  late final StreamSubscription<SessionState> _sessionChanges;
+
+  @override
+  void initState() {
+    super.initState();
+    _sessionChanges = _session.stream.listen(_onSessionChanged);
+  }
+
+  // A refresh redirect reports a new browser entry; on sign-in, replace the sign-in entry.
+  void _onSessionChanged(SessionState state) {
+    final context = _router.routerDelegate.navigatorKey.currentContext;
+    if (state is SessionSignedIn && context != null) {
+      Router.neglect(context, _router.refresh);
+    } else {
+      _router.refresh();
+    }
+  }
 
   @override
   void dispose() {
+    _sessionChanges.cancel();
     _router.dispose();
-    _refresh.dispose();
     _session.close();
     super.dispose();
   }

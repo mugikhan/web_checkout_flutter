@@ -11,7 +11,7 @@ String? authRedirect(SessionState session, Uri uri) {
     if (!signedIn) return null;
     return _localPath(uri.queryParameters['from']) ?? AppRoutes.bags;
   }
-  if (!signedIn && AppRoutes.guarded.contains(uri.path)) {
+  if (!signedIn && AppRoutes.isGuarded(uri.path)) {
     return Uri(
       path: AppRoutes.signIn,
       queryParameters: {'from': uri.toString()},

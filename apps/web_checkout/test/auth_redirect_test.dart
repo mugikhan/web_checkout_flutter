@@ -50,4 +50,23 @@ void main() {
       expect(redirect(signedIn, location), '/', reason: from);
     }
   });
+
+  test(
+    'sends a signed-out user on a checkout URL to sign-in with the query',
+    () {
+      final location = redirect(signedOut, '/checkout/cs_1?bags=bag_cafe')!;
+
+      expect(
+        Uri.parse(location).queryParameters['from'],
+        '/checkout/cs_1?bags=bag_cafe',
+      );
+    },
+  );
+
+  test('sends a signed-out user on an order URL to sign-in', () {
+    expect(
+      redirect(signedOut, '/orders/ord_1'),
+      '/sign-in?from=%2Forders%2Ford_1',
+    );
+  });
 }
