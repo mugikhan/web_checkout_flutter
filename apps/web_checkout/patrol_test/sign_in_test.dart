@@ -1,4 +1,5 @@
 import 'package:auth/auth.dart';
+import 'package:catalog/catalog.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:patrol/patrol.dart';
@@ -30,10 +31,7 @@ void main() {
     if (kIsWeb) expect(await currentLocation($), '/account');
 
     await $(AuthKeys.signOut).tap();
-    expect(
-      $('Surplus bags from Corner Pantry will show here.'),
-      findsOneWidget,
-    );
+    await $(CatalogKeys.bag('bag_cafe')).waitUntilVisible();
     if (kIsWeb) expect(await currentLocation($), '/');
 
     await $(AppKeys.navAccount).tap();

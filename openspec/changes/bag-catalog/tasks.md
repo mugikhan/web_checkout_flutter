@@ -29,7 +29,7 @@
 
 ## 5. Patrol
 
-- [ ] 5.1 Update the navigation and sign-in journeys to find the catalog page instead of the placeholder text, and verify both pass on Chrome, the Android emulator and the iOS simulator
+- [x] 5.1 Update the navigation and sign-in journeys to find the catalog page instead of the placeholder text, and verify both pass on Chrome, the Android emulator and the iOS simulator
 - [ ] 5.2 Add `patrol_test/catalog_test.dart`: bags load; pick Café and Bakery; the summary and the web URL; Grocery disabled with the hint; remove one and Grocery is enabled; open the bad link and check the picks, the web URL and the notice; verify it passes on all three platforms
 
 ## 6. Verification
