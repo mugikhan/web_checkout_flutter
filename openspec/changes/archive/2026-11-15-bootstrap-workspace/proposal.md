@@ -6,13 +6,13 @@ The repo has no Flutter code yet. Every later slice needs a pinned toolchain, a 
 
 ## What Changes
 
-- Pin Flutter 3.47.9 with FVM in `.fvmrc` ([ADR-0001](../../../docs/adr/0001-pin-flutter-with-fvm.md)).
-- Add the workspace root `pubspec.yaml` with Melos 7 scripts for analyze, format and test ([ADR-0003](../../../docs/adr/0003-pub-workspace.md), [ADR-0004](../../../docs/adr/0004-melos-task-runner.md)).
-- Create `apps/web_checkout` for web, iOS and Android, opted in to the material/cupertino split with `material_ui` only ([ADR-0002](../../../docs/adr/0002-material-ui-split.md)).
+- Pin Flutter 3.47.9 with FVM in `.fvmrc` ([the oracle](../../../../docs/ORACLE.md)).
+- Add the workspace root `pubspec.yaml` with Melos 7 scripts for analyze, format and test ([ADR-0002](../../../../docs/adr/0002-pub-workspace.md), [the oracle](../../../../docs/ORACLE.md)).
+- Create `apps/web_checkout` for web, iOS and Android, opted in to the material/cupertino split with `material_ui` only ([ADR-0001](../../../../docs/adr/0001-material-ui-split.md)).
 - Show a placeholder home screen titled "Bag Checkout", with path URLs on web.
 - Set the bundle id `dev.mugikhan.bagcheckout` and the display name "Bag Checkout" on every platform.
-- Set up patrol with one smoke journey that runs on Chrome, Android and iOS, including patrol's native Android and iOS setup ([ADR-0015](../../../docs/adr/0015-testing-strategy.md)).
-- Install the run-patrol-test skill, which records a video of each patrol run. Commit the videos under `apps/web_checkout/patrol_test/recordings/` ([ADR-0017](../../../docs/adr/0017-running-and-recording-patrol-tests.md)).
+- Set up patrol with one smoke journey that runs on Chrome, Android and iOS, including patrol's native Android and iOS setup ([ADR-0012](../../../../docs/adr/0012-testing-strategy.md)).
+- Install the run-patrol-test skill, which records a video of each patrol run. Commit the videos under `apps/web_checkout/patrol_test/recordings/` ([the oracle](../../../../docs/ORACLE.md)).
 - Add a GitHub Actions workflow that runs analyze and unit tests on pull requests to `main`.
 - Add a minimal README section on running the app locally.
 

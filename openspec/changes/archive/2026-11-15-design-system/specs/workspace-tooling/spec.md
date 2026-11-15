@@ -20,5 +20,5 @@ CI SHALL run workspace analysis and tests on pull requests that target `main` an
 ## REMOVED Requirements
 
 ### Requirement: CI gate on pull requests to main
-**Reason**: Its second scenario names the `develop` branch, which was removed (ADR-0019).
+**Reason**: Its second scenario names the `develop` branch, which was removed (ADR-0019 (since folded into docs/ORACLE.md)).
 **Migration**: "CI gate on pull requests into main" keeps the same rule and replaces the `develop` scenario with one for stacked pull requests.

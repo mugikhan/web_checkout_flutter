@@ -1,4 +1,4 @@
-# ADR-0007: Typed result unions for mutation failures
+# ADR-0005: Typed result unions for mutation failures
 
 **Status:** Accepted  
 **Date:** 2026-11-14  

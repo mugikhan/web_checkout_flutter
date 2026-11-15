@@ -1,4 +1,4 @@
-# ADR-0020: Commit generated GraphQL code
+# ADR-0013: Commit generated GraphQL code
 
 **Status:** Accepted  
 **Date:** 2026-11-15  
@@ -6,7 +6,7 @@
 
 ## Context
 
-graphql_codegen writes typed `*.graphql.dart` files through build_runner (ADR-0006). CI runs analyze and unit tests only (ADR-0015). Without the generated files, both fail.
+graphql_codegen writes typed `*.graphql.dart` files through build_runner (ADR-0004). CI runs analyze and unit tests only (ADR-0012). Without the generated files, both fail.
 
 ## Decisions
 

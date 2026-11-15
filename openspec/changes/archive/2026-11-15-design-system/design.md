@@ -124,8 +124,8 @@ Only the atoms this slice renders:
 
 ## Risks / Trade-offs
 
-- [`google_fonts` fetches DM Sans at runtime, so the first web load shows a fallback font briefly] → Accept it, as ADR-0013 records. Revisit as a web performance item later.
-- [go_router pulls `cupertino_ui` in transitively] → Allowed: ADR-0002 bans it as a direct dependency only. Nothing in our code imports it.
+- [`google_fonts` fetches DM Sans at runtime, so the first web load shows a fallback font briefly] → Accept it, as ADR-0011 records. Revisit as a web performance item later.
+- [go_router pulls `cupertino_ui` in transitively] → Allowed: ADR-0001 bans it as a direct dependency only. Nothing in our code imports it.
 - [Patrol's `resizeWindow` exists on web only] → Mobile runs check the compact layout. Widget tests cover the medium and expanded layouts on every platform.
 - [The DESIGN.md parity test parses Markdown tables] → Keep a fixed table format, which `DESIGN.md` states. The test fails loudly on a malformed row.
 

@@ -1,4 +1,4 @@
-# ADR-0011: Simulated auth through GraphQL signIn and a request context
+# ADR-0009: Simulated auth through GraphQL signIn and a request context
 
 **Status:** Accepted  
 **Date:** 2026-11-14  

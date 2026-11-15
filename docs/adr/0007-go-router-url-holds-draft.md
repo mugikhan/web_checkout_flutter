@@ -1,4 +1,4 @@
-# ADR-0009: go_router with path URLs; the URL holds the draft
+# ADR-0007: go_router with path URLs; the URL holds the draft
 
 **Status:** Accepted  
 **Date:** 2026-11-14  

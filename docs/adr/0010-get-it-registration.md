@@ -1,4 +1,4 @@
-# ADR-0012: Plain get_it with per-module registration
+# ADR-0010: Plain get_it with per-module registration
 
 **Status:** Accepted  
 **Date:** 2026-11-14  

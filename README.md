@@ -58,7 +58,7 @@ fvm dart run .agents/skills/run-patrol-test/scripts/run_patrol_test.dart plan --
 fvm exec dart run .agents/skills/run-patrol-test/scripts/run_patrol_test.dart run --test app_smoke --device chrome
 ```
 
-Videos land in `apps/web_checkout/patrol_test/recordings/`. Commit them. [ADR-0017](docs/adr/0017-running-and-recording-patrol-tests.md) covers the details. Install ffmpeg to convert web videos to MP4.
+Videos land in `apps/web_checkout/patrol_test/recordings/`. Commit them. [the oracle](docs/ORACLE.md) covers the details. Install ffmpeg to convert web videos to MP4.
 
 ## Docs
 

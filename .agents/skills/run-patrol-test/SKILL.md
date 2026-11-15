@@ -14,7 +14,7 @@ when the script prints `PLAN_STATUS=ask`, and then the user decides, not you.
 All commands run from the repository root. The script is
 `.agents/skills/run-patrol-test/scripts/run_patrol_test.dart`.
 
-> **Project patch (ADR-0017):** this repo pins Dart through FVM, and the global
+> **Project patch (see docs/ORACLE.md):** this repo pins Dart through FVM, and the global
 > `dart` is too old for the workspace. Run every script command with
 > `fvm dart`, and put `fvm exec ` in front of the `COMMAND=` value. A
 > reinstall with `--force` drops this patch, so add it again.

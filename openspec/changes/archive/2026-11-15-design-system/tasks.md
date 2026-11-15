@@ -47,5 +47,5 @@ Sign-off: a patrol recording of the navigation journey on web, Android and iOS, 
 
 ## Workflow follow-up
 
-- Merge PR #6 from `feat/design-system` to `main` after CI passes (ADR-0019).
+- Merge PR #6 from `feat/design-system` to `main` after CI passes (ADR-0019 (since folded into docs/ORACLE.md)).
 - Archive the change with `openspec archive design-system` after the merge.
