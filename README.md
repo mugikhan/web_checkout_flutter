@@ -2,6 +2,10 @@
 
 A web-first checkout slice in Flutter. It runs on web, iOS and Android from one codebase.
 
+## Demo
+
+[Download the demo video](https://github.com/mugikhan/web_checkout_flutter/raw/main/demo_video_web.mp4) (14 min, web, 89 MB). GitHub serves it as a download; any browser or video player plays the saved file.
+
 ## Run locally
 
 ### Prerequisites
