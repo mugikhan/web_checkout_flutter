@@ -56,7 +56,7 @@ The page SHALL handle every confirm failure. Session not found and session expir
 
 #### Scenario: Slot passed while on the page
 - **WHEN** the customer confirms and the "server" answers slot unavailable
-- **THEN** the page shows "That collection window is no longer available. Pick another.", reloads the windows and drops the slot
+- **THEN** the page stays on checkout, shows "That time slot is no longer available, please select another time slot and confirm your order", reloads the windows, removes the `slot` query from the URL with no new history entry, and keeps Confirm disabled until the customer picks a new window
 
 #### Scenario: Unexpected fault
 - **WHEN** the confirm request fails for an unexpected reason

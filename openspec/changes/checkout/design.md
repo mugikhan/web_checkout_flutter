@@ -166,12 +166,12 @@ Alternative: a callback on `SignInPage` that navigates after sign-in. Rejected, 
 
 `CheckoutBloc(checkoutRepository, catalogRepository, clock)`:
 - `CheckoutLoadRequested(sessionId)`, `restartable`. It loads the session and the bags in parallel. `COMPLETED` sets `orderId`; `EXPIRED` and `SessionNotFound` set their status; a fault in either sets `failed`. An open session stores windows, cards and the stored card id.
-- `CheckoutLinkChanged(bagIds, slot)`. It stores the raw link and, once loaded, cleans the bags with `BagSelection.clean` and matches the slot to an offered window.
+- `CheckoutLinkChanged(bagIds, slot)`. It stores the raw link and, once loaded, cleans the bags with `BagSelection.clean` and matches the slot to an offered window. A slot with no match sets `slotUnavailable`. A matched slot clears it, so picking a new window removes the notice. A card pick keeps it.
 - `CheckoutCardPicked(cardId)`, `restartable`. It sets `pendingCardId`, calls `setPaymentMethod`, then stores the session's card id or an error.
-- `CheckoutConfirmRequested`, `droppable`. It returns early unless `canConfirm`. Success keeps `confirming` true and sets `orderId`, so the button stays busy until the route changes. `SlotUnavailable` sets the error and reloads the session.
+- `CheckoutConfirmRequested`, `droppable`. It returns early unless `canConfirm`. Success keeps `confirming` true and sets `orderId`, so the button stays busy until the route changes. `SlotUnavailable` clears the window, sets `slotUnavailable` and reloads the session, so the page drops the slot from the URL.
 - `CheckoutErrorDismissed`.
 
-State getters: `pickedBags`, `total`, `canConfirm` (ready, bags picked, window picked, card stored, no card request, not confirming), and `needsCleanUrl` (loaded, and the raw bags or slot differ from the clean ones).
+State getters: `pickedBags`, `total`, `canConfirm` (ready, bags picked, window picked, card stored, no card request, no stale slot notice, not confirming), and `needsCleanUrl` (loaded, and the raw bags or slot differ from the clean ones).
 
 `today` comes from the clock at load and labels the window groups "Today" and "Tomorrow".
 
@@ -229,7 +229,6 @@ Both colour pairs are already in the contrast test (`onPrimary` / `primary`, `on
 ## Open for sign-off
 
 - Windows follow the device's local time zone. The store has no time zone of its own.
-- A passed or unknown `slot` drops out of the URL silently, with no notice.
 - Close uses `context.go`, so Back after close returns to the still-open checkout.
 - `setPaymentMethod` has a `CardNotFound` member for a forged card id, beyond the oracle's confirm list.
 - `createCheckoutSession` without a viewer is a GraphQL error, not a union member.

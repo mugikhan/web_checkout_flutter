@@ -40,12 +40,24 @@ The customer SHALL pick one window at a time. Picking a window SHALL put its UTC
 - **THEN** only the 15:00–16:00 window shows as picked and the `slot` query changes to its start
 
 ### Requirement: Slot from the URL
-Opening or refreshing a checkout URL with a `slot` SHALL show that window as picked when the "server" still offers it. A slot the "server" does not offer SHALL drop out of the URL, with no new history entry.
+Opening or refreshing a checkout URL with a `slot` SHALL show that window as picked when the "server" still offers it. A slot that has passed or is not offered SHALL leave the URL with no new history entry. The page SHALL then show the error notice "That time slot is no longer available, please select another time slot and confirm your order" until the customer picks a new window.
 
 #### Scenario: Refresh keeps the window
 - **WHEN** the customer refreshes the checkout page with an offered `slot`
 - **THEN** the same window shows as picked
 
-#### Scenario: Passed or unknown slot
-- **WHEN** the customer opens a checkout URL whose `slot` window already started or is not a window start
-- **THEN** no window shows as picked and the `slot` query leaves the URL
+#### Scenario: Passed slot on load
+- **WHEN** the customer opens a checkout URL whose `slot` window already started
+- **THEN** no window shows as picked, the `slot` query leaves the URL, and the page shows "That time slot is no longer available, please select another time slot and confirm your order" on an `errorContainer` background
+
+#### Scenario: Unknown slot on load
+- **WHEN** the customer opens a checkout URL whose `slot` is not a window start
+- **THEN** no window shows as picked, the `slot` query leaves the URL, and the page shows the same notice
+
+#### Scenario: Notice blocks Confirm
+- **WHEN** the stale slot notice shows
+- **THEN** Confirm is disabled and its hint asks for a collection window
+
+#### Scenario: New window clears the notice
+- **WHEN** the customer picks a window while the stale slot notice shows
+- **THEN** the notice disappears and the `slot` query holds the new window's start
