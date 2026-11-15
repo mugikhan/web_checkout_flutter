@@ -14,3 +14,6 @@ export '../src/domain/checkout/checkout_results.dart';
 export '../src/domain/checkout/checkout_session.dart';
 export '../src/domain/checkout/collection_window.dart';
 export '../src/domain/checkout/saved_card.dart';
+export '../src/domain/orders/order.dart';
+export '../src/domain/orders/order_repository.dart';
+export '../src/domain/orders/order_result.dart';
