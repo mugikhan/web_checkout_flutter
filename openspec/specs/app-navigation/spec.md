@@ -117,13 +117,6 @@ Every URL under `/checkout/` and `/orders/` SHALL require a signed-in viewer. A 
 - **WHEN** a signed-out user opens `/orders/ord_1`
 - **THEN** the Sign in page shows with `from` set to `/orders/ord_1`
 
-### Requirement: Order placeholder
-`/orders/:orderId` SHALL show a placeholder page inside the navigation shell, with Bags selected. It SHALL show "Order placed" and the order id from the URL, and SHALL NOT query the order.
-
-#### Scenario: Open an order URL
-- **WHEN** a signed-in viewer opens `/orders/ord_1`
-- **THEN** the page shows "Order placed" and "ord_1", with Bags selected in the navigation
-
 ### Requirement: Sign-in leaves no history entry
 When a user signs in on `/sign-in?from=…`, the app SHALL replace the sign-in entry in browser history with the `from` URL.
 

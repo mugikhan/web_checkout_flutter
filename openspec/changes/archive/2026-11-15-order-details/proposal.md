@@ -6,13 +6,13 @@ The brief asks for an order details view with a status timeline, and for a pendi
 
 ## What Changes
 
-- Add an `order` query that returns the order or `OrderNotFound` for an unknown or foreign id ([ADR-0005](../../../docs/adr/0005-typed-result-unions.md), [ADR-0009](../../../docs/adr/0009-simulated-auth.md)).
-- Add an `orderStatusChanged` subscription served by `LocalLink` as a stream ([ADR-0004](../../../docs/adr/0004-graphql-codegen-local-link.md)). The "server" works out each order's status from its stored times, so a refresh during the hold still ends in the right state.
-- Add `modules/orders` with an order bloc and the order page, replacing the placeholder. The bloc loads the order, then follows its status until it is final ([ADR-0006](../../../docs/adr/0006-bloc-with-concurrency.md)).
+- Add an `order` query that returns the order or `OrderNotFound` for an unknown or foreign id ([ADR-0005](../../../../docs/adr/0005-typed-result-unions.md), [ADR-0009](../../../../docs/adr/0009-simulated-auth.md)).
+- Add an `orderStatusChanged` subscription served by `LocalLink` as a stream ([ADR-0004](../../../../docs/adr/0004-graphql-codegen-local-link.md)). The "server" works out each order's status from its stored times, so a refresh during the hold still ends in the right state.
+- Add `modules/orders` with an order bloc and the order page, replacing the placeholder. The bloc loads the order, then follows its status until it is final ([ADR-0006](../../../../docs/adr/0006-bloc-with-concurrency.md)).
 - Show the order id, store, bags with their snapshot prices, total, collection window in local time, masked card and an animated status timeline with a time per reached state.
 - End a Confirmed or Failed order with one "Back to bags" action. A Failed order shows the decline reason.
-- Add a `StatusTimeline` atom to `packages/ui`, in `DESIGN.md` first ([ADR-0011](../../../docs/adr/0011-design-tokens.md)).
-- Add an order journey that covers a Visa order turning Confirmed, a Mastercard order turning Failed, and an unknown order id ([ADR-0012](../../../docs/adr/0012-testing-strategy.md)).
+- Add a `StatusTimeline` atom to `packages/ui`, in `DESIGN.md` first ([ADR-0011](../../../../docs/adr/0011-design-tokens.md)).
+- Add an order journey that covers a Visa order turning Confirmed, a Mastercard order turning Failed, and an unknown order id ([ADR-0012](../../../../docs/adr/0012-testing-strategy.md)).
 
 ## Out of scope
 

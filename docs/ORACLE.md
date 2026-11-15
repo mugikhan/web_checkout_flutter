@@ -147,5 +147,5 @@ This file records every answer the user gave in the planning ("grill me") sessio
 3. `simulated-auth`: done.
 4. `bag-catalog`: done.
 5. `checkout`: done.
-6. `order-details`: in progress.
+6. `order-details`: done.
 7. `docs-and-delivery`: README, SOLUTION.md with the "AI usage" section, Loom video.
