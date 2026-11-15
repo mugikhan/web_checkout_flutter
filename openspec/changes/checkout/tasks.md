@@ -40,7 +40,7 @@
 
 - [x] 7.1 Update the navigation, sign-in and catalog journeys where Continue or the new routes change what they see, and verify they pass on Chrome, the Android emulator and the iOS simulator
 - [x] 7.2 Add `patrol_test/checkout_test.dart`: signed-out Continue, sign in, checkout with the bags (web URL holds the session id and bags), pick the first offered window (web URL gains `slot`), Confirm disabled, pick Visa, double-tap Confirm, one order and the placeholder with its id, web Back skips checkout, then an unknown session shows "Checkout not found" with Start again; verify it passes on all three platforms
-- [ ] 7.3 Extend the checkout journey: open a checkout URL whose `slot` is a day in the past, see the notice and the URL without `slot`, then pick a window and see the notice clear; verify it passes on all three platforms
+- [x] 7.3 Extend the checkout journey: open a checkout URL whose `slot` is a day in the past, see the notice and the URL without `slot`, then pick a window and see the notice clear; verify it passes on all three platforms
 
 ## 8. Verification
 
@@ -55,7 +55,7 @@ Sign-off: the checkout journey on web, Android and iOS. It shows a signed-out Co
 - **Web, manual**: refresh on checkout after picking a window and a card, and both stay picked. Refresh on the order page, and it still shows the order id.
 - **Web, manual**: resize across 840px, and the page moves between two columns and the bottom confirm bar.
 
-- [ ] 8.1 Run every automated check above and confirm each passes
+- [x] 8.1 Run every automated check above and confirm each passes
 - [ ] 8.2 Record the checkout journey on web, Android and iOS and paste the output in the PR description
 - [ ] 8.3 User verifies the slice
 
