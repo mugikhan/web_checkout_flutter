@@ -1,6 +1,7 @@
 import 'package:api/data/data.dart';
 import 'package:auth/auth.dart';
 import 'package:catalog/catalog.dart';
+import 'package:checkout/checkout.dart';
 import 'package:get_it/get_it.dart';
 import 'package:storage/storage.dart';
 
@@ -12,4 +13,5 @@ Future<void> configureDependencies(GetIt sl) async {
   registerApiData(sl);
   registerAuthModule(sl);
   registerCatalogModule(sl);
+  registerCheckoutModule(sl);
 }

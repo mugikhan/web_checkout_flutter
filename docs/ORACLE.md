@@ -50,6 +50,7 @@ This file records every answer the user gave in the planning ("grill me") sessio
 | Shell | `StatefulShellRoute` with two destinations: Bags and Account. | Grill round 5 |
 | Checkout layout | Full screen, outside the shell, no nav. A close (✕) button returns to `/?bags=…`. No "are you sure" dialog. The user may change this after verifying that slice. | Grill round 5–6 |
 | Orders layout | `/orders/:orderId` sits inside the shell under Bags. | Grill round 5 |
+| Order page in `checkout` | `/orders/:orderId` is a guarded placeholder page inside the shell, under the Bags branch. It shows "Order placed" and the order id, with no order query. `order-details` builds the real page. | Session 2026-11-15 |
 | After confirm | Navigate to the order with replace, so Back never returns to a confirmable checkout. | Grill round 3 |
 | Bad bag links | When `/?bags=` holds unknown ids, duplicates or more than 2 ids, the catalog drops unknown ids and duplicates and keeps the first 2 valid ids. It replaces the URL with the clean one, with no new history entry, and shows the notice "A max of 2 bags can be selected, some bags were removed" in the error colours (`errorContainer` with `onErrorContainer`). The user chose this wording and colour after the first recordings. | Session 2026-11-15 |
 | Unknown URLs | "Page not found" built from `StateView`, with one action, "Go to Bags". The address bar keeps the unknown URL. The view sits outside the shell. A known route with a missing record, such as an unknown order id, is handled inside that slice's page. No silent redirect to `/`. | Session 2026-11-15 |
@@ -63,8 +64,10 @@ This file records every answer the user gave in the planning ("grill me") sessio
 | Quantity | Up to 2 different bags per order, each bag at most once. | Grill round 4 |
 | Money | Integer cents in ZAR, formatted `en_ZA`. | Grill round 2 |
 | Collection windows | 1-hour windows from 09:00 to 22:00, today and tomorrow only. Windows that already started are hidden. No capacity limit. Stored in UTC, shown in local time. | Grill rounds 3–4 |
+| Stale slot | A `slot` that has passed or is not offered leaves the URL with replace, on load or when confirm answers `SlotUnavailable`. Checkout stays open and shows the error notice "That time slot is no longer available, please select another time slot and confirm your order" in the error colours (`errorContainer` with `onErrorContainer`). Confirm stays disabled until the customer picks a new window, which clears the notice. | Session 2026-11-15 |
 | Draft | The URL holds the draft: bags and slot. The catalog keeps its selection in `/?bags=…` too. | Grill rounds 3–4 |
 | Catalog summary | The catalog shows a selection summary: the number of bags picked and the total price. It has no "Continue" action yet. The `checkout` slice adds Continue together with `createCheckoutSession`. | Session 2026-11-15 |
+| Continue | The catalog summary gains a "Continue" action, enabled with 1–2 bags picked. A signed-in customer goes straight to `/checkout/new?bags=…`. A signed-out customer goes to `/sign-in?from=/checkout/new?bags=…` first. `/checkout/new` creates the session and replaces the URL with `/checkout/:sessionId?bags=…`. `/checkout/new` is guarded and never stays in history. | Session 2026-11-15 |
 | Bag limit in the catalog | With 2 bags selected, the unselected bags become disabled and show the hint "You can pick up to 2 bags". Deselecting a bag enables them again. | Session 2026-11-15 |
 | Checkout session | `createCheckoutSession` (no args; the owner comes from the viewer) returns a session id for the URL. The session id is the idempotency key. | ADR-0008 |
 | Session expiry | 15 minutes after creation. Expired → "This checkout expired" and "Start again", which keeps the bags and drops a passed slot. | Grill round 4 |
@@ -127,7 +130,7 @@ This file records every answer the user gave in the planning ("grill me") sessio
 | Topic | Answer | Source |
 |---|---|---|
 | Spec flow | OpenSpec: one change per slice, implemented one at a time. Flow: propose, review, apply, verify, sign-off, archive. Each `tasks.md` ends with a Verification section and the task "User verifies the slice". Write the next proposal only after the previous slice is signed off. | User, first message; grill round 3 |
-| Slice delivery | An Opus subagent at medium effort proposes, implements and verifies each slice, then reports. The main session settles decisions before dispatch and handles sign-off, PR and archive. A failure or error makes the subagent report back. | Session 2026-11-15 |
+| Slice delivery | The main session (Opus) plans each slice: it settles decisions with the user, records them here, and writes and validates the OpenSpec change. A Sonnet subagent implements it, with no push or PR. A blind Sonnet verifier, given only the change and branch, checks it, records the videos and opens the PR. A Sonnet runner handles chores: sign-off tick, merge after CI, archive. Any subagent reports back on failure. The split saves usage and cost. | Session 2026-11-15 |
 | ADRs | Ask the user before a foundational decision. Write an ADR only for a choice with lasting impact, a meaningful trade-off, or a high cost to reverse: one a future engineer would ask "why was this built this way?" about. Everything else goes in this file. Use the house template in `docs/adr/`. | User, first message; session 2026-11-15 |
 | Branches | `feat/<change>` off `main`, one PR per slice to `main`, merged after sign-off. A slice that depends on an unmerged one stacks its PR on that branch. No `develop` branch ("overkill for the assignment"). | Session 2026-11-15 |
 | CI | Analyze and unit tests on PRs to `main` that change code, tooling or `DESIGN.md`. Docs, ADR and OpenSpec PRs skip CI. No build_runner and no patrol in CI. | ADR-0012, session 2026-11-15 |
@@ -141,6 +144,6 @@ This file records every answer the user gave in the planning ("grill me") sessio
 2. `design-system`: done.
 3. `simulated-auth`: done.
 4. `bag-catalog`: done.
-5. `checkout`
+5. `checkout`: in progress.
 6. `order-details`
 7. `docs-and-delivery`: README, SOLUTION.md with the "AI usage" section, Loom video.

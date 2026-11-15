@@ -8,4 +8,5 @@ abstract final class CatalogKeys {
   static const notice = Key('catalog-notice');
   static const noticeDismiss = Key('catalog-notice-dismiss');
   static const retry = Key('catalog-retry');
+  static const continueButton = Key('catalog-continue');
 }

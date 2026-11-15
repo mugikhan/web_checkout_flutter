@@ -33,6 +33,9 @@ class AuthResolvers {
     return Query$Viewer(viewer: name == null ? null : _viewer(name));
   }
 
+  /// viewerId derives the stable viewer id that owns sessions and orders.
+  static String viewerId(String name) => 'viewer:${name.toLowerCase()}';
+
   static Fragment$ViewerFields _viewer(String name) =>
-      Fragment$ViewerFields(id: 'viewer:${name.toLowerCase()}', name: name);
+      Fragment$ViewerFields(id: viewerId(name), name: name);
 }

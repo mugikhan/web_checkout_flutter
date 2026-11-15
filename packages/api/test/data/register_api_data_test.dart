@@ -28,4 +28,15 @@ void main() {
     expect(sl<CatalogRepository>(), isA<GraphqlCatalogRepository>());
     expect(await sl<CatalogRepository>().bags(), isA<BagsLoaded>());
   });
+
+  test('registers a CheckoutRepository', () {
+    final sl = GetIt.asNewInstance()
+      ..registerSingleton(
+        AppStorage(client: MemoryStore(), server: MemoryStore()),
+      );
+
+    registerApiData(sl);
+
+    expect(sl<CheckoutRepository>(), isA<GraphqlCheckoutRepository>());
+  });
 }

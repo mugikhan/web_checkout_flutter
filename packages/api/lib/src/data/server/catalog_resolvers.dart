@@ -36,6 +36,18 @@ class CatalogResolvers {
     ),
   ];
 
+  static String get storeName => _store.name;
+
+  /// bag finds a seeded bag by id, or returns null for an unknown id.
+  static ({String id, String name, int priceCents})? bag(String id) {
+    for (final bag in _bags) {
+      if (bag.id == id) {
+        return (id: bag.id, name: bag.name, priceCents: bag.priceCents);
+      }
+    }
+    return null;
+  }
+
   Future<Query$Bags> bags() async => Query$Bags(
     bags: [
       for (final bag in _bags)

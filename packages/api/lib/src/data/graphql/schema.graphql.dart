@@ -1,3 +1,84 @@
+enum Enum$CheckoutSessionStatus {
+  OPEN,
+  COMPLETED,
+  EXPIRED,
+  $unknown;
+
+  factory Enum$CheckoutSessionStatus.fromJson(String value) =>
+      fromJson$Enum$CheckoutSessionStatus(value);
+
+  String toJson() => toJson$Enum$CheckoutSessionStatus(this);
+}
+
+String toJson$Enum$CheckoutSessionStatus(Enum$CheckoutSessionStatus e) {
+  switch (e) {
+    case Enum$CheckoutSessionStatus.OPEN:
+      return r'OPEN';
+    case Enum$CheckoutSessionStatus.COMPLETED:
+      return r'COMPLETED';
+    case Enum$CheckoutSessionStatus.EXPIRED:
+      return r'EXPIRED';
+    case Enum$CheckoutSessionStatus.$unknown:
+      return r'$unknown';
+  }
+}
+
+Enum$CheckoutSessionStatus fromJson$Enum$CheckoutSessionStatus(String value) {
+  switch (value) {
+    case r'OPEN':
+      return Enum$CheckoutSessionStatus.OPEN;
+    case r'COMPLETED':
+      return Enum$CheckoutSessionStatus.COMPLETED;
+    case r'EXPIRED':
+      return Enum$CheckoutSessionStatus.EXPIRED;
+    default:
+      return Enum$CheckoutSessionStatus.$unknown;
+  }
+}
+
+enum Enum$OrderStatus {
+  CREATED,
+  PENDING,
+  CONFIRMED,
+  FAILED,
+  $unknown;
+
+  factory Enum$OrderStatus.fromJson(String value) =>
+      fromJson$Enum$OrderStatus(value);
+
+  String toJson() => toJson$Enum$OrderStatus(this);
+}
+
+String toJson$Enum$OrderStatus(Enum$OrderStatus e) {
+  switch (e) {
+    case Enum$OrderStatus.CREATED:
+      return r'CREATED';
+    case Enum$OrderStatus.PENDING:
+      return r'PENDING';
+    case Enum$OrderStatus.CONFIRMED:
+      return r'CONFIRMED';
+    case Enum$OrderStatus.FAILED:
+      return r'FAILED';
+    case Enum$OrderStatus.$unknown:
+      return r'$unknown';
+  }
+}
+
+Enum$OrderStatus fromJson$Enum$OrderStatus(String value) {
+  switch (value) {
+    case r'CREATED':
+      return Enum$OrderStatus.CREATED;
+    case r'PENDING':
+      return Enum$OrderStatus.PENDING;
+    case r'CONFIRMED':
+      return Enum$OrderStatus.CONFIRMED;
+    case r'FAILED':
+      return Enum$OrderStatus.FAILED;
+    default:
+      return Enum$OrderStatus.$unknown;
+  }
+}
+
 enum Enum$__TypeKind {
   SCALAR,
   OBJECT,
@@ -181,4 +262,19 @@ Enum$__DirectiveLocation fromJson$Enum$__DirectiveLocation(String value) {
 
 const possibleTypesMap = <String, Set<String>>{
   'SignInResult': {'SignInSuccess', 'InvalidName'},
+  'CheckoutSessionResult': {'CheckoutSession', 'SessionNotFound'},
+  'SetPaymentMethodResult': {
+    'CheckoutSession',
+    'SessionNotFound',
+    'SessionExpired',
+    'CardNotFound',
+  },
+  'ConfirmCheckoutResult': {
+    'Order',
+    'SessionExpired',
+    'SlotUnavailable',
+    'PaymentMethodMissing',
+    'InvalidBags',
+    'SessionNotFound',
+  },
 };
