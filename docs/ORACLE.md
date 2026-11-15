@@ -51,6 +51,7 @@ This file records every answer the user gave in the planning ("grill me") sessio
 | Checkout layout | Full screen, outside the shell, no nav. A close (✕) button returns to `/?bags=…`. No "are you sure" dialog. The user may change this after verifying that slice. | Grill round 5–6 |
 | Orders layout | `/orders/:orderId` sits inside the shell under Bags. | Grill round 5 |
 | After confirm | Navigate to the order with replace, so Back never returns to a confirmable checkout. | Grill round 3 |
+| Bad bag links | When `/?bags=` holds unknown ids, duplicates or more than 2 ids, the catalog drops unknown ids and duplicates and keeps the first 2 valid ids. It replaces the URL with the clean one, with no new history entry, and shows a notice that some bags from the link were left out. | Session 2026-11-15 |
 | Unknown URLs | "Page not found" built from `StateView`, with one action, "Go to Bags". The address bar keeps the unknown URL. The view sits outside the shell. A known route with a missing record, such as an unknown order id, is handled inside that slice's page. No silent redirect to `/`. | Session 2026-11-15 |
 
 ## Domain: bags and checkout
@@ -63,6 +64,8 @@ This file records every answer the user gave in the planning ("grill me") sessio
 | Money | Integer cents in ZAR, formatted `en_ZA`. | Grill round 2 |
 | Collection windows | 1-hour windows from 09:00 to 22:00, today and tomorrow only. Windows that already started are hidden. No capacity limit. Stored in UTC, shown in local time. | Grill rounds 3–4 |
 | Draft | The URL holds the draft: bags and slot. The catalog keeps its selection in `/?bags=…` too. | Grill rounds 3–4 |
+| Catalog summary | The catalog shows a selection summary: the number of bags picked and the total price. It has no "Continue" action yet. The `checkout` slice adds Continue together with `createCheckoutSession`. | Session 2026-11-15 |
+| Bag limit in the catalog | With 2 bags selected, the unselected bags become disabled and show the hint "You can pick up to 2 bags". Deselecting a bag enables them again. | Session 2026-11-15 |
 | Checkout session | `createCheckoutSession` (no args; the owner comes from the viewer) returns a session id for the URL. The session id is the idempotency key. | ADR-0008 |
 | Session expiry | 15 minutes after creation. Expired → "This checkout expired" and "Start again", which keeps the bags and drops a passed slot. | Grill round 4 |
 | Unknown session | Rejected (`SessionNotFound`) with a way to start again. The server never accepts unknown or expired sessions. | Grill round 3 |
@@ -137,7 +140,7 @@ This file records every answer the user gave in the planning ("grill me") sessio
 1. `bootstrap-workspace`: done.
 2. `design-system`: done.
 3. `simulated-auth`: done.
-4. `bag-catalog`
+4. `bag-catalog`: in progress.
 5. `checkout`
 6. `order-details`
 7. `docs-and-delivery`: README, SOLUTION.md with the "AI usage" section, Loom video.
