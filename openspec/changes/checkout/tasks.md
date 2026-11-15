@@ -18,9 +18,9 @@
 
 ## 4. modules/checkout
 
-- [ ] 4.1 Create `modules/checkout` as a workspace member with `ui`, `api`, `bloc`, `flutter_bloc`, `bloc_concurrency` and `get_it`, and verify it resolves with no `material_ui` dependency
-- [ ] 4.2 Add `CheckoutStartBloc`, and verify `bloc_test` cases: started, failed, retry and `droppable` start
-- [ ] 4.3 Add `CheckoutBloc`, and verify `bloc_test` cases: open, completed, expired, not found and failed loads; bag and slot cleaning; card picked, failed and `restartable` (last card wins); confirm success, each failure, the `SlotUnavailable` reload, the `canConfirm` guard and `droppable` double confirm
+- [x] 4.1 Create `modules/checkout` as a workspace member with `ui`, `api`, `bloc`, `flutter_bloc`, `bloc_concurrency` and `get_it`, and verify it resolves with no `material_ui` dependency
+- [x] 4.2 Add `CheckoutStartBloc`, and verify `bloc_test` cases: started, failed, retry and `droppable` start
+- [x] 4.3 Add `CheckoutBloc`, and verify `bloc_test` cases: open, completed, expired, not found and failed loads; bag and slot cleaning; card picked, failed and `restartable` (last card wins); confirm success, each failure, the `SlotUnavailable` reload, the `canConfirm` guard and `droppable` double confirm
 - [ ] 4.4 Add `CheckoutKeys`, `CheckoutStartPage`, `CheckoutPage` and `registerCheckoutModule`; verify widget tests for loading, failed, not found, expired, no bags, ready, the disabled Confirm, both layouts, the clean-URL, close, start-again and completed callbacks
 - [ ] 4.5 Verify `fvm exec melos run analyze` still passes the import-boundary check with the new module
 
