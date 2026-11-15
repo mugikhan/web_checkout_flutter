@@ -10,6 +10,14 @@ type Query {
 
   "The viewer's saved cards, or none without a viewer."
   savedCards: [SavedCard!]!
+
+  "The viewer's order. Another viewer's order reads as not found."
+  order(id: ID!): OrderResult!
+}
+
+type Subscription {
+  "Emits the order now, then once more when a pending hold settles, then ends."
+  orderStatusChanged(orderId: ID!): OrderResult!
 }
 
 type Mutation {
@@ -101,10 +109,38 @@ enum OrderStatus {
   FAILED
 }
 
+type OrderBag {
+  id: ID!
+  name: String!
+  "The price at confirm time, in ZAR cents."
+  priceCents: Int!
+}
+
+type OrderCard {
+  brand: String!
+  last4: String!
+}
+
 type Order {
   id: ID!
+  "Derived from the clock and the stored times at every read."
   status: OrderStatus!
+  store: String!
+  bags: [OrderBag!]!
+  totalCents: Int!
+  window: CollectionWindow!
+  card: OrderCard!
+  "An ISO-8601 UTC instant."
+  createdAt: String!
+  "An ISO-8601 UTC instant, 3 seconds after creation."
+  holdConfirmsAt: String!
 }
+
+type OrderNotFound {
+  orderId: ID!
+}
+
+union OrderResult = Order | OrderNotFound
 
 type SessionNotFound {
   sessionId: ID!

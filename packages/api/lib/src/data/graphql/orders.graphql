@@ -1,0 +1,45 @@
+fragment OrderFields on Order {
+  id
+  status
+  store
+  bags {
+    id
+    name
+    priceCents
+  }
+  totalCents
+  window {
+    startsAt
+    endsAt
+  }
+  card {
+    brand
+    last4
+  }
+  createdAt
+  holdConfirmsAt
+}
+
+query Order($id: ID!) {
+  order(id: $id) {
+    __typename
+    ... on Order {
+      ...OrderFields
+    }
+    ... on OrderNotFound {
+      orderId
+    }
+  }
+}
+
+subscription OrderStatusChanged($orderId: ID!) {
+  orderStatusChanged(orderId: $orderId) {
+    __typename
+    ... on Order {
+      ...OrderFields
+    }
+    ... on OrderNotFound {
+      orderId
+    }
+  }
+}
