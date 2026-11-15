@@ -15,8 +15,8 @@
 
 ## 3. Orders module
 
-- [ ] 3.1 Add `modules/orders` to the workspace with `OrderBloc` (restartable load and follow, subscription cancelled on close); verify bloc tests for load, follow to Confirmed, follow to Failed, a late open with no subscription, not found, unavailable with retry, and cancel on close
-- [ ] 3.2 Add `OrderPage`, `OrdersKeys` and `registerOrdersModule`; verify page tests for the details content, the Pending timeline, Confirmed and Failed with "Back to bags", the decline reason in the error tone, "Order not found", loading and error states, and semantic labels
+- [x] 3.1 Add `modules/orders` to the workspace with `OrderBloc` (restartable load and follow, subscription cancelled on close); verify bloc tests for load, follow to Confirmed, follow to Failed, a late open with no subscription, not found, unavailable with retry, and cancel on close
+- [x] 3.2 Add `OrderPage`, `OrdersKeys` and `registerOrdersModule`; verify page tests for the details content, the Pending timeline, Confirmed and Failed with "Back to bags", the decline reason in the error tone, "Order not found", loading and error states, and semantic labels
 
 ## 4. App wiring
 
