@@ -8,8 +8,8 @@
 
 - [x] 2.1 Add the checkout types, unions and operations to `schema.graphql` and `checkout.graphql`, run `fvm exec melos run codegen`, and verify `fvm exec melos run analyze` passes
 - [x] 2.2 Add `CheckoutStore` and `CheckoutResolvers` with an injected clock, route the new operations in `LocalServer`, and verify resolver tests: create, owner, read, expiry, foreign and unknown sessions, saved cards, `setPaymentMethod` (stored, unknown card, expired, completed), every confirm rule, a repeat confirm, two concurrent confirms, and the order record with snapshot prices, `holdConfirmsAt` and `declines`
-- [ ] 2.3 Add `GraphqlCheckoutRepository` and register it in `registerApiData`; verify mapping tests over `LocalServer` for every result and over a broken link (`CheckoutUnavailable`), and the "every operation has a resolver" test
-- [ ] 2.4 Run `fvm exec melos run codegen` again and verify `git status` shows no change to generated files
+- [x] 2.3 Add `GraphqlCheckoutRepository` and register it in `registerApiData`; verify mapping tests over `LocalServer` for every result and over a broken link (`CheckoutUnavailable`), and the "every operation has a resolver" test
+- [x] 2.4 Run `fvm exec melos run codegen` again and verify `git status` shows no change to generated files
 
 ## 3. UI atoms
 
