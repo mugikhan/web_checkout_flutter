@@ -22,6 +22,10 @@ void main() {
         'onSurface / surface': (s.onSurface, s.surface),
         'onSurface / surfaceContainer': (s.onSurface, s.surfaceContainer),
         'onSurfaceVariant / surface': (s.onSurfaceVariant, s.surface),
+        'onSurfaceVariant / surfaceContainer': (
+          s.onSurfaceVariant,
+          s.surfaceContainer,
+        ),
         'onPrimary / primary': (s.onPrimary, s.primary),
         'onSecondary / secondary': (s.onSecondary, s.secondary),
         'onTertiary / tertiary': (s.onTertiary, s.tertiary),
@@ -51,6 +55,16 @@ void main() {
         contrast(border.color, theme.colorScheme.surface),
         greaterThanOrEqualTo(3),
       );
+    });
+  }
+
+  for (final (name, theme) in [
+    ('light', AppTheme.light(textTheme: testTextTheme)),
+    ('dark', AppTheme.dark(textTheme: testTextTheme)),
+  ]) {
+    test('$name picked tile border meets 3:1 on surfaceContainer', () {
+      final s = theme.colorScheme;
+      expect(contrast(s.primary, s.surfaceContainer), greaterThanOrEqualTo(3));
     });
   }
 

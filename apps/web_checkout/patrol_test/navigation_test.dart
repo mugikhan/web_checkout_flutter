@@ -1,4 +1,5 @@
 import 'package:auth/auth.dart';
+import 'package:catalog/catalog.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
@@ -15,10 +16,7 @@ void main() {
     await $.pumpAndSettle();
 
     expect($('Bag Checkout'), findsWidgets);
-    expect(
-      $('Surplus bags from Corner Pantry will show here.'),
-      findsOneWidget,
-    );
+    await $(CatalogKeys.bag('bag_cafe')).waitUntilVisible();
 
     await $(AppKeys.navAccount).tap();
     expect($(AuthKeys.signInName), findsOneWidget);
@@ -28,10 +26,7 @@ void main() {
     }
 
     await $(AuthKeys.signInBack).tap();
-    expect(
-      $('Surplus bags from Corner Pantry will show here.'),
-      findsOneWidget,
-    );
+    await $(CatalogKeys.bag('bag_cafe')).waitUntilVisible();
     if (kIsWeb) expect(await currentPath($), '/');
 
     if (!kIsWeb) return;

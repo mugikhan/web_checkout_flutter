@@ -1,0 +1,17 @@
+fragment BagFields on Bag {
+  id
+  name
+  description
+  priceCents
+  worthCents
+  store {
+    id
+    name
+  }
+}
+
+query Bags {
+  bags {
+    ...BagFields
+  }
+}
