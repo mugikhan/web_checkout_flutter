@@ -69,7 +69,7 @@ Opening a Bags URL with a valid `bags` query, or refreshing on it, SHALL show th
 - **THEN** the Grocery tile shows as picked
 
 ### Requirement: Selection summary
-The Bags page SHALL show a summary with the number of picked bags and their total price. It SHALL offer no action to continue to checkout.
+The Bags page SHALL show a summary with the number of picked bags and their total price. It SHALL offer a "Continue" action, enabled only with 1 or 2 bags picked.
 
 #### Scenario: Two bags picked
 - **WHEN** the user picks the Café bag at R59,99 and the Bakery bag at R49,99
@@ -78,6 +78,10 @@ The Bags page SHALL show a summary with the number of picked bags and their tota
 #### Scenario: Nothing picked
 - **WHEN** no bag is picked
 - **THEN** the summary reads "No bags picked" and the total "R0,00"
+
+#### Scenario: Continue disabled with nothing picked
+- **WHEN** no bag is picked
+- **THEN** the Continue action is disabled
 
 ### Requirement: Bad bag links
 When the `bags` query holds unknown ids, duplicates or more than 2 ids, the catalog SHALL drop the unknown ids and duplicates and keep the first 2 valid ids in link order. It SHALL replace the URL with the clean one, without a new history entry, and SHALL show the notice "A max of 2 bags can be selected, some bags were removed" in the error colours.
@@ -134,3 +138,22 @@ Each bag tile, the notice's dismiss action and the retry action SHALL carry a st
 #### Scenario: Screen reader on a disabled tile
 - **WHEN** a screen reader focuses a tile disabled by the bag limit
 - **THEN** it announces the tile as disabled with the hint "You can pick up to 2 bags"
+
+### Requirement: Continue to checkout
+Continue SHALL open `/checkout/new` with the picked bags in its `bags` query. A signed-out user SHALL go to sign-in first, with `from` set to that URL, and SHALL land on checkout after signing in.
+
+#### Scenario: Signed-in viewer continues
+- **WHEN** a signed-in viewer picks the Café bag and selects Continue
+- **THEN** the checkout page shows the Café bag
+
+#### Scenario: Signed-out user continues
+- **WHEN** a signed-out user picks the Café bag and selects Continue
+- **THEN** the Sign in page shows with `from` set to `/checkout/new?bags=bag_cafe`
+
+#### Scenario: Sign in after Continue
+- **WHEN** that user signs in
+- **THEN** the checkout page shows the Café bag and the address bar reads `/checkout/<session id>?bags=bag_cafe`
+
+#### Scenario: Screen reader on Continue
+- **WHEN** a screen reader focuses the Continue action
+- **THEN** it announces "Continue" and whether it is enabled
