@@ -88,7 +88,9 @@ This file records every answer the user gave in the planning ("grill me") sessio
 | Delay | The hold confirms or fails 3 seconds after confirm. The decline card fails it. | Grill round 3 |
 | Timeline | Animated, with a timestamp per reached state. | Grill round 3 |
 | Details page | Order id, store, each bag with snapshot price, total, collection window in local time, masked payment method, timeline. | Grill round 5 |
-| Failed order | Shows the reason and "Back to bags". No retry. | Grill round 5 |
+| Failed order | Shows the reason and "Back to bags". No retry button. The reason reads "The payment was declined and you were not charged. Try placing the order again". | Grill round 5, session 2026-11-15 |
+| Confirmed order | Also ends with one "Back to bags" action. A pending order shows no action. | Session 2026-11-15 |
+| Decline coverage | The order-details journey and its web, Android and iOS recordings include an order paid with "Mastercard •••• 0002" that turns Failed and shows its reason and "Back to bags". The checkout videos had no failing payment, because Failed only shows once order-details serves status changes. | Session 2026-11-15 |
 | Orders list | None. Orders are reached by the confirm redirect or a deep link. | Grill round 3 |
 
 ## Auth
@@ -145,5 +147,5 @@ This file records every answer the user gave in the planning ("grill me") sessio
 3. `simulated-auth`: done.
 4. `bag-catalog`: done.
 5. `checkout`: done.
-6. `order-details`
+6. `order-details`: in progress.
 7. `docs-and-delivery`: README, SOLUTION.md with the "AI usage" section, Loom video.
