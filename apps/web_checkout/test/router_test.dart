@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:auth/auth.dart';
+import 'package:catalog/catalog.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:web_checkout/app_keys.dart';
@@ -10,10 +11,7 @@ void main() {
   testWidgets('/ shows Bags with Bags selected', (tester) async {
     await pumpApp(tester);
 
-    expect(
-      find.text('Surplus bags from Corner Pantry will show here.'),
-      findsOneWidget,
-    );
+    expect(find.byKey(CatalogKeys.bag('bag_cafe')), findsOneWidget);
     final bar = tester.widget<NavigationBar>(find.byType(NavigationBar));
     expect(bar.selectedIndex, 0);
   });
@@ -60,10 +58,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(currentLocation(tester), '/');
-    expect(
-      find.text('Surplus bags from Corner Pantry will show here.'),
-      findsOneWidget,
-    );
+    expect(find.byKey(CatalogKeys.bag('bag_cafe')), findsOneWidget);
   });
 
   testWidgets('resizing across a breakpoint keeps the page and URL', (
