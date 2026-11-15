@@ -182,6 +182,13 @@ The summary shows "No bags picked", "1 bag" or "2 bags", and the total from `for
 - [A bad link triggers two builds: the raw link, then the clean URL] → The bloc cleans the link before the page shows tiles, so the raw picks never render.
 - [The bag list reloads each time the Bags page is built again] → Acceptable for four seeded bags with no network.
 
+## Found during implementation
+
+- The domain `Store` clashes with `Store` from `package:graphql/client.dart`. `GraphqlCatalogRepository` imports only `GraphQLClient`, and its test hides `Store`.
+- `Semantics.checked` and `enabled` still exist in Flutter 3.47.9. Tests use `isSemantics`, because `containsSemantics` is deprecated.
+- The catalog journey checks Back on web with `$.platform.web.goBack()`. With `Router.neglect` removed, it fails at that step, so the check is real.
+- The design named a "Web, manual" Back check. The journey now covers it on web, and the manual check stays as a backup.
+
 ## Open for sign-off
 
 - Tapping the Bags destination while Bags is open resets the branch to `/`, which drops the picks. Switching from Account to Bags keeps them. The shell can stop resetting Bags in a later slice.
