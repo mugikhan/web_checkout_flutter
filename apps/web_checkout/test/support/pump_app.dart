@@ -7,6 +7,7 @@ import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:orders/orders.dart';
 import 'package:web_checkout/app.dart';
 
 class MockAuthRepository extends Mock implements AuthRepository {}
@@ -14,6 +15,8 @@ class MockAuthRepository extends Mock implements AuthRepository {}
 class MockCatalogRepository extends Mock implements CatalogRepository {}
 
 class MockCheckoutRepository extends Mock implements CheckoutRepository {}
+
+class MockOrderRepository extends Mock implements OrderRepository {}
 
 const _store = Store(id: 'store_corner_pantry', name: 'Corner Pantry');
 
@@ -87,6 +90,44 @@ MockCheckoutRepository mockCheckoutRepository({CheckoutSession? session}) {
   return repository;
 }
 
+/// settledOrder is order `ord_1`, Confirmed, paid with Visa.
+final settledOrder = Order(
+  id: 'ord_1',
+  status: OrderStatus.confirmed,
+  store: 'Corner Pantry',
+  bags: const [OrderBag(id: 'bag_cafe', name: 'Café bag', price: Money(5999))],
+  total: const Money(5999),
+  window: CollectionWindow(DateTime(2026, 11, 15, 13)),
+  card: const OrderCard(brand: 'Visa', last4: '4242'),
+  createdAt: DateTime(2026, 11, 15, 10, 30),
+  holdConfirmsAt: DateTime(2026, 11, 15, 10, 30, 3),
+);
+
+/// settledOrderPending is [settledOrder] before its hold time.
+Order settledOrderPending() => Order(
+  id: settledOrder.id,
+  status: OrderStatus.pending,
+  store: settledOrder.store,
+  bags: settledOrder.bags,
+  total: settledOrder.total,
+  window: settledOrder.window,
+  card: settledOrder.card,
+  createdAt: settledOrder.createdAt,
+  holdConfirmsAt: settledOrder.holdConfirmsAt,
+);
+
+/// mockOrderRepository stubs a repository that serves [order] as `ord_1` and nothing else.
+MockOrderRepository mockOrderRepository({Order? order}) {
+  final repository = MockOrderRepository();
+  when(() => repository.order(any()))
+      .thenAnswer((_) async => const OrderNotFound());
+  when(() => repository.order('ord_1'))
+      .thenAnswer((_) async => OrderLoaded(order ?? settledOrder));
+  when(() => repository.watchStatus(any()))
+      .thenAnswer((_) => const Stream<OrderResult>.empty());
+  return repository;
+}
+
 /// mockAuthRepository stubs a repository that starts with [viewer] signed in.
 MockAuthRepository mockAuthRepository({Viewer? viewer}) {
   final repository = MockAuthRepository();
@@ -105,6 +146,7 @@ Future<void> pumpApp(
   AuthRepository? repository,
   CatalogRepository? catalog,
   CheckoutRepository? checkout,
+  OrderRepository? orders,
   bool settle = true,
 }) async {
   tester.view.physicalSize = size;
@@ -116,10 +158,12 @@ Future<void> pumpApp(
     ..registerSingleton<CatalogRepository>(catalog ?? mockCatalogRepository())
     ..registerSingleton<CheckoutRepository>(
       checkout ?? mockCheckoutRepository(),
-    );
+    )
+    ..registerSingleton<OrderRepository>(orders ?? mockOrderRepository());
   registerAuthModule(sl);
   registerCatalogModule(sl);
   registerCheckoutModule(sl);
+  registerOrdersModule(sl);
 
   await tester.pumpWidget(
     BagCheckoutApp(

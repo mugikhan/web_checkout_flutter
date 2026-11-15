@@ -4,10 +4,10 @@ import 'package:checkout/checkout.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
+import 'package:orders/orders.dart';
 import 'package:ui/ui.dart';
 
 import '../pages/not_found_page.dart';
-import '../pages/order_placeholder_page.dart';
 import '../shell/app_shell.dart';
 import 'app_routes.dart';
 import 'auth_redirect.dart';
@@ -102,9 +102,17 @@ GoRouter buildRouter({
               ),
               GoRoute(
                 path: AppRoutes.order,
-                builder: (context, state) => OrderPlaceholderPage(
-                  orderId: state.pathParameters['orderId']!,
-                ),
+                builder: (context, state) {
+                  final orderId = state.pathParameters['orderId']!;
+                  return BlocProvider(
+                    key: ValueKey(orderId),
+                    create: (_) =>
+                        sl<OrderBloc>()..add(OrderLoadRequested(orderId)),
+                    child: OrderPage(
+                      onBackToBags: () => context.go(AppRoutes.bags),
+                    ),
+                  );
+                },
               ),
             ],
           ),

@@ -20,8 +20,8 @@
 
 ## 4. App wiring
 
-- [ ] 4.1 Route `/orders/:orderId` to `OrderPage`, delete `OrderPlaceholderPage`, register the module in the composition root, and verify router tests for a guarded order URL, refresh on the order page with Bags selected, "Back to bags" to `/`, and an unknown order id
-- [ ] 4.2 Keep the checkout journey and the checkout-confirm scenarios passing with the new page ("Order placed" heading, order id key), and verify with `fvm exec melos run test`
+- [x] 4.1 Route `/orders/:orderId` to `OrderPage`, delete `OrderPlaceholderPage`, register the module in the composition root, and verify router tests for a guarded order URL, refresh on the order page with Bags selected, "Back to bags" to `/`, and an unknown order id
+- [x] 4.2 Keep the checkout journey and the checkout-confirm scenarios passing with the new page ("Order placed" heading, order id key), and verify with `fvm exec melos run test`
 
 ## 5. Order journey
 
