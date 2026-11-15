@@ -2,7 +2,7 @@
 
 ## 1. Checkout domain in packages/api
 
-- [ ] 1.1 Add `CollectionWindow`, `SavedCard`, `CheckoutSession`, the sealed results and failures, and `CheckoutRepository` behind `lib/domain/domain.dart`; verify tests for `CollectionWindow.offered` at 08:30, 13:00 and 21:30, and for `slotParam` and `parseSlot`
+- [x] 1.1 Add `CollectionWindow`, `SavedCard`, `CheckoutSession`, the sealed results and failures, and `CheckoutRepository` behind `lib/domain/domain.dart`; verify tests for `CollectionWindow.offered` at 08:30, 13:00 and 21:30, and for `slotParam` and `parseSlot`
 
 ## 2. Checkout "server" in packages/api
 

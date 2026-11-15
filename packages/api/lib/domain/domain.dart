@@ -9,3 +9,8 @@ export '../src/domain/catalog/bags_result.dart';
 export '../src/domain/catalog/catalog_repository.dart';
 export '../src/domain/catalog/money.dart';
 export '../src/domain/catalog/store.dart';
+export '../src/domain/checkout/checkout_repository.dart';
+export '../src/domain/checkout/checkout_results.dart';
+export '../src/domain/checkout/checkout_session.dart';
+export '../src/domain/checkout/collection_window.dart';
+export '../src/domain/checkout/saved_card.dart';
