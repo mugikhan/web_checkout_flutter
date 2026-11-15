@@ -27,11 +27,11 @@
 
 ## 5. modules/auth
 
-- [ ] 5.1 Create `modules/auth` as a workspace member with `ui`, `api`, `bloc`, `flutter_bloc`, `bloc_concurrency` and `get_it`, and verify it resolves with no `material_ui` dependency
-- [ ] 5.2 Add `SessionBloc`, and verify `bloc_test` cases: a stored viewer restores, no viewer and `ApiFault` read as signed out, `ViewerSignedIn`, and sign out deleting the token
-- [ ] 5.3 Add `SignInBloc` with `droppable` submit, and verify `bloc_test` cases: name too short sends nothing, spaces trim, success, the "server" invalid name, unavailable, the error clearing on edit, and a double submit calling the repository once
-- [ ] 5.4 Add `AuthKeys`, `SignInPage`, `AccountPage` and `registerAuthModule`, and verify widget tests for the inline error, the submit, the back action and the Account name and Sign out action
-- [ ] 5.5 Add a module that imports `package:api/data/data.dart` on purpose, verify `melos run analyze` fails and names the file, then revert
+- [x] 5.1 Create `modules/auth` as a workspace member with `ui`, `api`, `bloc`, `flutter_bloc`, `bloc_concurrency` and `get_it`, and verify it resolves with no `material_ui` dependency
+- [x] 5.2 Add `SessionBloc`, and verify `bloc_test` cases: a stored viewer restores, no viewer and `ApiFault` read as signed out, `ViewerSignedIn`, and sign out deleting the token
+- [x] 5.3 Add `SignInBloc` with `droppable` submit, and verify `bloc_test` cases: name too short sends nothing, spaces trim, success, the "server" invalid name, unavailable, the error clearing on edit, and a double submit calling the repository once
+- [x] 5.4 Add `AuthKeys`, `SignInPage`, `AccountPage` and `registerAuthModule`, and verify widget tests for the inline error, the submit, the back action and the Account name and Sign out action
+- [x] 5.5 Add a module that imports `package:api/data/data.dart` on purpose, verify `melos run analyze` fails and names the file, then revert
 
 ## 6. App wiring
 
