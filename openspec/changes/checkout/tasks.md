@@ -57,7 +57,7 @@ Sign-off: the checkout journey on web, Android and iOS. It shows a signed-out Co
 
 - [x] 8.1 Run every automated check above and confirm each passes
 - [x] 8.2 Record the checkout journey on web, Android and iOS and paste the output in the PR description
-- [ ] 8.3 User verifies the slice
+- [x] 8.3 User verifies the slice
 
 ## Workflow follow-up
 
