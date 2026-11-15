@@ -5,7 +5,7 @@ This file records every answer the user gave in the planning ("grill me") sessio
 - ADRs in `docs/adr/` record the foundational decisions with their reasons. This file records all answers, including the small ones that never needed an ADR.
 - When this file and an ADR disagree, the later decision wins. Tell the user about the conflict.
 - When the user decides something new, add it here in the same change.
-- Slice briefs for subagents live in `docs/briefs/`.
+- The assignment itself is `docs/assignment-brief.pdf`.
 
 ## Toolchain and workspace
 
@@ -132,7 +132,7 @@ This file records every answer the user gave in the planning ("grill me") sessio
 
 1. `bootstrap-workspace`: done.
 2. `design-system`: done.
-3. `simulated-auth`: in progress (brief in `docs/briefs/simulated-auth.md`).
+3. `simulated-auth`: in progress.
 4. `bag-catalog`
 5. `checkout`
 6. `order-details`
