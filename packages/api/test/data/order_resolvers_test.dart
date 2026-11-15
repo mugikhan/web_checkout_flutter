@@ -4,10 +4,14 @@ import 'package:api/src/data/graphql/auth.graphql.dart';
 import 'package:api/src/data/graphql/checkout.graphql.dart';
 import 'package:api/src/data/graphql/orders.graphql.dart';
 import 'package:api/src/data/graphql/schema.graphql.dart';
+
+import 'dart:convert';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:storage/storage.dart';
 
 void main() {
+  late MemoryStore store;
   late LocalServer server;
   late DateTime now;
   late List<Duration> delays;
@@ -69,8 +73,9 @@ void main() {
     now = DateTime.utc(2026, 11, 15, 10, 30);
     delays = [];
     slot = CollectionWindow.offered(now).first;
+    store = MemoryStore();
     server = LocalServer(
-      MemoryStore(),
+      store,
       clock: () => now,
       delay: (duration) async => delays.add(duration),
     );
@@ -97,6 +102,27 @@ void main() {
         expect(result.card.last4, '4242');
         expect(result.createdAt, '2026-11-15T10:30:00.000Z');
         expect(result.holdConfirmsAt, '2026-11-15T10:30:03.000Z');
+      },
+    );
+
+    test(
+      'prices stay as confirmed: stored prices win over the catalog',
+      () async {
+        final id = await placeOrder('card_visa_4242');
+        final orders =
+            jsonDecode((await store.read('orders'))!) as Map<String, dynamic>;
+        final stored = orders[id] as Map<String, dynamic>;
+        stored['bags'] = [
+          {'id': 'bag_cafe', 'name': 'Café bag', 'priceCents': 4500},
+          {'id': 'bag_bakery', 'name': 'Bakery bag', 'priceCents': 3000},
+        ];
+        stored['totalCents'] = 7500;
+        await store.write('orders', jsonEncode(orders));
+
+        final result = await order(id);
+
+        expect(result.bags.map((b) => b.priceCents), [4500, 3000]);
+        expect(result.totalCents, 7500);
       },
     );
 
