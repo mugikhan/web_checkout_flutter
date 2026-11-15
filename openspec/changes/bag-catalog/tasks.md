@@ -17,7 +17,7 @@
 ## 3. modules/catalog
 
 - [x] 3.1 Create `modules/catalog` as a workspace member with `ui`, `api`, `bloc`, `flutter_bloc`, `bloc_concurrency` and `get_it`, and verify it resolves with no `material_ui` dependency
-- [ ] 3.2 Add `CatalogBloc`, and verify `bloc_test` cases: load success, load failure, retry, `restartable` load, a link before and after load, a cleaned link setting `leftOut`, a clean link leaving it false, and dismissing the notice
+- [x] 3.2 Add `CatalogBloc`, and verify `bloc_test` cases: load success, load failure, retry, `restartable` load, a link before and after load, a cleaned link setting `leftOut`, a clean link leaving it false, and dismissing the notice
 - [ ] 3.3 Add `CatalogKeys`, `CatalogPage` and `registerCatalogModule`, and verify widget tests for loading, the error view and retry, the tiles, the limit and hint, the summary, the clean-URL callback, the notice, and one and two columns by width
 - [ ] 3.4 Verify `fvm exec melos run analyze` still passes the import-boundary check with the new module
 
