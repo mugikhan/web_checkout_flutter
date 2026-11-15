@@ -88,28 +88,36 @@ GoRouter buildRouter({
             routes: [
               GoRoute(
                 path: AppRoutes.bags,
-                builder: (context, state) => BlocProvider(
-                  create: (_) =>
-                      sl<CatalogBloc>()..add(const CatalogLoadRequested()),
-                  child: CatalogPage(
-                    bagIds: AppRoutes.bagIdsFrom(state.uri),
-                    onSelectionChanged: (ids) =>
-                        replace(context, AppRoutes.bagsLocation(ids)),
-                    onContinue: (ids) =>
-                        context.go(AppRoutes.checkoutStart(ids)),
+                pageBuilder: (context, state) => NoTransitionPage(
+                  key: state.pageKey,
+                  child: BlocProvider(
+                    create: (_) =>
+                        sl<CatalogBloc>()..add(const CatalogLoadRequested()),
+                    child: CatalogPage(
+                      bagIds: AppRoutes.bagIdsFrom(state.uri),
+                      onSelectionChanged: (ids) =>
+                          replace(context, AppRoutes.bagsLocation(ids)),
+                      onContinue: (ids) =>
+                          context.go(AppRoutes.checkoutStart(ids)),
+                    ),
                   ),
                 ),
               ),
               GoRoute(
                 path: AppRoutes.order,
-                builder: (context, state) {
+                // Both pages share the shell navigator, and a platform transition
+                // would keep the order page on screen while Bags opens.
+                pageBuilder: (context, state) {
                   final orderId = state.pathParameters['orderId']!;
-                  return BlocProvider(
-                    key: ValueKey(orderId),
-                    create: (_) =>
-                        sl<OrderBloc>()..add(OrderLoadRequested(orderId)),
-                    child: OrderPage(
-                      onBackToBags: () => context.go(AppRoutes.bags),
+                  return NoTransitionPage(
+                    key: state.pageKey,
+                    child: BlocProvider(
+                      key: ValueKey(orderId),
+                      create: (_) =>
+                          sl<OrderBloc>()..add(OrderLoadRequested(orderId)),
+                      child: OrderPage(
+                        onBackToBags: () => context.go(AppRoutes.bags),
+                      ),
                     ),
                   );
                 },

@@ -88,4 +88,73 @@ void main() {
 
     expect(find.byKey(OrdersKeys.backToBags), findsOneWidget);
   });
+
+  testWidgets('Back to bags leaves no order page on screen after one frame', (
+    tester,
+  ) async {
+    await pumpApp(
+      tester,
+      location: '/orders/ord_1',
+      repository: mockAuthRepository(viewer: naledi),
+    );
+
+    await tester.ensureVisible(find.byKey(OrdersKeys.backToBags));
+    await tester.tap(find.byKey(OrdersKeys.backToBags));
+    await tester.pump();
+
+    expect(find.byType(OrderPage), findsNothing);
+    expect(find.byType(CatalogPage), findsOneWidget);
+    await tester.pumpAndSettle();
+    expect(find.byType(OrderPage), findsNothing);
+  }, variant: TargetPlatformVariant.only(TargetPlatform.iOS));
+
+  testWidgets(
+    'Back to bags leaves no order page on screen after one frame, on Android',
+    (tester) async {
+      await pumpApp(
+        tester,
+        location: '/orders/ord_1',
+        repository: mockAuthRepository(viewer: naledi),
+      );
+
+      await tester.ensureVisible(find.byKey(OrdersKeys.backToBags));
+      await tester.tap(find.byKey(OrdersKeys.backToBags));
+      await tester.pump();
+
+      expect(find.byType(OrderPage), findsNothing);
+    },
+    variant: TargetPlatformVariant.only(TargetPlatform.android),
+  );
+
+  testWidgets(
+    'prices stay as confirmed: the order page shows the stored prices',
+    (tester) async {
+      final stored = Order(
+        id: 'ord_1',
+        status: OrderStatus.confirmed,
+        store: 'Corner Pantry',
+        bags: const [
+          OrderBag(id: 'bag_cafe', name: 'Café bag', price: Money(4500)),
+          OrderBag(id: 'bag_bakery', name: 'Bakery bag', price: Money(3000)),
+        ],
+        total: const Money(7500),
+        window: settledOrder.window,
+        card: settledOrder.card,
+        createdAt: settledOrder.createdAt,
+        holdConfirmsAt: settledOrder.holdConfirmsAt,
+      );
+      await pumpApp(
+        tester,
+        location: '/orders/ord_1',
+        repository: mockAuthRepository(viewer: naledi),
+        orders: mockOrderRepository(order: stored),
+      );
+
+      expect(find.text('R45,00'), findsOneWidget);
+      expect(find.text('R30,00'), findsOneWidget);
+      expect(find.text('R75,00'), findsOneWidget);
+      expect(find.text('R59,99'), findsNothing);
+      expect(find.text('R49,99'), findsNothing);
+    },
+  );
 }

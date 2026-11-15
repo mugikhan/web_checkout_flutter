@@ -116,3 +116,8 @@ Wait for the settled state with patrol's waiting finders, not fixed sleeps. The 
 - [The client subscription and query share one GraphQL client cache] → Use `FetchPolicy.noCache` or `networkOnly` for the order query and the subscription, so a refresh never shows a stale Pending.
 - [A real 3-second wait per order makes the journey slow] → Accepted. It is what the user sees, and it gives the videos both outcomes.
 - [A clock change on the device during the hold] → Out of scope for an in-app "server".
+
+## Found during implementation
+
+- The order page and Bags share the shell branch navigator, so `go('/')` from "Back to bags" ran the platform page transition and kept the order page on screen while Bags opened.
+- The Bags and order routes now use `NoTransitionPage`, so the swap is instant on web and mobile. Route tests check that no `OrderPage` remains after one frame.
