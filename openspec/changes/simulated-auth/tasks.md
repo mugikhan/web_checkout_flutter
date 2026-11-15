@@ -59,7 +59,7 @@ Sign-off: a patrol recording of the sign-in journey on web, Android and iOS. Eac
 - **Web, manual**: `/sign-in?from=https://example.com` returns to `/` after sign-in.
 
 - [x] 8.1 Record the sign-in journey with the run-patrol-test skill on web, Android and iOS, check frames from each video for the error, the Account page and sign out, and commit the videos under `apps/web_checkout/patrol_test/recordings/`
-- [ ] 8.2 Run every automated check above and paste the output in the PR description
+- [x] 8.2 Run every automated check above and paste the output in the PR description
 - [ ] 8.3 User verifies the slice
 
 ## Workflow follow-up
