@@ -24,7 +24,7 @@ Each bullet is a choice I made or confirmed: what I chose and what I rejected.
 - Chose Clean architecture in `packages/api`; everything depends on the domain models in pure dart. Rejected use cases and a repository per module.
 - Chose `graphql_codegen` with an in-app `LocalLink` and a fake "server". Rejected an in-process GraphQL executor; a real backend.
 - Chose to commit generated code as it is quicker and cheaper on CI.
-- Chose typed result unions in the schema for failures to map to domain failures. Rejected error codes in `extensions`. Cost: wordier operations.
+- Chose typed result unions in the schema for failures to map to domain failures. Rejected error codes in `extensions`.
 - Chose bloc with bloc_concurrency and get_it, bloc handles streams, blocking state updates using transformers and I am familiar with it. Rejected `injectable` as it is not necessary and makes it harder to see at a glance what is registered.
 - Chose `go_router` as it supports deep linking on web and supports mobile.
 - Chose a server-issued checkout session as the idempotency key stored in the url, unknown and expired sessions are rejected. Rejected the card token in the url.
