@@ -16,4 +16,16 @@ void main() {
     expect(sl<AuthRepository>(), isA<GraphqlAuthRepository>());
     expect(await sl<AuthRepository>().currentViewer(), isNull);
   });
+
+  test('registers a CatalogRepository', () async {
+    final sl = GetIt.asNewInstance()
+      ..registerSingleton(
+        AppStorage(client: MemoryStore(), server: MemoryStore()),
+      );
+
+    registerApiData(sl);
+
+    expect(sl<CatalogRepository>(), isA<GraphqlCatalogRepository>());
+    expect(await sl<CatalogRepository>().bags(), isA<BagsLoaded>());
+  });
 }

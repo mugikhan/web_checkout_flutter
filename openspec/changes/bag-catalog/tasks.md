@@ -5,7 +5,7 @@
 - [x] 1.1 Add `Money`, `Store`, `Bag`, `BagsResult`, `CatalogRepository` and `BagSelection` behind `lib/domain/domain.dart`, and verify tests for `clean` (unknown, duplicate, extra and empty ids) and `toggle` (add, remove, limit)
 - [x] 1.2 Add the `Store` and `Bag` types and the `bags` query to `schema.graphql`, add `catalog.graphql`, run `fvm exec melos run codegen`, and verify `fvm exec melos run analyze` passes
 - [x] 1.3 Add `CatalogResolvers` with the four seeded bags and route `Bags` in `LocalServer`, and verify resolver tests and the "every operation has a resolver" test
-- [ ] 1.4 Add `GraphqlCatalogRepository` and register it in `registerApiData`, and verify tests over `LocalServer` (four bags in order, prices, store) and over a broken link (`BagsUnavailable`)
+- [x] 1.4 Add `GraphqlCatalogRepository` and register it in `registerApiData`, and verify tests over `LocalServer` (four bags in order, prices, store) and over a broken link (`BagsUnavailable`)
 - [ ] 1.5 Run `fvm exec melos run codegen` again and verify `git status` shows no change to generated files
 
 ## 2. UI atoms
