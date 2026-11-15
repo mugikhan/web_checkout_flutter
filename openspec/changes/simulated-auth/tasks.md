@@ -37,7 +37,7 @@
 
 - [x] 6.1 Add `configureDependencies` and make `main` async; depend on `storage`, `api`, `auth`, `flutter_bloc` and `get_it`; verify `fvm flutter build web` succeeds
 - [x] 6.2 Add `authRedirect`, the `/sign-in` route, the session-driven `refreshListenable` and the loading gate; replace `AccountPlaceholderPage` with `AccountPage`; verify unit tests for every `authRedirect` case
-- [x] 6.3 Update the router and app widget tests with a mocked `AuthRepository` with mocktail, and verify tests for the guard, the return to `from`, a signed-in viewer on `/sign-in`, sign out to `/` and the unknown URL
+- [x] 6.3 Update the router and app widget tests with a mocktail `AuthRepository`, and verify tests for the guard, the return to `from`, a signed-in viewer on `/sign-in`, sign out to `/` and the unknown URL
 
 ## 7. Patrol
 
