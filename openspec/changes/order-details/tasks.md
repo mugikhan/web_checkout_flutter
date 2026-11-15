@@ -6,7 +6,7 @@
 - [x] 1.2 Extend `schema.graphql` with the richer `Order`, `OrderNotFound`, `OrderResult`, the `order` query and the `orderStatusChanged` subscription; add the operations file and run `fvm exec melos run codegen`; verify the generated code is committed and a second codegen run leaves no diff
 - [x] 1.3 Add stream resolvers to `LocalLink` and verify a test that a subscription yields every event the resolver emits, then closes
 - [x] 1.4 Add the order resolvers with derived status (injected clock and delay); verify resolver tests for Pending before the hold time, Confirmed and Failed after it, `OrderNotFound` for unknown and foreign ids, and a subscription that emits Pending then the settled order at the original hold time
-- [ ] 1.5 Add `GraphqlOrderRepository` with no-cache fetching, register it in `registerApiData`, and verify repository tests map every union member and an unexpected fault
+- [x] 1.5 Add `GraphqlOrderRepository` with no-cache fetching, register it in `registerApiData`, and verify repository tests map every union member and an unexpected fault
 
 ## 2. UI: StatusTimeline
 
