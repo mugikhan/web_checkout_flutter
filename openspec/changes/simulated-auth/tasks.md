@@ -13,8 +13,8 @@
 
 ## 3. packages/api
 
-- [ ] 3.1 Create `packages/api` as a workspace member with `storage`, `graphql`, `get_it`, `graphql_codegen` and `build_runner`, and verify it resolves
-- [ ] 3.2 Add the domain layer (`Viewer`, `ViewerName`, `SignInResult`, `AuthRepository`, `ApiFault`) behind `lib/domain/domain.dart`, and verify tests for `ViewerName.isValid` at 3 and 4 trimmed characters
+- [x] 3.1 Create `packages/api` as a workspace member with `storage`, `graphql`, `get_it`, `graphql_codegen` and `build_runner`, and verify it resolves
+- [x] 3.2 Add the domain layer (`Viewer`, `ViewerName`, `SignInResult`, `AuthRepository`, `ApiFault`) behind `lib/domain/domain.dart`, and verify tests for `ViewerName.isValid` at 3 and 4 trimmed characters
 - [ ] 3.3 Add `schema.graphql`, `auth.graphql` and `build.yaml`, run `melos run codegen`, and verify the generated `*.graphql.dart` files compile under `melos run analyze`
 - [ ] 3.4 Add `LocalLink`, `RequestContext`, `LocalServer` and the auth resolvers, and verify tests for routing, an unknown operation, every operation having a resolver, and the name rule on the "server"
 - [ ] 3.5 Add `GraphqlAuthRepository` and `registerApiData` behind `lib/data/data.dart`, and verify end-to-end tests over `MemoryStore`: sign in stores the token, `currentViewer` reads it, a stale token is deleted, sign out deletes it, and an invalid name stores nothing
