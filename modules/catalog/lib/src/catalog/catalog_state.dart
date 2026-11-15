@@ -16,13 +16,13 @@ class CatalogState {
   final CatalogStatus status;
   final List<Bag> bags;
 
-  /// The bag ids the URL holds, before cleaning.
+  /// linkIds holds the bag ids from the URL, before cleaning.
   final List<String> linkIds;
 
-  /// The clean bag ids, in pick order, once [status] is loaded.
+  /// picked holds the clean bag ids, in pick order, once [status] is loaded.
   final List<String> picked;
 
-  /// Whether a bad link lost some bags, until the user dismisses the notice.
+  /// leftOut is true after a bad link lost bags, until the notice is dismissed.
   final bool leftOut;
 
   List<Bag> get pickedBags => [
