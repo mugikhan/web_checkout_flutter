@@ -46,7 +46,7 @@ Sign-off: the catalog journey on web, Android and iOS. It shows two picks with t
 - **Web, manual**: resize across 600px and 840px, and the tiles move between one and two columns with the summary visible.
 
 - [x] 6.1 Run every automated check above and confirm each passes
-- [ ] 6.2 Record the catalog journey on web, Android and iOS and paste the output in the PR description
+- [x] 6.2 Record the catalog journey on web, Android and iOS and paste the output in the PR description
 - [ ] 6.3 User verifies the slice
 
 ## Workflow follow-up
