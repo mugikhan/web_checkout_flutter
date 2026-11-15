@@ -25,6 +25,7 @@ void main() {
       expect($(CatalogKeys.bag(id)), findsOneWidget);
     }
     expect(summary($, CatalogKeys.summaryCount), 'No bags picked');
+    expect(continueEnabled($), isFalse);
 
     await pick($, 'bag_cafe');
     await pick($, 'bag_bakery');
@@ -32,6 +33,7 @@ void main() {
     expect(tile($, 'bag_bakery').selected, isTrue);
     expect(summary($, CatalogKeys.summaryCount), '2 bags');
     expect(summary($, CatalogKeys.summaryTotal), 'R109,98');
+    expect(continueEnabled($), isTrue);
     if (kIsWeb) {
       expect(await currentLocation($), '/?bags=bag_cafe,bag_bakery');
     }
@@ -81,6 +83,12 @@ Future<void> pick(PatrolIntegrationTester $, String id) =>
 
 BagTile tile(PatrolIntegrationTester $, String id) =>
     $.tester.widget<BagTile>(find.byKey(CatalogKeys.bag(id)));
+
+bool continueEnabled(PatrolIntegrationTester $) =>
+    $.tester
+        .widget<AppButton>(find.byKey(CatalogKeys.continueButton))
+        .onPressed !=
+    null;
 
 String? summary(PatrolIntegrationTester $, Key key) =>
     $.tester.widget<Text>(find.byKey(key)).data;

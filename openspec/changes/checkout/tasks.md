@@ -36,8 +36,8 @@
 
 ## 7. Patrol
 
-- [ ] 7.1 Update the navigation, sign-in and catalog journeys where Continue or the new routes change what they see, and verify they pass on Chrome, the Android emulator and the iOS simulator
-- [ ] 7.2 Add `patrol_test/checkout_test.dart`: signed-out Continue, sign in, checkout with the bags (web URL holds the session id and bags), pick the first offered window (web URL gains `slot`), Confirm disabled, pick Visa, double-tap Confirm, one order and the placeholder with its id, web Back skips checkout, then an unknown session shows "Checkout not found" with Start again; verify it passes on all three platforms
+- [x] 7.1 Update the navigation, sign-in and catalog journeys where Continue or the new routes change what they see, and verify they pass on Chrome, the Android emulator and the iOS simulator
+- [x] 7.2 Add `patrol_test/checkout_test.dart`: signed-out Continue, sign in, checkout with the bags (web URL holds the session id and bags), pick the first offered window (web URL gains `slot`), Confirm disabled, pick Visa, double-tap Confirm, one order and the placeholder with its id, web Back skips checkout, then an unknown session shows "Checkout not found" with Start again; verify it passes on all three platforms
 
 ## 8. Verification
 
