@@ -217,6 +217,15 @@ Both colour pairs are already in the contrast test (`onPrimary` / `primary`, `on
 - [The serialization lock lives in one `LocalServer` instance] → The app builds one server. A real backend would use a transaction.
 - [The session reloads in full after `SlotUnavailable`] → One extra request, only on a rare failure.
 
+## Found during implementation
+
+- Removing the serialization lock makes the "two confirms at once" resolver test fail, so the test proves the lock.
+- Replacing `Router.neglect` on sign-in with a plain refresh makes the checkout journey fail on web at the Back step, so that check is real too.
+- Resolver and repository tests pick the first window from `CollectionWindow.offered(now)`, so they pass in any machine time zone.
+- bloc emits its first state even when it equals the initial state, so start bloc tests expect `starting` first, as the catalog tests do.
+- Confirm shows a hint under it that names what is missing: "Pick a collection window and a card to confirm."
+- The journey proves one order by reading `server.orders` from shared_preferences after a double tap with no frame between the taps.
+
 ## Open for sign-off
 
 - Windows follow the device's local time zone. The store has no time zone of its own.

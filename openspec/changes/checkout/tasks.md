@@ -52,7 +52,7 @@ Sign-off: the checkout journey on web, Android and iOS. It shows a signed-out Co
 - **Web, manual**: refresh on checkout after picking a window and a card, and both stay picked. Refresh on the order page, and it still shows the order id.
 - **Web, manual**: resize across 840px, and the page moves between two columns and the bottom confirm bar.
 
-- [ ] 8.1 Run every automated check above and confirm each passes
+- [x] 8.1 Run every automated check above and confirm each passes
 - [ ] 8.2 Record the checkout journey on web, Android and iOS and paste the output in the PR description
 - [ ] 8.3 User verifies the slice
 
