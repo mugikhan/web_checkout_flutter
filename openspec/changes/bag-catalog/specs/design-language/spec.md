@@ -25,11 +25,15 @@ A selectable tile SHALL show whether it is picked, and SHALL support a disabled 
 - **THEN** it ignores taps and shows the hint text in a colour that meets 4.5:1 contrast
 
 ### Requirement: Inline notices
-An inline notice SHALL show a short message on the page, SHALL meet 4.5:1 contrast in both themes, and SHALL offer a dismiss action. Screen readers SHALL announce the notice when it appears.
+An inline notice SHALL show a short message on the page, SHALL meet 4.5:1 contrast in both themes, and SHALL offer a dismiss action. A notice SHALL use either the info colours (`secondary` with `onSecondary`) or the error colours (`errorContainer` with `onErrorContainer`). Screen readers SHALL announce the notice when it appears.
 
 #### Scenario: Notice appears
 - **WHEN** a page shows an inline notice
 - **THEN** a screen reader announces its message
+
+#### Scenario: Error notice
+- **WHEN** a page shows an inline notice with the error tone
+- **THEN** its container is `errorContainer` and its text and icons are `onErrorContainer`, in both themes
 
 #### Scenario: Dismiss a notice
 - **WHEN** the user selects the notice's dismiss action

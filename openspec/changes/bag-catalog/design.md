@@ -140,7 +140,7 @@ The route builder creates the bloc with `BlocProvider(create: …)` and adds `Ca
 - `formatZar(int cents)` wraps `NumberFormat.simpleCurrency(locale: 'en_ZA')`: "R59,99", and "R1 234,50" with a no-break space.
 - `PriceText(priceCents, worthCents)`: price in `titleMedium` `onSurface`; worth in `bodyMedium` `onSurfaceVariant` with a line through. Its semantic label is "R59,99, worth R180,00".
 - `BagTile`: a flat card with an `outline` border, `md` radius and `lg` padding. Picked: a 2px `primary` border and a `check_circle` in `primary`. Disabled: taps do nothing, the circle icon dims, and the hint shows in `bodyMedium` `onSurfaceVariant`. One merged semantics node carries `checked`, `enabled` and `button`.
-- `InlineNotice(message, onDismiss, dismissKey)`: `secondary` background, `onSecondary` text and icons, `md` radius, a close `IconButton` with the tooltip "Dismiss". It is a live region.
+- `InlineNotice(message, onDismiss, dismissKey, tone)`: `md` radius, a close `IconButton` with the tooltip "Dismiss", and a live region. `InlineNoticeTone.info` uses `secondary` with `onSecondary`. `InlineNoticeTone.error` uses `errorContainer` with `onErrorContainer`. The bad-link notice uses the error tone, with the text "A max of 2 bags can be selected, some bags were removed" (the user's wording).
 
 New contrast pairs, checked in the `packages/ui` contrast test:
 
@@ -149,7 +149,7 @@ New contrast pairs, checked in the `packages/ui` contrast test:
 | `onSurfaceVariant` / `surfaceContainer` | same as on `surface` | `#9DADAF` on `#18251F` | 4.5:1 |
 | `primary` / `surfaceContainer` (picked border) | `#1D2B24` on `#F6F3EE` | `#E7F54D` on `#18251F` | 3:1 |
 
-`onSecondary` / `secondary` is already in the test.
+`onSecondary` / `secondary` and `onErrorContainer` / `errorContainer` are already in the test.
 
 ### Page layout
 
@@ -170,7 +170,7 @@ The summary shows "No bags picked", "1 bag" or "2 bags", and the total from `for
 ### Tests
 
 - `packages/api`: `BagSelection` rules, the `Bags` resolver, `LocalLink` coverage of the new operation, and `GraphqlCatalogRepository` over `LocalServer` and over a broken link.
-- `packages/ui`: `formatZar`, `PriceText` text and semantics, `BagTile` picked, disabled and hint states and semantics, `InlineNotice` dismiss and live region, the new contrast pairs.
+- `packages/ui`: `formatZar`, `PriceText` text and semantics, `BagTile` picked, disabled and hint states and semantics, `InlineNotice` dismiss, live region and both tones, the new contrast pairs.
 - `modules/catalog`: `bloc_test` for every event, the cleaned link, `leftOut`, failure and retry, and `restartable` load, with a mocktail `CatalogRepository`. Widget tests for the loading, error and loaded views, the limit, the summary and the clean-URL callback.
 - `apps/web_checkout`: `bagIdsFrom` and `bagsLocation`, and router tests for picks in the URL, the bad link and the return to Bags.
 - Patrol: a new catalog journey; the navigation and sign-in journeys check the catalog page instead of the placeholder.

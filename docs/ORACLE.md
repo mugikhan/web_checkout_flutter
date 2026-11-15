@@ -51,7 +51,7 @@ This file records every answer the user gave in the planning ("grill me") sessio
 | Checkout layout | Full screen, outside the shell, no nav. A close (✕) button returns to `/?bags=…`. No "are you sure" dialog. The user may change this after verifying that slice. | Grill round 5–6 |
 | Orders layout | `/orders/:orderId` sits inside the shell under Bags. | Grill round 5 |
 | After confirm | Navigate to the order with replace, so Back never returns to a confirmable checkout. | Grill round 3 |
-| Bad bag links | When `/?bags=` holds unknown ids, duplicates or more than 2 ids, the catalog drops unknown ids and duplicates and keeps the first 2 valid ids. It replaces the URL with the clean one, with no new history entry, and shows a notice that some bags from the link were left out. | Session 2026-11-15 |
+| Bad bag links | When `/?bags=` holds unknown ids, duplicates or more than 2 ids, the catalog drops unknown ids and duplicates and keeps the first 2 valid ids. It replaces the URL with the clean one, with no new history entry, and shows the notice "A max of 2 bags can be selected, some bags were removed" in the error colours (`errorContainer` with `onErrorContainer`). The user chose this wording and colour after the first recordings. | Session 2026-11-15 |
 | Unknown URLs | "Page not found" built from `StateView`, with one action, "Go to Bags". The address bar keeps the unknown URL. The view sits outside the shell. A known route with a missing record, such as an unknown order id, is handled inside that slice's page. No silent redirect to `/`. | Session 2026-11-15 |
 
 ## Domain: bags and checkout

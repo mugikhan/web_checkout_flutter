@@ -12,7 +12,7 @@ Bags still shows a placeholder, so a customer cannot pick anything to buy. Check
 - Keep the selection in `/?bags=…`. A tap updates the URL without a new history entry, and the page reads its selection back from the URL. Refresh and deep links keep the picks ([ADR-0007](../../../docs/adr/0007-go-router-url-holds-draft.md)).
 - Allow up to 2 different bags. With 2 picked, the other bags turn disabled and show "You can pick up to 2 bags".
 - Show a summary with the number of bags picked and the total price.
-- Clean a bad link. Unknown ids and duplicates drop out, and only the first 2 valid ids stay. The URL is replaced with the clean one, and a notice says some bags from the link were left out.
+- Clean a bad link. Unknown ids and duplicates drop out, and only the first 2 valid ids stay. The URL is replaced with the clean one, and a notice in the error colours says "A max of 2 bags can be selected, some bags were removed".
 - Show a loading view while bags load, and an error view with a retry action when they fail.
 - Add the `PriceText`, `BagTile` and `InlineNotice` atoms to `DESIGN.md` and `packages/ui` ([ADR-0011](../../../docs/adr/0011-design-tokens.md)).
 - Add a catalog patrol journey, and update the navigation and sign-in journeys for the new Bags page ([ADR-0012](../../../docs/adr/0012-testing-strategy.md)).

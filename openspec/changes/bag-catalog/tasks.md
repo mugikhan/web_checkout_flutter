@@ -39,7 +39,7 @@ Sign-off: the catalog journey on web, Android and iOS. It shows two picks with t
 - **Scripts**: `fvm exec melos run analyze`, `fvm exec melos run format:check` and `fvm exec melos run test` all exit 0, with `catalog` included.
 - **Codegen**: `fvm exec melos run codegen` leaves no diff.
 - **Bloc tests**: `CatalogBloc` covers every event, both repository results, the cleaned link and `restartable` load.
-- **Patrol, catalog journey**: four bags show. Café and Bakery picked show "2 bags" and "R109,98", and on web the URL reads `/?bags=bag_cafe,bag_bakery`. Grocery is disabled with "You can pick up to 2 bags". Removing Bakery enables Grocery. `/?bags=bag_unknown,bag_cafe,bag_cafe,bag_bakery,bag_grocery` shows Café and Bakery picked, `/?bags=bag_cafe,bag_bakery` on web, and the notice. On web, Back then returns to `/?bags=bag_cafe`, which proves picks and the clean-up replace history entries.
+- **Patrol, catalog journey**: four bags show. Café and Bakery picked show "2 bags" and "R109,98", and on web the URL reads `/?bags=bag_cafe,bag_bakery`. Grocery is disabled with "You can pick up to 2 bags". Removing Bakery enables Grocery. `/?bags=bag_unknown,bag_cafe,bag_cafe,bag_bakery,bag_grocery` shows Café and Bakery picked, `/?bags=bag_cafe,bag_bakery` on web, and the error notice "A max of 2 bags can be selected, some bags were removed". On web, Back then returns to `/?bags=bag_cafe`, which proves picks and the clean-up replace history entries.
 - **Patrol, navigation and sign-in journeys**: still pass on all three platforms.
 - **Web, manual**: pick two bags, refresh, and the picks stay. Press Back after picks, and the browser leaves Bags in one step.
 - **Back check is real**: without `Router.neglect`, the catalog journey fails on web at the Back step.

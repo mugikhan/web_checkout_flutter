@@ -81,11 +81,11 @@ The Bags page SHALL show a summary with the number of picked bags and their tota
 - **THEN** the summary reads "No bags picked" and the total "R0,00"
 
 ### Requirement: Bad bag links
-When the `bags` query holds unknown ids, duplicates or more than 2 ids, the catalog SHALL drop the unknown ids and duplicates and keep the first 2 valid ids in link order. It SHALL replace the URL with the clean one, without a new history entry, and SHALL show a notice that some bags from the link were left out.
+When the `bags` query holds unknown ids, duplicates or more than 2 ids, the catalog SHALL drop the unknown ids and duplicates and keep the first 2 valid ids in link order. It SHALL replace the URL with the clean one, without a new history entry, and SHALL show the notice "A max of 2 bags can be selected, some bags were removed" in the error colours.
 
 #### Scenario: Unknown, duplicate and extra ids
 - **WHEN** the user opens `/?bags=bag_unknown,bag_cafe,bag_cafe,bag_bakery,bag_grocery`
-- **THEN** only Café and Bakery show as picked, the address bar reads `/?bags=bag_cafe,bag_bakery`, and the page shows "Some bags from the link were left out."
+- **THEN** only Café and Bakery show as picked, the address bar reads `/?bags=bag_cafe,bag_bakery`, and the page shows "A max of 2 bags can be selected, some bags were removed" on an `errorContainer` background
 
 #### Scenario: Only unknown ids
 - **WHEN** the user opens `/?bags=bag_unknown`
