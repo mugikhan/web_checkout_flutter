@@ -17,7 +17,7 @@ GraphQLClient buildGraphqlClient({
   );
   final noCache = Policies(fetch: FetchPolicy.noCache);
   return GraphQLClient(
-    link: auth.concat(LocalLink(server.resolvers)),
+    link: auth.concat(LocalLink(server.resolvers, streams: server.streams)),
     cache: GraphQLCache(),
     defaultPolicies: DefaultPolicies(
       query: noCache,

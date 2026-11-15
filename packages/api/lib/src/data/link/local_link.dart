@@ -9,15 +9,36 @@ typedef Resolver = Future<Map<String, dynamic>> Function(
   RequestContext context,
 );
 
+/// StreamResolver answers one subscription with a stream of JSON data.
+typedef StreamResolver = Stream<Map<String, dynamic>> Function(
+  Map<String, dynamic> variables,
+  RequestContext context,
+);
+
 /// LocalLink routes each request by operation name to an in-app resolver.
 class LocalLink extends Link {
-  LocalLink(this._resolvers);
+  LocalLink(this._resolvers, {this._streams = const {}});
 
   final Map<String, Resolver> _resolvers;
+  final Map<String, StreamResolver> _streams;
 
   @override
   Stream<Response> request(Request request, [NextLink? forward]) async* {
     final name = _operationName(request.operation);
+    final stream = _streams[name];
+    if (stream != null) {
+      try {
+        await for (final data in stream(
+          request.variables,
+          RequestContext.fromRequest(request),
+        )) {
+          yield Response(data: data, response: {'data': data});
+        }
+      } on Object catch (error) {
+        yield _error('Resolver for "$name" failed: $error');
+      }
+      return;
+    }
     final resolver = _resolvers[name];
     if (resolver == null) {
       yield _error('No resolver for operation "$name".');

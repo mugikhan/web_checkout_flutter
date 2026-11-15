@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:api/data/data.dart';
 import 'package:api/src/data/graphql/auth.graphql.dart';
+import 'package:api/src/data/graphql/orders.graphql.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:gql/ast.dart';
 import 'package:gql/language.dart';
@@ -66,6 +67,46 @@ void main() {
     expect(response.errors?.single.message, contains('boom'));
   });
 
+  test('yields every event a stream resolver emits, then closes', () async {
+    final link = LocalLink(
+      {},
+      streams: {
+        'OrderStatusChanged': (variables, context) async* {
+          yield {'orderStatusChanged': 'first'};
+          yield {'orderStatusChanged': 'second'};
+        },
+      },
+    );
+
+    final responses = await link
+        .request(request(documentNodeSubscriptionOrderStatusChanged))
+        .toList();
+
+    expect(responses.map((r) => r.data), [
+      {'orderStatusChanged': 'first'},
+      {'orderStatusChanged': 'second'},
+    ]);
+  });
+
+  test('turns a stream resolver exception into a GraphQL error', () async {
+    final link = LocalLink(
+      {},
+      streams: {
+        'OrderStatusChanged': (variables, context) async* {
+          yield {'orderStatusChanged': 'first'};
+          throw StateError('boom');
+        },
+      },
+    );
+
+    final responses = await link
+        .request(request(documentNodeSubscriptionOrderStatusChanged))
+        .toList();
+
+    expect(responses, hasLength(2));
+    expect(responses.last.errors?.single.message, contains('boom'));
+  });
+
   test('every operation in the .graphql files has a resolver', () {
     final names = Directory('lib')
         .listSync(recursive: true)
@@ -80,6 +121,7 @@ void main() {
         .toSet();
 
     expect(names, isNotEmpty);
-    expect(LocalServer(MemoryStore()).resolvers.keys.toSet(), names);
+    final server = LocalServer(MemoryStore());
+    expect({...server.resolvers.keys, ...server.streams.keys}, names);
   });
 }
