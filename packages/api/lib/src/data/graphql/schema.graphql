@@ -1,6 +1,9 @@
 type Query {
   "The viewer the request's token belongs to, or null without a valid token."
   viewer: Viewer
+
+  "Every bag the store sells, in catalog order."
+  bags: [Bag!]!
 }
 
 type Mutation {
@@ -23,3 +26,19 @@ type InvalidName {
 }
 
 union SignInResult = SignInSuccess | InvalidName
+
+type Store {
+  id: ID!
+  name: String!
+}
+
+type Bag {
+  id: ID!
+  name: String!
+  description: String!
+  "What the customer pays, in ZAR cents."
+  priceCents: Int!
+  "The retail value of the contents, in ZAR cents."
+  worthCents: Int!
+  store: Store!
+}
