@@ -196,7 +196,7 @@ void main() {
     );
 
     blocTest<CheckoutBloc, CheckoutState>(
-      'a slot that is not offered picks nothing and needs cleaning',
+      'a passed slot picks nothing, needs cleaning and shows the slot error',
       build: build,
       seed: () => loaded(),
       act: (bloc) => bloc.add(
@@ -205,7 +205,63 @@ void main() {
       verify: (bloc) {
         expect(bloc.state.window, isNull);
         expect(bloc.state.needsCleanUrl, isTrue);
+        expect(bloc.state.error, CheckoutError.slotUnavailable);
       },
+    );
+
+    blocTest<CheckoutBloc, CheckoutState>(
+      'an unknown slot shows the slot error',
+      build: build,
+      seed: () => loaded(),
+      act: (bloc) =>
+          bloc.add(const CheckoutLinkChanged(['bag_cafe'], 'not-a-slot')),
+      verify: (bloc) => expect(bloc.state.error, CheckoutError.slotUnavailable),
+    );
+
+    blocTest<CheckoutBloc, CheckoutState>(
+      'a passed slot on load shows the slot error',
+      setUp: () => answerSession(
+        CheckoutSessionLoaded(openSession(card: visa), savedCards),
+      ),
+      build: build,
+      seed: () => const CheckoutState(
+        linkIds: ['bag_cafe'],
+        linkSlot: '2026-11-15T03:00Z',
+      ),
+      act: (bloc) => bloc.add(const CheckoutLoadRequested('cs_1')),
+      verify: (bloc) {
+        expect(bloc.state.status, CheckoutStatus.ready);
+        expect(bloc.state.error, CheckoutError.slotUnavailable);
+        expect(bloc.state.needsCleanUrl, isTrue);
+      },
+    );
+
+    blocTest<CheckoutBloc, CheckoutState>(
+      'the slot error stays once the URL drops the slot, and blocks Confirm',
+      build: build,
+      seed: () => loaded(
+        linkSlot: '2026-11-15T03:00Z',
+        card: visa,
+      ).copyWith(error: () => CheckoutError.slotUnavailable),
+      act: (bloc) => bloc.add(const CheckoutLinkChanged(['bag_cafe'], null)),
+      verify: (bloc) {
+        expect(bloc.state.error, CheckoutError.slotUnavailable);
+        expect(bloc.state.needsCleanUrl, isFalse);
+        expect(bloc.state.canConfirm, isFalse);
+      },
+    );
+
+    blocTest<CheckoutBloc, CheckoutState>(
+      'picking a new window clears the slot error',
+      build: build,
+      seed: () =>
+          loaded(card: visa)
+              .copyWith(error: () => CheckoutError.slotUnavailable),
+      act: (bloc) => bloc.add(
+        CheckoutLinkChanged(const ['bag_cafe'], firstWindow.slotParam),
+      ),
+      expect: () => [ready],
+      verify: (bloc) => expect(bloc.state.canConfirm, isTrue),
     );
 
     blocTest<CheckoutBloc, CheckoutState>(
@@ -237,6 +293,19 @@ void main() {
             .copyWith(pendingCardId: () => visa.id),
         ready,
       ],
+    );
+
+    blocTest<CheckoutBloc, CheckoutState>(
+      'a card pick keeps the slot error',
+      setUp: () => when(() => checkout.setPaymentMethod('cs_1', visa.id))
+          .thenAnswer((_) async => PaymentMethodSet(openSession(card: visa))),
+      build: build,
+      seed: () => loaded().copyWith(error: () => CheckoutError.slotUnavailable),
+      act: (bloc) => bloc.add(CheckoutCardPicked(visa.id)),
+      verify: (bloc) {
+        expect(bloc.state.cardId, visa.id);
+        expect(bloc.state.error, CheckoutError.slotUnavailable);
+      },
     );
 
     blocTest<CheckoutBloc, CheckoutState>(
@@ -458,7 +527,7 @@ void main() {
     );
 
     blocTest<CheckoutBloc, CheckoutState>(
-      'slot unavailable shows the error, reloads and drops the window',
+      'slot unavailable shows the error, drops the window and reloads',
       setUp: () {
         answerConfirm(const SlotUnavailable());
         answerSession(
@@ -477,8 +546,17 @@ void main() {
       build: build,
       seed: () => ready,
       act: (bloc) => bloc.add(const CheckoutConfirmRequested()),
-      skip: 2,
+      skip: 1,
+      expect: () => [
+        ready.copyWith(
+          window: () => null,
+          error: () => CheckoutError.slotUnavailable,
+        ),
+        isA<CheckoutState>(),
+      ],
       verify: (bloc) {
+        expect(bloc.state.status, CheckoutStatus.ready);
+        expect(bloc.state.canConfirm, isFalse);
         expect(bloc.state.error, CheckoutError.slotUnavailable);
         expect(bloc.state.window, isNull);
         expect(bloc.state.windows, windows.skip(1));

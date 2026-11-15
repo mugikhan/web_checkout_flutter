@@ -97,6 +97,60 @@ void main() {
     expect(tester.widget<WindowChip>(chip).selected, isTrue);
   });
 
+  testWidgets('a passed slot leaves the URL and shows the notice', (
+    tester,
+  ) async {
+    final passed = CollectionWindow(
+      DateTime.now().subtract(const Duration(days: 1)),
+    ).slotParam;
+    await pumpApp(
+      tester,
+      location: '/checkout/cs_1?bags=bag_cafe&slot=$passed',
+      repository: mockAuthRepository(viewer: naledi),
+    );
+
+    expect(currentLocation(tester), '/checkout/cs_1?bags=bag_cafe');
+    expect(
+      find.text(
+        'That time slot is no longer available, please select another time '
+        'slot and confirm your order',
+      ),
+      findsOneWidget,
+    );
+  });
+
+  testWidgets('slot unavailable on confirm stays on checkout without a slot', (
+    tester,
+  ) async {
+    final checkout = mockCheckoutRepository(session: openSession(card: visa));
+    final slot = CollectionWindow.offered(DateTime.now()).first;
+    when(() => checkout.confirm(any(), any(), any()))
+        .thenAnswer((_) async => const SlotUnavailable());
+    await pumpApp(
+      tester,
+      location: '/checkout/cs_1?bags=bag_cafe&slot=${slot.slotParam}',
+      repository: mockAuthRepository(viewer: naledi),
+      checkout: checkout,
+    );
+    when(() => checkout.session('cs_1')).thenAnswer(
+      (_) async => CheckoutSessionLoaded(
+        CheckoutSession(
+          id: 'cs_1',
+          status: CheckoutSessionStatus.open,
+          expiresAt: DateTime.now().toUtc().add(const Duration(minutes: 15)),
+          paymentMethod: visa,
+          windows: CollectionWindow.offered(DateTime.now()).skip(1).toList(),
+        ),
+        const [visa],
+      ),
+    );
+
+    await tap(tester, CheckoutKeys.confirm);
+
+    expect(currentLocation(tester), '/checkout/cs_1?bags=bag_cafe');
+    expect(find.byKey(CheckoutKeys.errorNotice), findsOneWidget);
+  });
+
   testWidgets('confirm lands on the order placeholder under Bags', (
     tester,
   ) async {

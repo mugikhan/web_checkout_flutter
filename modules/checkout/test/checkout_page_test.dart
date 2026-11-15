@@ -9,6 +9,10 @@ import 'package:ui/ui.dart';
 import 'support/mocks.dart';
 import 'support/pump_checkout.dart';
 
+const slotNotice =
+    'That time slot is no longer available, please select another time slot '
+    'and confirm your order';
+
 void main() {
   late MockCheckoutRepository checkout;
   late MockCatalogRepository catalog;
@@ -144,6 +148,65 @@ void main() {
     expect(find.text('Bakery bag'), findsOneWidget);
     expect(find.text('Grocery bag'), findsNothing);
   });
+
+  testWidgets('a passed slot shows the notice until a new window is picked', (
+    tester,
+  ) async {
+    answerSession(CheckoutSessionLoaded(openSession(card: visa), savedCards));
+    final calls = await pump(tester, slot: '2026-11-15T03:00Z');
+
+    expect(calls.drafts, ['bag_cafe|null']);
+    expect(find.text(slotNotice), findsOneWidget);
+    final notice = tester.widget<InlineNotice>(
+      find.byKey(CheckoutKeys.errorNotice),
+    );
+    expect(notice.tone, InlineNoticeTone.error);
+    expect(confirm(tester).onPressed, isNull);
+    expect(find.text('Pick a collection window to confirm.'), findsOneWidget);
+
+    await tap(tester, CheckoutKeys.window(firstWindow.slotParam));
+
+    expect(find.text(slotNotice), findsNothing);
+    expect(confirm(tester).onPressed, isNotNull);
+  });
+
+  testWidgets('an unknown slot shows the notice', (tester) async {
+    answerSession(CheckoutSessionLoaded(openSession(), savedCards));
+    final calls = await pump(tester, slot: 'not-a-slot');
+
+    expect(calls.drafts, ['bag_cafe|null']);
+    expect(find.text(slotNotice), findsOneWidget);
+  });
+
+  testWidgets(
+    'slot unavailable on confirm shows the notice and drops the slot',
+    (tester) async {
+      answerSession(CheckoutSessionLoaded(openSession(card: visa), savedCards));
+      final calls = await pump(tester, slot: firstWindow.slotParam);
+      when(() => checkout.confirm(any(), any(), any()))
+          .thenAnswer((_) async => const SlotUnavailable());
+      answerSession(
+        CheckoutSessionLoaded(
+          CheckoutSession(
+            id: 'cs_1',
+            status: CheckoutSessionStatus.open,
+            expiresAt: now.toUtc(),
+            paymentMethod: visa,
+            windows: windows.skip(1).toList(),
+          ),
+          savedCards,
+        ),
+      );
+
+      await tap(tester, CheckoutKeys.confirm);
+
+      expect(calls.drafts, ['bag_cafe|null']);
+      expect(calls.completed, isEmpty);
+      expect(find.text(slotNotice), findsOneWidget);
+      expect(confirm(tester).onPressed, isNull);
+      expect(find.text('Pick a collection window to confirm.'), findsOneWidget);
+    },
+  );
 
   group('ready', () {
     setUp(
