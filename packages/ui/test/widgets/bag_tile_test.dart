@@ -89,7 +89,7 @@ void main() {
 
     expect(
       tester.getSemantics(find.byKey(const Key('tile'))),
-      containsSemantics(
+      isSemantics(
         label: 'Café bag, R59,99, worth R180,00',
         isButton: true,
         hasCheckedState: true,
@@ -106,7 +106,7 @@ void main() {
     );
     expect(
       tester.getSemantics(find.byKey(const Key('tile'))),
-      containsSemantics(
+      isSemantics(
         hint: 'You can pick up to 2 bags',
         hasCheckedState: true,
         isChecked: false,
