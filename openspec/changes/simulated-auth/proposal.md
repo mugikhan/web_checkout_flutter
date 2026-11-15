@@ -6,18 +6,18 @@ Orders and checkout sessions need an owner, and the order routes must sit behind
 
 ## What Changes
 
-- Add `packages/storage`: key-value persistence over `shared_preferences`, with a client namespace and a "server" namespace ([ADR-0006](../../../docs/adr/0006-graphql-codegen-local-link.md), [ADR-0011](../../../docs/adr/0011-simulated-auth.md)).
-- Add `packages/api` with a domain layer and a data layer ([ADR-0005](../../../docs/adr/0005-clean-architecture-in-api.md)). The data layer holds `schema.graphql`, the `.graphql` operations, generated typed code, a `LocalLink` and the local "server" ([ADR-0006](../../../docs/adr/0006-graphql-codegen-local-link.md)).
-- Add a `signIn(name)` mutation and a `viewer` query. `signIn` returns a typed result union, so an invalid name is a schema member and not an error map ([ADR-0007](../../../docs/adr/0007-typed-result-unions.md)).
+- Add `packages/storage`: key-value persistence over `shared_preferences`, with a client namespace and a "server" namespace ([ADR-0004](../../../docs/adr/0004-graphql-codegen-local-link.md), [ADR-0009](../../../docs/adr/0009-simulated-auth.md)).
+- Add `packages/api` with a domain layer and a data layer ([ADR-0003](../../../docs/adr/0003-clean-architecture-in-api.md)). The data layer holds `schema.graphql`, the `.graphql` operations, generated typed code, a `LocalLink` and the local "server" ([ADR-0004](../../../docs/adr/0004-graphql-codegen-local-link.md)).
+- Add a `signIn(name)` mutation and a `viewer` query. `signIn` returns a typed result union, so an invalid name is a schema member and not an error map ([ADR-0005](../../../docs/adr/0005-typed-result-unions.md)).
 - Validate the name twice: the form rejects it inline, and the "server" rejects it again. A name needs more than 3 characters after trimming.
 - Store the token in the client namespace. `LocalLink` reads it from the request context, as a server reads an `Authorization` header. Sign out deletes it. The session survives a browser refresh.
-- Add `modules/auth` with the session and sign-in blocs and the Sign in and Account pages ([ADR-0008](../../../docs/adr/0008-bloc-with-concurrency.md)). The Account page replaces the placeholder and shows the viewer's name and a Sign out action.
-- Guard `/account`. A signed-out user goes to `/sign-in?from=/account` and returns after sign-in. `/sign-in` sits outside the navigation shell ([ADR-0009](../../../docs/adr/0009-go-router-url-holds-draft.md)).
-- Wire dependencies with plain get_it: each package and module exports one registration function, and the app's composition root calls them ([ADR-0012](../../../docs/adr/0012-get-it-registration.md)).
-- Add the `AppTextField` atom to `DESIGN.md` and `packages/ui`. `packages/ui` re-exports Material, so the first module never imports `material_ui` ([ADR-0002](../../../docs/adr/0002-material-ui-split.md)).
-- Add a Melos `codegen` script and commit the generated code. The analyzer and the format check skip generated files. CI does not run build_runner ([ADR-0020](../../../docs/adr/0020-commit-generated-code.md)).
+- Add `modules/auth` with the session and sign-in blocs and the Sign in and Account pages ([ADR-0006](../../../docs/adr/0006-bloc-with-concurrency.md)). The Account page replaces the placeholder and shows the viewer's name and a Sign out action.
+- Guard `/account`. A signed-out user goes to `/sign-in?from=/account` and returns after sign-in. `/sign-in` sits outside the navigation shell ([ADR-0007](../../../docs/adr/0007-go-router-url-holds-draft.md)).
+- Wire dependencies with plain get_it: each package and module exports one registration function, and the app's composition root calls them ([ADR-0010](../../../docs/adr/0010-get-it-registration.md)).
+- Add the `AppTextField` atom to `DESIGN.md` and `packages/ui`. `packages/ui` re-exports Material, so the first module never imports `material_ui` ([ADR-0001](../../../docs/adr/0001-material-ui-split.md)).
+- Add a Melos `codegen` script and commit the generated code. The analyzer and the format check skip generated files. CI does not run build_runner ([ADR-0013](../../../docs/adr/0013-commit-generated-code.md)).
 - Add an import-boundary check to `melos run analyze`. It fails when a module imports the api data layer or `src/`.
-- Add a patrol journey for sign-in and record it on web, Android and iOS ([ADR-0015](../../../docs/adr/0015-testing-strategy.md), [ADR-0017](../../../docs/adr/0017-running-and-recording-patrol-tests.md)).
+- Add a patrol journey for sign-in and record it on web, Android and iOS ([ADR-0012](../../../docs/adr/0012-testing-strategy.md), [the oracle](../../../docs/ORACLE.md)).
 
 ## Out of scope
 

@@ -1,4 +1,4 @@
-// Modules import Material through ui only (ADR-0002).
+// Modules import Material through ui only (ADR-0001).
 export 'package:material_ui/material_ui.dart';
 
 export 'src/layout/window_size_class.dart';

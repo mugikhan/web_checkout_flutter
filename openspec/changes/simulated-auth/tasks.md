@@ -64,5 +64,5 @@ Sign-off: a patrol recording of the sign-in journey on web, Android and iOS. Eac
 
 ## Workflow follow-up
 
-- Open a PR from `feat/simulated-auth` to `main` after the user signs off (ADR-0019).
+- Open a PR from `feat/simulated-auth` to `main` after the user signs off (see docs/ORACLE.md).
 - Archive the change with `openspec archive simulated-auth` after the merge.

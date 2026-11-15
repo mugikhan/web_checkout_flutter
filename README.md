@@ -38,11 +38,11 @@ fvm exec melos run format:check
 fvm exec melos run test
 ```
 
-`analyze` also fails when a module imports `package:api/data/` or `package:api/src/` ([ADR-0005](docs/adr/0005-clean-architecture-in-api.md)).
+`analyze` also fails when a module imports `package:api/data/` or `package:api/src/` ([ADR-0003](docs/adr/0003-clean-architecture-in-api.md)).
 
 ### Regenerate GraphQL code
 
-The generated `*.graphql.dart` files are committed ([ADR-0020](docs/adr/0020-commit-generated-code.md)). After you change a `.graphql` file in `packages/api`, run this and commit the output:
+The generated `*.graphql.dart` files are committed ([ADR-0013](docs/adr/0013-commit-generated-code.md)). After you change a `.graphql` file in `packages/api`, run this and commit the output:
 
 ```sh
 fvm exec melos run codegen

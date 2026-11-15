@@ -27,7 +27,7 @@ melos:
       private: true
       run: melos exec -c 1 --flutter -- flutter analyze --no-pub
     check:imports:
-      description: Fail when a module imports package:api/data or package:api/src (ADR-0005).
+      description: Fail when a module imports package:api/data or package:api/src (ADR-0003).
       run: dart run tool/check_imports.dart
 
     codegen:

@@ -22,7 +22,7 @@ The app has a go_router shell with Bags and Account branches, placeholder pages 
 | Member | Why now |
 |---|---|
 | `packages/storage` | The token and the "server" sessions must survive a refresh. |
-| `packages/api` | `AuthRepository`, the schema and `LocalLink` live here (ADR-0005, ADR-0011). |
+| `packages/api` | `AuthRepository`, the schema and `LocalLink` live here (ADR-0003, ADR-0009). |
 | `modules/auth` | The first feature module: the session and sign-in blocs and the Sign in and Account pages. |
 | `AppTextField` (ui atom) | The sign-in form is the first screen with text input. |
 
@@ -88,7 +88,7 @@ Resolvers parse variables with the generated `Variables$…fromJson`, and build 
 
 `LocalServer` keeps sessions as a JSON map from token to viewer name under one key in the `server` namespace. Tokens are 32 random hex bytes from `Random.secure()`.
 
-Alternative: pass the token as an operation variable. Rejected by ADR-0011: no request may name its own viewer.
+Alternative: pass the token as an operation variable. Rejected by ADR-0009: no request may name its own viewer.
 
 ### Repository and failures
 
@@ -158,7 +158,7 @@ The app creates one `SessionBloc` in `BagCheckoutApp` and provides it with `Bloc
 
 ### Material re-export
 
-`packages/ui` re-exports `package:material_ui/material_ui.dart` from its barrel. `modules/auth` imports `package:ui/ui.dart` and has no `material_ui` dependency, so a direct import fails to resolve (ADR-0002).
+`packages/ui` re-exports `package:material_ui/material_ui.dart` from its barrel. `modules/auth` imports `package:ui/ui.dart` and has no `material_ui` dependency, so a direct import fails to resolve (ADR-0001).
 
 ### AppTextField
 
@@ -188,7 +188,7 @@ The app creates one `SessionBloc` in `BagCheckoutApp` and provides it with `Bloc
 ## Risks / Trade-offs
 
 - [`AuthLink` writes to `HttpLinkHeaders`, an HTTP type] → Accept it. It makes `LocalLink` read the token exactly as a real server would, and an `HttpLink` swap needs no change.
-- [A stale generated file can pass CI] → ADR-0020 accepts this. Task 3.6 checks that `codegen` leaves no diff before commit.
+- [A stale generated file can pass CI] → ADR-0013 accepts this. Task 3.6 checks that `codegen` leaves no diff before commit.
 - [Patrol may run both journeys in one process on some platforms] → `configureDependencies` resets get_it. Each journey clears preferences before `main()`.
 - [The navigation journey now meets the guard] → It checks the sign-in redirect and returns to Bags through the back action. Its web-only resize and dark-mode checks stay on `/`.
 - [`find`-based format check differs from the plain `dart format lib`] → It checks the same files minus generated ones. A test-run failure on purpose proves it still names a bad file.
@@ -205,6 +205,6 @@ The app creates one `SessionBloc` in `BagCheckoutApp` and provides it with `Bloc
 
 ## Open for sign-off
 
-- `packages/ui` re-exports all of `material_ui`, not a selected list. ADR-0002 allows "selected Material symbols". A `show` list can replace the full export later without touching modules that use only listed symbols.
+- `packages/ui` re-exports all of `material_ui`, not a selected list. ADR-0001 allows "selected Material symbols". A `show` list can replace the full export later without touching modules that use only listed symbols.
 - Sign out deletes the client token only. The "server" keeps the old session entry. A `signOut` mutation can revoke it in a later slice.
 - The viewer id derives from the lower-cased name, so "Naledi" and "naledi" are the same viewer. Orders will hang off this id.
