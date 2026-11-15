@@ -1,4 +1,3 @@
-import 'package:material_ui/material_ui.dart';
 import 'package:ui/ui.dart';
 
 /// BagsPlaceholderPage holds the Bags destination until the catalog arrives.

@@ -22,8 +22,8 @@
 
 ## 4. AppTextField
 
-- [ ] 4.1 Add the `AppTextField` row to `DESIGN.md`, then the atom and `inputDecorationTheme` in `packages/ui`; verify widget tests for the label, the error text and border in the `error` colour in both themes, and the semantics
-- [ ] 4.2 Re-export `material_ui` from `package:ui/ui.dart`, and verify `melos run analyze` passes
+- [x] 4.1 Add the `AppTextField` row to `DESIGN.md`, then the atom and `inputDecorationTheme` in `packages/ui`; verify widget tests for the label, the error text and border in the `error` colour in both themes, and the semantics
+- [x] 4.2 Re-export `material_ui` from `package:ui/ui.dart`, and verify `melos run analyze` passes
 
 ## 5. modules/auth
 

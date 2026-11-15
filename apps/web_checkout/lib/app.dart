@@ -1,5 +1,4 @@
 import 'package:go_router/go_router.dart';
-import 'package:material_ui/material_ui.dart';
 import 'package:ui/ui.dart';
 
 import 'router/app_router.dart';
