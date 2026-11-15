@@ -18,7 +18,7 @@
 - [x] 3.3 Add `schema.graphql`, `auth.graphql` and `build.yaml`, run `melos run codegen`, and verify the generated `*.graphql.dart` files compile under `melos run analyze`
 - [x] 3.4 Add `LocalLink`, `RequestContext`, `LocalServer` and the auth resolvers, and verify tests for routing, an unknown operation, every operation having a resolver, and the name rule on the "server"
 - [x] 3.5 Add `GraphqlAuthRepository` and `registerApiData` behind `lib/data/data.dart`, and verify end-to-end tests over `MemoryStore`: sign in stores the token, `currentViewer` reads it, a stale token is deleted, sign out deletes it, and an invalid name stores nothing
-- [ ] 3.6 Run `melos run codegen` again and verify `git status` shows no change to generated files
+- [x] 3.6 Run `melos run codegen` again and verify `git status` shows no change to generated files
 
 ## 4. AppTextField
 
