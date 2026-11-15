@@ -337,7 +337,8 @@ class _Details extends StatelessWidget {
   static String _errorMessage(CheckoutError error) => switch (error) {
     CheckoutError.cardFailed => 'That card could not be used. Pick another.',
     CheckoutError.slotUnavailable =>
-      'That collection window is no longer available. Pick another.',
+      'That time slot is no longer available, please select another time '
+          'slot and confirm your order',
     CheckoutError.paymentMissing => 'Pick a card to pay with.',
     CheckoutError.invalidBags =>
       'These bags cannot be checked out. Close checkout and pick them again.',

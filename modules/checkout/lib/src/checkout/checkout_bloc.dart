@@ -71,7 +71,12 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
     Emitter<CheckoutState> emit,
   ) async {
     if (state.status != CheckoutStatus.ready || state.confirming) return;
-    emit(state.copyWith(pendingCardId: () => event.cardId, error: () => null));
+    emit(
+      state.copyWith(
+        pendingCardId: () => event.cardId,
+        error: () => _keepSlotError(state.error),
+      ),
+    );
     final result = await _checkoutRepository.setPaymentMethod(
       state.sessionId,
       event.cardId,
@@ -109,7 +114,12 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
       case SessionExpired():
         emit(failed.copyWith(status: CheckoutStatus.expired));
       case SlotUnavailable():
-        emit(failed.copyWith(error: () => CheckoutError.slotUnavailable));
+        emit(
+          failed.copyWith(
+            window: () => null,
+            error: () => CheckoutError.slotUnavailable,
+          ),
+        );
         await _reloadSession(emit);
       case PaymentMethodMissing():
         emit(
@@ -161,9 +171,20 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
     if (state.status != CheckoutStatus.ready) return state;
     final known = {for (final bag in state.bags) bag.id};
     final start = CollectionWindow.parseSlot(state.linkSlot);
+    final window = state.windows.where((w) => w.start == start).firstOrNull;
+    final stale = state.linkSlot != null && window == null;
     return state.copyWith(
       picked: BagSelection.clean(state.linkIds, known),
-      window: () => state.windows.where((w) => w.start == start).firstOrNull,
+      window: () => window,
+      error: () => switch (state.error) {
+        _ when stale => CheckoutError.slotUnavailable,
+        CheckoutError.slotUnavailable when window != null => null,
+        final error => error,
+      },
     );
   }
+
+  // The slot notice stays until the customer picks a new window.
+  static CheckoutError? _keepSlotError(CheckoutError? error) =>
+      error == CheckoutError.slotUnavailable ? error : null;
 }

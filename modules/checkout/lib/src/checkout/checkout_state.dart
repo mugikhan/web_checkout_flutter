@@ -78,6 +78,7 @@ class CheckoutState {
       window != null &&
       cardId != null &&
       pendingCardId == null &&
+      error != CheckoutError.slotUnavailable &&
       !confirming;
 
   /// needsCleanUrl is true when the URL holds bags or a slot the page dropped.
