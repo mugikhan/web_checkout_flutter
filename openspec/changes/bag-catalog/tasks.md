@@ -23,7 +23,7 @@
 
 ## 4. App wiring
 
-- [ ] 4.1 Add `AppRoutes.bagIdsFrom` and `AppRoutes.bagsLocation`, and verify unit tests for empty, spaced, duplicate and multiple ids
+- [x] 4.1 Add `AppRoutes.bagIdsFrom` and `AppRoutes.bagsLocation`, and verify unit tests for empty, spaced, duplicate and multiple ids
 - [ ] 4.2 Depend on `catalog`, call `registerCatalogModule` in `configureDependencies`, build `CatalogPage` on the Bags route with `Router.neglect`, and delete `BagsPlaceholderPage`; verify `fvm flutter build web` succeeds
 - [ ] 4.3 Update the router and app widget tests with a mocktail `CatalogRepository`, and verify tests for picks in the URL, a deep link with picks, the bad link cleaned to `/?bags=bag_cafe,bag_bakery`, and the return to Bags keeping the picks
 
