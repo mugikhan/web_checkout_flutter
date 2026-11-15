@@ -1,14 +1,17 @@
+import 'package:auth/auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:patrol/patrol.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:web_checkout/app_keys.dart';
 import 'package:web_checkout/main.dart' as app;
 
 void main() {
   patrolTest('user moves between Bags and Account', ($) async {
-    app.main();
+    await (await SharedPreferences.getInstance()).clear();
+    await app.main();
     await $.pumpAndSettle();
 
     expect($('Bag Checkout'), findsWidgets);
@@ -18,16 +21,13 @@ void main() {
     );
 
     await $(AppKeys.navAccount).tap();
-    expect(
-      $('Sign in to see your orders. Sign-in is not available yet.'),
-      findsOneWidget,
-    );
+    expect($(AuthKeys.signInName), findsOneWidget);
     if (kIsWeb) {
       expect(urlStrategy, isA<PathUrlStrategy>());
-      expect(await currentPath($), '/account');
+      expect(await currentLocation($), '/sign-in?from=/account');
     }
 
-    await $(AppKeys.navBags).tap();
+    await $(AuthKeys.signInBack).tap();
     expect(
       $('Surplus bags from Corner Pantry will show here.'),
       findsOneWidget,
@@ -61,6 +61,11 @@ void main() {
 
 Future<String> currentPath(PatrolIntegrationTester $) async =>
     Uri.parse(await $.platform.web.getCurrentPageUrl()).path;
+
+Future<String> currentLocation(PatrolIntegrationTester $) async {
+  final url = Uri.parse(await $.platform.web.getCurrentPageUrl());
+  return Uri.decodeFull(url.hasQuery ? '${url.path}?${url.query}' : url.path);
+}
 
 NavigationRail rail(PatrolIntegrationTester $) =>
     $.tester.widget<NavigationRail>(find.byType(NavigationRail));

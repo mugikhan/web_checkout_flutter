@@ -53,7 +53,7 @@ Sign-off: a patrol recording of the sign-in journey on web, Android and iOS. Eac
 - **Boundary**: a deliberate `package:api/data/data.dart` import in `modules/auth` fails `melos run analyze`.
 - **Codegen**: `melos run codegen` leaves no diff.
 - **Bloc tests**: `SessionBloc` and `SignInBloc` cover every event, every result member and `droppable` submit.
-- **Patrol, sign-in journey**: Account signed out goes to `/sign-in?from=%2Faccount`. "Bob" shows "Enter at least 4 characters". "Naledi" lands on `/account` with the name. Sign out returns to `/` signed out.
+- **Patrol, sign-in journey**: Account signed out goes to `/sign-in` with `from=/account`. "Bob" shows "Enter at least 4 characters". "Naledi" lands on `/account` with the name. Sign out returns to `/` signed out.
 - **Patrol, navigation journey**: still passes on all three platforms.
 - **Web, manual**: sign in, refresh on `/account`, and the name still shows. Sign out, refresh, and Account still asks for sign-in.
 - **Web, manual**: `/sign-in?from=https://example.com` returns to `/` after sign-in.

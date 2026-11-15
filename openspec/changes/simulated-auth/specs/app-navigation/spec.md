@@ -15,7 +15,7 @@ The app SHALL offer two top-level destinations, Bags and Account. Each SHALL hav
 
 #### Scenario: Open Account signed out
 - **WHEN** a signed-out user selects Account in the navigation
-- **THEN** the Sign in page shows and the address bar reads `/sign-in?from=%2Faccount`
+- **THEN** the Sign in page shows and the address bar reads `/sign-in` with `from` set to `/account`
 
 ### Requirement: Deep links and refresh
 Opening a destination URL directly, or refreshing on it, SHALL show that destination when the user may see it.
@@ -30,7 +30,7 @@ Opening a destination URL directly, or refreshing on it, SHALL show that destina
 
 #### Scenario: Direct link to Account signed out
 - **WHEN** a signed-out user opens `/account` in a new tab
-- **THEN** the Sign in page shows and the address bar reads `/sign-in?from=%2Faccount`
+- **THEN** the Sign in page shows and the address bar reads `/sign-in` with `from` set to `/account`
 
 ## ADDED Requirements
 
