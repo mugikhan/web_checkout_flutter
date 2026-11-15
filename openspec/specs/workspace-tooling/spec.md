@@ -45,7 +45,7 @@ One command SHALL report unformatted Dart files in every member.
 The same patrol journeys SHALL run on Chrome, an Android emulator and an iOS simulator.
 
 #### Scenario: Run on each platform
-- **WHEN** a developer runs the navigation and sign-in journeys on Chrome, an Android emulator or an iOS simulator
+- **WHEN** a developer runs the navigation, sign-in and catalog journeys on Chrome, an Android emulator or an iOS simulator
 - **THEN** the journeys pass on each of them
 
 ### Requirement: Recorded patrol runs
