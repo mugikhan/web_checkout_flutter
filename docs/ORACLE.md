@@ -148,4 +148,4 @@ This file records every answer the user gave in the planning ("grill me") sessio
 4. `bag-catalog`: done.
 5. `checkout`: done.
 6. `order-details`: done.
-7. `docs-and-delivery`: README, SOLUTION.md with the "AI usage" section, Loom video.
+7. `docs-and-delivery`: done. README and SOLUTION.md with the "AI usage" section. The Loom video is recorded separately.
