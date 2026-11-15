@@ -1,10 +1,10 @@
 import 'package:auth/auth.dart';
+import 'package:catalog/catalog.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ui/ui.dart';
 
-import '../pages/bags_placeholder_page.dart';
 import '../pages/not_found_page.dart';
 import '../shell/app_shell.dart';
 import 'app_routes.dart';
@@ -37,7 +37,18 @@ GoRouter buildRouter({
             routes: [
               GoRoute(
                 path: AppRoutes.bags,
-                builder: (context, state) => const BagsPlaceholderPage(),
+                builder: (context, state) => BlocProvider(
+                  create: (_) =>
+                      sl<CatalogBloc>()..add(const CatalogLoadRequested()),
+                  child: CatalogPage(
+                    bagIds: AppRoutes.bagIdsFrom(state.uri),
+                    // Neglect replaces the browser entry; go_router's replace still adds one.
+                    onSelectionChanged: (ids) => Router.neglect(
+                      context,
+                      () => context.go(AppRoutes.bagsLocation(ids)),
+                    ),
+                  ),
+                ),
               ),
             ],
           ),

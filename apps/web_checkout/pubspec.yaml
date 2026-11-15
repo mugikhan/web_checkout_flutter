@@ -12,6 +12,8 @@ dependencies:
     path: ../../packages/api
   auth:
     path: ../../modules/auth
+  catalog:
+    path: ../../modules/catalog
   flutter:
     sdk: flutter
   flutter_bloc: ^9.1.1
