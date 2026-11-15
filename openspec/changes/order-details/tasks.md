@@ -39,7 +39,7 @@ Checks the verifier runs and the user signs off:
 - **Manual, web:** refresh during the hold keeps the original hold time; refresh after the hold shows the settled status at once.
 
 - [x] 6.1 Run every automated check above and confirm it passes
-- [ ] 6.2 Record the order journey on web, Android and iOS and paste the output in the PR description
+- [x] 6.2 Record the order journey on web, Android and iOS and paste the output in the PR description
 - [ ] 6.3 User verifies the slice
 
 ## Workflow follow-up
