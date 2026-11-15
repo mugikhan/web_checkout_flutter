@@ -47,7 +47,7 @@ Sign-off: the catalog journey on web, Android and iOS. It shows two picks with t
 
 - [x] 6.1 Run every automated check above and confirm each passes
 - [x] 6.2 Record the catalog journey on web, Android and iOS and paste the output in the PR description
-- [ ] 6.3 User verifies the slice
+- [x] 6.3 User verifies the slice
 
 ## Workflow follow-up
 
