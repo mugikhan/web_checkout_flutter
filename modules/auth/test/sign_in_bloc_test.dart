@@ -4,16 +4,19 @@ import 'package:api/domain/domain.dart';
 import 'package:auth/auth.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
 
-import 'support/fake_auth_repository.dart';
+import 'support/mocks.dart';
 
 void main() {
-  const naledi = FakeAuthRepository.naledi;
-  late FakeAuthRepository repository;
+  late MockAuthRepository repository;
 
-  setUp(() => repository = FakeAuthRepository());
+  setUp(() => repository = MockAuthRepository());
 
   SignInBloc build() => SignInBloc(authRepository: repository);
+
+  void answerSignIn(SignInResult result) =>
+      when(() => repository.signIn(any())).thenAnswer((_) async => result);
 
   blocTest<SignInBloc, SignInState>(
     'a name of 3 characters shows the error and sends nothing',
@@ -25,7 +28,7 @@ void main() {
       const SignInState(name: 'Bob'),
       const SignInState(name: 'Bob', error: SignInError.nameTooShort),
     ],
-    verify: (_) => expect(repository.signInCalls, isEmpty),
+    verify: (_) => verifyNever(() => repository.signIn(any())),
   );
 
   blocTest<SignInBloc, SignInState>(
@@ -38,11 +41,12 @@ void main() {
     expect: () => [
       const SignInState(name: '     ', error: SignInError.nameTooShort),
     ],
-    verify: (_) => expect(repository.signInCalls, isEmpty),
+    verify: (_) => verifyNever(() => repository.signIn(any())),
   );
 
   blocTest<SignInBloc, SignInState>(
     'a valid name signs in with the trimmed name',
+    setUp: () => answerSignIn(const SignedIn(naledi)),
     build: build,
     act: (bloc) => bloc
       ..add(const SignInNameChanged('  Naledi '))
@@ -56,15 +60,13 @@ void main() {
         viewer: naledi,
       ),
     ],
-    verify: (_) => expect(repository.signInCalls, ['Naledi']),
+    verify: (_) => verify(() => repository.signIn('Naledi')).called(1),
   );
 
   blocTest<SignInBloc, SignInState>(
     'a "server" InvalidName shows the error with its minimum length',
-    build: () {
-      repository.signInResult = const InvalidName(minLength: 5);
-      return build();
-    },
+    setUp: () => answerSignIn(const InvalidName(minLength: 5)),
+    build: build,
     act: (bloc) => bloc
       ..add(const SignInNameChanged('Thab'))
       ..add(const SignInSubmitted()),
@@ -80,16 +82,14 @@ void main() {
 
   blocTest<SignInBloc, SignInState>(
     'SignInUnavailable shows the retry error and allows a new submit',
-    build: () {
-      repository.signInResult = const SignInUnavailable();
-      return build();
-    },
+    setUp: () => answerSignIn(const SignInUnavailable()),
+    build: build,
     act: (bloc) async {
       bloc
         ..add(const SignInNameChanged('Naledi'))
         ..add(const SignInSubmitted());
       await Future<void>.delayed(Duration.zero);
-      repository.signInResult = const SignedIn(naledi);
+      answerSignIn(const SignedIn(naledi));
       bloc.add(const SignInSubmitted());
     },
     skip: 2,
@@ -102,7 +102,7 @@ void main() {
         viewer: naledi,
       ),
     ],
-    verify: (_) => expect(repository.signInCalls, hasLength(2)),
+    verify: (_) => verify(() => repository.signIn('Naledi')).called(2),
   );
 
   blocTest<SignInBloc, SignInState>(
@@ -113,19 +113,19 @@ void main() {
     expect: () => [const SignInState(name: 'Bobb')],
   );
 
+  final gate = Completer<SignInResult>();
   blocTest<SignInBloc, SignInState>(
     'a second submit while one runs is dropped',
-    build: () {
-      repository.signInGate = Completer<void>();
-      return build();
-    },
+    setUp: () =>
+        when(() => repository.signIn(any())).thenAnswer((_) => gate.future),
+    build: build,
     act: (bloc) async {
       bloc
         ..add(const SignInNameChanged('Naledi'))
         ..add(const SignInSubmitted())
         ..add(const SignInSubmitted());
       await Future<void>.delayed(Duration.zero);
-      repository.signInGate!.complete();
+      gate.complete(const SignedIn(naledi));
     },
     skip: 1,
     expect: () => [
@@ -136,6 +136,6 @@ void main() {
         viewer: naledi,
       ),
     ],
-    verify: (_) => expect(repository.signInCalls, ['Naledi']),
+    verify: (_) => verify(() => repository.signIn('Naledi')).called(1),
   );
 }

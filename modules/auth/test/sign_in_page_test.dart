@@ -2,8 +2,9 @@ import 'package:api/domain/domain.dart';
 import 'package:auth/auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
 
-import 'support/fake_auth_repository.dart';
+import 'support/mocks.dart';
 import 'support/pump_page.dart';
 
 // The button keeps its spinner after success, so pumpAndSettle never ends.
@@ -13,12 +14,14 @@ Future<void> pumpBlocs(WidgetTester tester) async {
 }
 
 void main() {
-  late FakeAuthRepository repository;
+  late MockAuthRepository repository;
   late SessionBloc session;
   late int backs;
 
   setUp(() {
-    repository = FakeAuthRepository();
+    repository = MockAuthRepository();
+    when(() => repository.signIn(any()))
+        .thenAnswer((_) async => const SignedIn(naledi));
     session = SessionBloc(authRepository: repository);
     backs = 0;
   });
@@ -46,7 +49,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Enter at least 4 characters'), findsOneWidget);
-    expect(repository.signInCalls, isEmpty);
+    verifyNever(() => repository.signIn(any()));
     expect(session.state, const SessionChecking());
 
     await tester.enterText(find.byKey(AuthKeys.signInName), 'Bobby');
@@ -61,8 +64,8 @@ void main() {
     await tester.tap(find.byKey(AuthKeys.signInSubmit));
     await pumpBlocs(tester);
 
-    expect(repository.signInCalls, ['Naledi']);
-    expect(session.state, const SessionSignedIn(FakeAuthRepository.naledi));
+    verify(() => repository.signIn('Naledi')).called(1);
+    expect(session.state, const SessionSignedIn(naledi));
   });
 
   testWidgets('the keyboard done action submits', (tester) async {
@@ -72,11 +75,12 @@ void main() {
     await tester.testTextInput.receiveAction(TextInputAction.done);
     await pumpBlocs(tester);
 
-    expect(repository.signInCalls, ['Naledi']);
+    verify(() => repository.signIn('Naledi')).called(1);
   });
 
   testWidgets('an unexpected failure shows the retry message', (tester) async {
-    repository.signInResult = const SignInUnavailable();
+    when(() => repository.signIn(any()))
+        .thenAnswer((_) async => const SignInUnavailable());
     await pump(tester);
 
     await tester.enterText(find.byKey(AuthKeys.signInName), 'Naledi');

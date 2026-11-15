@@ -3,12 +3,12 @@ import 'package:auth/auth.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
 
-import 'support/fake_auth_repository.dart';
+import 'support/mocks.dart';
 
 void main() {
   test('registers a fresh bloc per lookup', () {
     final sl = GetIt.asNewInstance()
-      ..registerSingleton<AuthRepository>(FakeAuthRepository());
+      ..registerSingleton<AuthRepository>(MockAuthRepository());
 
     registerAuthModule(sl);
 

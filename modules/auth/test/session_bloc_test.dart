@@ -1,61 +1,66 @@
+import 'package:api/domain/domain.dart';
 import 'package:auth/auth.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
 
-import 'support/fake_auth_repository.dart';
+import 'support/mocks.dart';
 
 void main() {
-  const naledi = FakeAuthRepository.naledi;
+  late MockAuthRepository repository;
+
+  setUp(() => repository = MockAuthRepository());
+
+  SessionBloc build() => SessionBloc(authRepository: repository);
 
   test('starts in SessionChecking', () {
-    expect(
-      SessionBloc(authRepository: FakeAuthRepository()).state,
-      const SessionChecking(),
-    );
+    expect(build().state, const SessionChecking());
   });
 
   blocTest<SessionBloc, SessionState>(
     'restores a stored viewer',
-    build: () =>
-        SessionBloc(authRepository: FakeAuthRepository(viewer: naledi)),
+    setUp: () =>
+        when(() => repository.currentViewer()).thenAnswer((_) async => naledi),
+    build: build,
     act: (bloc) => bloc.add(const SessionCheckRequested()),
     expect: () => [const SessionSignedIn(naledi)],
   );
 
   blocTest<SessionBloc, SessionState>(
     'reads no viewer as signed out',
-    build: () => SessionBloc(authRepository: FakeAuthRepository()),
+    setUp: () =>
+        when(() => repository.currentViewer()).thenAnswer((_) async => null),
+    build: build,
     act: (bloc) => bloc.add(const SessionCheckRequested()),
     expect: () => [const SessionSignedOut()],
   );
 
   blocTest<SessionBloc, SessionState>(
     'reads an ApiFault as signed out',
-    build: () => SessionBloc(
-      authRepository: FakeAuthRepository(currentViewerFault: true),
-    ),
+    setUp: () =>
+        when(() => repository.currentViewer())
+            .thenThrow(const ApiFault('boom')),
+    build: build,
     act: (bloc) => bloc.add(const SessionCheckRequested()),
     expect: () => [const SessionSignedOut()],
   );
 
   blocTest<SessionBloc, SessionState>(
     'moves to signed in on ViewerSignedIn',
-    build: () => SessionBloc(authRepository: FakeAuthRepository()),
+    build: build,
     seed: () => const SessionSignedOut(),
     act: (bloc) => bloc.add(const ViewerSignedIn(naledi)),
     expect: () => [const SessionSignedIn(naledi)],
+    verify: (_) => verifyZeroInteractions(repository),
   );
 
-  final repository = FakeAuthRepository(viewer: naledi);
   blocTest<SessionBloc, SessionState>(
     'signs out through the repository',
-    build: () => SessionBloc(authRepository: repository),
+    setUp: () => when(() => repository.signOut()).thenAnswer((_) async {}),
+    build: build,
     seed: () => const SessionSignedIn(naledi),
     act: (bloc) => bloc.add(const SignOutRequested()),
     expect: () => [const SessionSignedOut()],
-    verify: (_) {
-      expect(repository.signOutCalls, 1);
-      expect(repository.viewer, isNull);
-    },
+    verify: (_) => verify(() => repository.signOut()).called(1),
   );
 }
