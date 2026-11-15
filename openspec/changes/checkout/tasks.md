@@ -23,6 +23,7 @@
 - [x] 4.3 Add `CheckoutBloc`, and verify `bloc_test` cases: open, completed, expired, not found and failed loads; bag and slot cleaning; card picked, failed and `restartable` (last card wins); confirm success, each failure, the `SlotUnavailable` reload, the `canConfirm` guard and `droppable` double confirm
 - [x] 4.4 Add `CheckoutKeys`, `CheckoutStartPage`, `CheckoutPage` and `registerCheckoutModule`; verify widget tests for loading, failed, not found, expired, no bags, ready, the disabled Confirm, both layouts, the clean-URL, close, start-again and completed callbacks
 - [x] 4.5 Verify `fvm exec melos run analyze` still passes the import-boundary check with the new module
+- [x] 4.6 Show the stale slot notice for a passed or unknown slot on load and for `SlotUnavailable` on confirm, keep Confirm disabled until a new window, and verify bloc and page tests for both cases, the dropped slot and the cleared notice
 
 ## 5. Catalog Continue
 
@@ -33,11 +34,13 @@
 - [x] 6.1 Add `AppRoutes.isGuarded`, `checkoutStart`, `checkoutLocation`, `orderLocation` and `slotFrom`, and use `isGuarded` in `authRedirect`; verify unit tests for guarded paths, builders and the `from` for a checkout URL
 - [x] 6.2 Add the `/checkout/new`, `/checkout/:sessionId` and `/orders/:orderId` routes, `OrderPlaceholderPage`, `registerCheckoutModule`, and Continue on Bags; verify router tests for the signed-in start, the signed-out redirect, the placeholder in the shell, the completed redirect and close
 - [x] 6.3 Refresh the router from `SessionBloc` in the app, with `Router.neglect` on sign-in; verify the router and auth redirect tests still pass and `fvm flutter build web` succeeds
+- [x] 6.4 Verify router tests: a passed slot leaves the URL with the notice, and `SlotUnavailable` on confirm stays on checkout without a slot
 
 ## 7. Patrol
 
 - [x] 7.1 Update the navigation, sign-in and catalog journeys where Continue or the new routes change what they see, and verify they pass on Chrome, the Android emulator and the iOS simulator
 - [x] 7.2 Add `patrol_test/checkout_test.dart`: signed-out Continue, sign in, checkout with the bags (web URL holds the session id and bags), pick the first offered window (web URL gains `slot`), Confirm disabled, pick Visa, double-tap Confirm, one order and the placeholder with its id, web Back skips checkout, then an unknown session shows "Checkout not found" with Start again; verify it passes on all three platforms
+- [ ] 7.3 Extend the checkout journey: open a checkout URL whose `slot` is a day in the past, see the notice and the URL without `slot`, then pick a window and see the notice clear; verify it passes on all three platforms
 
 ## 8. Verification
 
@@ -47,13 +50,13 @@ Sign-off: the checkout journey on web, Android and iOS. It shows a signed-out Co
 - **Codegen**: `fvm exec melos run codegen` leaves no diff.
 - **Bloc tests**: `CheckoutStartBloc` and `CheckoutBloc` cover every event, every repository result, `restartable` card picks and `droppable` confirm.
 - **Server tests**: a repeat confirm and two concurrent confirms each leave one order.
-- **Patrol, checkout journey**: as in task 7.2. On web the URL reads `/checkout/<id>?bags=bag_cafe,bag_bakery`, then gains `slot`, then reads `/orders/<id>`, and Back leaves the order for `/?bags=bag_cafe,bag_bakery`.
+- **Patrol, checkout journey**: as in task 7.2. On web the URL reads `/checkout/<id>?bags=bag_cafe,bag_bakery`, then gains `slot`, then reads `/orders/<id>`, and Back leaves the order for `/?bags=bag_cafe,bag_bakery`. A checkout URL with a past `slot` shows "That time slot is no longer available, please select another time slot and confirm your order" and loses `slot`.
 - **Patrol, navigation, sign-in and catalog journeys**: still pass on all three platforms.
 - **Web, manual**: refresh on checkout after picking a window and a card, and both stay picked. Refresh on the order page, and it still shows the order id.
 - **Web, manual**: resize across 840px, and the page moves between two columns and the bottom confirm bar.
 
-- [x] 8.1 Run every automated check above and confirm each passes
-- [x] 8.2 Record the checkout journey on web, Android and iOS and paste the output in the PR description
+- [ ] 8.1 Run every automated check above and confirm each passes
+- [ ] 8.2 Record the checkout journey on web, Android and iOS and paste the output in the PR description
 - [ ] 8.3 User verifies the slice
 
 ## Workflow follow-up
