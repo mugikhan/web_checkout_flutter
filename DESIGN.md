@@ -126,7 +126,7 @@ Material 3 window size classes, by window width.
 | `AppTextField` | Every text input | Always pass a visible `label`; it is also the semantic label. Show validation errors inline through `errorText`, under the field in `error`. `md` radius. `onSurfaceVariant` border, because `outline` falls below 3:1 for a field edge. `primary` border on focus, `error` border on error. |
 | `PriceText` | Every price | Format with `formatZar` (`en_ZA`, such as "R59,99"). Price in `titleMedium` `onSurface`. The worth follows in `bodyMedium` `onSurfaceVariant`, crossed out. Screen readers hear "R59,99, worth R180,00". |
 | `BagTile` | Every bag a customer can pick | Flat, `surfaceContainer`, `outline` border, `md` radius, `lg` padding. Picked: 2px `primary` border and a check icon in `primary`. Disabled: ignores taps, dims only the icon, and shows its hint in `bodyMedium` `onSurfaceVariant`. One semantics node carries the name, price, checked and enabled state, and the hint. |
-| `InlineNotice` | A short page message, such as a cleaned link | `secondary` background, `onSecondary` text and icons, `md` radius. A close icon button with the tooltip "Dismiss". Screen readers announce it as a live region. |
+| `InlineNotice` | A short page message, such as a cleaned link | Two tones. `info`: `secondary` background, `onSecondary` text and icons. `error`: `errorContainer` background, `onErrorContainer` text and icons, for a message about something the app removed or rejected. `md` radius. A close icon button with the tooltip "Dismiss". Screen readers announce it as a live region. |
 
 Later slices add components here when they first use them.
 

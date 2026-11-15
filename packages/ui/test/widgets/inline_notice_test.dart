@@ -43,10 +43,56 @@ void main() {
       );
       expect(surface.color, colors.secondary);
       expect(
+        tester.widget<Icon>(find.byIcon(Icons.info_outline)).color,
+        colors.onSecondary,
+      );
+      expect(
         tester.widget<Text>(find.text('Note')).style?.color,
         colors.onSecondary,
       );
     });
+  }
+
+  for (final (brightness, colors) in [
+    (Brightness.light, AppColors.light),
+    (Brightness.dark, AppColors.dark),
+  ]) {
+    testWidgets(
+      '${brightness.name}: the error tone uses the error container pair',
+      (tester) async {
+        await pumpThemed(
+          tester,
+          InlineNotice(
+            message: 'Note',
+            tone: InlineNoticeTone.error,
+            onDismiss: () {},
+          ),
+          brightness: brightness,
+        );
+
+        final surface = tester.widget<Material>(
+          find
+              .descendant(
+                of: find.byType(InlineNotice),
+                matching: find.byType(Material),
+              )
+              .first,
+        );
+        expect(surface.color, colors.errorContainer);
+        expect(
+          tester.widget<Text>(find.text('Note')).style?.color,
+          colors.onErrorContainer,
+        );
+        expect(
+          tester.widget<Icon>(find.byIcon(Icons.info_outline)).color,
+          colors.onErrorContainer,
+        );
+        expect(
+          tester.widget<IconButton>(find.byType(IconButton)).color,
+          colors.onErrorContainer,
+        );
+      },
+    );
   }
 
   testWidgets('is a live region with a labelled dismiss action', (
