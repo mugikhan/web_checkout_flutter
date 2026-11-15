@@ -136,7 +136,7 @@ This file records every answer the user gave in the planning ("grill me") sessio
 
 1. `bootstrap-workspace`: done.
 2. `design-system`: done.
-3. `simulated-auth`: in progress.
+3. `simulated-auth`: done.
 4. `bag-catalog`
 5. `checkout`
 6. `order-details`
