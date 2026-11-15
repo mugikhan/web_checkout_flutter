@@ -59,9 +59,15 @@ void main() {
     expect(tile($, 'bag_grocery').selected, isFalse);
     expect(tile($, 'bag_surprise').selected, isFalse);
     expect(summary($, CatalogKeys.summaryCount), '2 bags');
-    if (kIsWeb) {
-      expect(await currentLocation($), '/?bags=bag_cafe,bag_bakery');
-    }
+    if (!kIsWeb) return;
+    expect(await currentLocation($), '/?bags=bag_cafe,bag_bakery');
+
+    // Picks and the clean-up replace entries, so Back skips the bad link.
+    await $.platform.web.goBack();
+    await $.pumpAndSettle();
+    expect(await currentLocation($), '/?bags=bag_cafe');
+    expect(tile($, 'bag_cafe').selected, isTrue);
+    expect(tile($, 'bag_bakery').selected, isFalse);
   });
 }
 
