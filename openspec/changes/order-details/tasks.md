@@ -40,7 +40,7 @@ Checks the verifier runs and the user signs off:
 
 - [x] 6.1 Run every automated check above and confirm it passes
 - [x] 6.2 Record the order journey on web, Android and iOS and paste the output in the PR description
-- [ ] 6.3 User verifies the slice
+- [x] 6.3 User verifies the slice
 
 ## Workflow follow-up
 
