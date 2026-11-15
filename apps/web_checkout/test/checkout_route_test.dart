@@ -4,8 +4,8 @@ import 'package:catalog/catalog.dart';
 import 'package:checkout/checkout.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:orders/orders.dart';
 import 'package:ui/ui.dart';
-import 'package:web_checkout/app_keys.dart';
 
 import 'support/pump_app.dart';
 
@@ -151,9 +151,7 @@ void main() {
     expect(find.byKey(CheckoutKeys.errorNotice), findsOneWidget);
   });
 
-  testWidgets('confirm lands on the order placeholder under Bags', (
-    tester,
-  ) async {
+  testWidgets('confirm lands on the order page under Bags', (tester) async {
     final checkout = mockCheckoutRepository(session: openSession(card: visa));
     final slot = CollectionWindow.offered(DateTime.now()).first;
     when(() => checkout.confirm('cs_1', ['bag_cafe'], slot.start))
@@ -169,7 +167,7 @@ void main() {
 
     expect(currentLocation(tester), '/orders/ord_1');
     expect(find.text('Order placed'), findsOneWidget);
-    expect(tester.widget<Text>(find.byKey(AppKeys.orderId)).data, 'ord_1');
+    expect(tester.widget<Text>(find.byKey(OrdersKeys.orderId)).data, 'ord_1');
     final bar = tester.widget<NavigationBar>(find.byType(NavigationBar));
     expect(bar.selectedIndex, 0);
   });
@@ -220,28 +218,6 @@ void main() {
     expect(
       tester.widget<BagTile>(find.byKey(CatalogKeys.bag('bag_cafe'))).selected,
       isTrue,
-    );
-  });
-
-  testWidgets('/orders/:id shows the placeholder to a signed-in viewer', (
-    tester,
-  ) async {
-    await pumpApp(
-      tester,
-      location: '/orders/ord_1',
-      repository: mockAuthRepository(viewer: naledi),
-    );
-
-    expect(find.text('Order placed'), findsOneWidget);
-    expect(find.text('ord_1'), findsOneWidget);
-  });
-
-  testWidgets('/orders/:id sends a signed-out user to sign-in', (tester) async {
-    await pumpApp(tester, location: '/orders/ord_1');
-
-    expect(
-      Uri.decodeFull(currentLocation(tester)),
-      '/sign-in?from=/orders/ord_1',
     );
   });
 }

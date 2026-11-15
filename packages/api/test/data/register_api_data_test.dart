@@ -39,4 +39,15 @@ void main() {
 
     expect(sl<CheckoutRepository>(), isA<GraphqlCheckoutRepository>());
   });
+
+  test('registers an OrderRepository', () {
+    final sl = GetIt.asNewInstance()
+      ..registerSingleton(
+        AppStorage(client: MemoryStore(), server: MemoryStore()),
+      );
+
+    registerApiData(sl);
+
+    expect(sl<OrderRepository>(), isA<GraphqlOrderRepository>());
+  });
 }

@@ -4,10 +4,10 @@ import 'package:checkout/checkout.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
+import 'package:orders/orders.dart';
 import 'package:ui/ui.dart';
 
 import '../pages/not_found_page.dart';
-import '../pages/order_placeholder_page.dart';
 import '../shell/app_shell.dart';
 import 'app_routes.dart';
 import 'auth_redirect.dart';
@@ -88,23 +88,39 @@ GoRouter buildRouter({
             routes: [
               GoRoute(
                 path: AppRoutes.bags,
-                builder: (context, state) => BlocProvider(
-                  create: (_) =>
-                      sl<CatalogBloc>()..add(const CatalogLoadRequested()),
-                  child: CatalogPage(
-                    bagIds: AppRoutes.bagIdsFrom(state.uri),
-                    onSelectionChanged: (ids) =>
-                        replace(context, AppRoutes.bagsLocation(ids)),
-                    onContinue: (ids) =>
-                        context.go(AppRoutes.checkoutStart(ids)),
+                pageBuilder: (context, state) => NoTransitionPage(
+                  key: state.pageKey,
+                  child: BlocProvider(
+                    create: (_) =>
+                        sl<CatalogBloc>()..add(const CatalogLoadRequested()),
+                    child: CatalogPage(
+                      bagIds: AppRoutes.bagIdsFrom(state.uri),
+                      onSelectionChanged: (ids) =>
+                          replace(context, AppRoutes.bagsLocation(ids)),
+                      onContinue: (ids) =>
+                          context.go(AppRoutes.checkoutStart(ids)),
+                    ),
                   ),
                 ),
               ),
               GoRoute(
                 path: AppRoutes.order,
-                builder: (context, state) => OrderPlaceholderPage(
-                  orderId: state.pathParameters['orderId']!,
-                ),
+                // Both pages share the shell navigator, and a platform transition
+                // would keep the order page on screen while Bags opens.
+                pageBuilder: (context, state) {
+                  final orderId = state.pathParameters['orderId']!;
+                  return NoTransitionPage(
+                    key: state.pageKey,
+                    child: BlocProvider(
+                      key: ValueKey(orderId),
+                      create: (_) =>
+                          sl<OrderBloc>()..add(OrderLoadRequested(orderId)),
+                      child: OrderPage(
+                        onBackToBags: () => context.go(AppRoutes.bags),
+                      ),
+                    ),
+                  );
+                },
               ),
             ],
           ),

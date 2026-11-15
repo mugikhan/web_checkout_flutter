@@ -4,11 +4,13 @@ import 'package:storage/storage.dart';
 
 import '../graphql/auth.graphql.dart';
 import '../graphql/checkout.graphql.dart';
+import '../graphql/orders.graphql.dart';
 import '../link/local_link.dart';
 import 'auth_resolvers.dart';
 import 'catalog_resolvers.dart';
 import 'checkout_resolvers.dart';
 import 'checkout_store.dart';
+import 'order_resolvers.dart';
 import 'session_store.dart';
 
 /// LocalServer is the in-app "server": one resolver per GraphQL operation.
@@ -17,25 +19,35 @@ class LocalServer {
     KeyValueStore store, {
     Random? random,
     DateTime Function()? clock,
+    Future<void> Function(Duration)? delay,
   }) {
     final rng = random ?? Random.secure();
     final viewers = SessionStore(store, random: rng);
+    final orders = CheckoutStore(store);
+    final now = clock ?? DateTime.now;
     return LocalServer._(
       AuthResolvers(viewers),
       CheckoutResolvers(
         viewers: viewers,
-        store: CheckoutStore(store),
+        store: orders,
         random: rng,
-        clock: clock ?? DateTime.now,
+        clock: now,
+      ),
+      OrderResolvers(
+        viewers: viewers,
+        store: orders,
+        clock: now,
+        delay: delay ?? Future<void>.delayed,
       ),
     );
   }
 
-  LocalServer._(this._auth, this._checkout);
+  LocalServer._(this._auth, this._checkout, this._orders);
 
   final AuthResolvers _auth;
   final CatalogResolvers _catalog = CatalogResolvers();
   final CheckoutResolvers _checkout;
+  final OrderResolvers _orders;
 
   late final Map<String, Resolver> resolvers = {
     'SignIn': (variables, context) async =>
@@ -61,5 +73,18 @@ class LocalServer {
           Variables$Mutation$ConfirmCheckout.fromJson(variables),
           context,
         )).toJson(),
+    'Order': (variables, context) async => (await _orders.order(
+      Variables$Query$Order.fromJson(variables),
+      context,
+    )).toJson(),
+  };
+
+  late final Map<String, StreamResolver> streams = {
+    'OrderStatusChanged': (variables, context) => _orders
+        .orderStatusChanged(
+          Variables$Subscription$OrderStatusChanged.fromJson(variables),
+          context,
+        )
+        .map((event) => event.toJson()),
   };
 }

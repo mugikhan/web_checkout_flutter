@@ -5,5 +5,4 @@ abstract final class AppKeys {
   static const navBags = Key('nav-bags');
   static const navAccount = Key('nav-account');
   static const notFoundGoToBags = Key('not-found-go-to-bags');
-  static const orderId = Key('order-id');
 }

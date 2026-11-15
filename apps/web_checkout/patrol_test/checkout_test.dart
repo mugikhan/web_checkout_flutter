@@ -7,6 +7,7 @@ import 'package:checkout/checkout.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
+import 'package:orders/orders.dart';
 import 'package:patrol/patrol.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ui/ui.dart';
@@ -80,9 +81,11 @@ void main() {
       await $.tester.tap(find.byKey(CheckoutKeys.confirm));
       await $.pumpAndSettle();
 
-      await $(AppKeys.orderId).waitUntilVisible();
+      await $(OrdersKeys.orderId).waitUntilVisible();
       expect($('Order placed'), findsOneWidget);
-      final orderId = $.tester.widget<Text>(find.byKey(AppKeys.orderId)).data!;
+      final orderId = $.tester
+          .widget<Text>(find.byKey(OrdersKeys.orderId))
+          .data!;
       expect(orderId, startsWith('ord_'));
       final orders = jsonDecode(
         preferences.getString('server.orders')!,

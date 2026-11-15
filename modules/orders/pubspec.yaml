@@ -1,0 +1,26 @@
+name: orders
+description: Order details feature for Bag Checkout.
+publish_to: none
+version: 0.1.0
+resolution: workspace
+
+environment:
+  sdk: ^3.13.0
+
+dependencies:
+  api:
+    path: ../../packages/api
+  bloc: ^9.2.1
+  bloc_concurrency: ^0.3.0
+  flutter:
+    sdk: flutter
+  flutter_bloc: ^9.1.1
+  get_it: ^9.3.0
+  ui:
+    path: ../../packages/ui
+
+dev_dependencies:
+  bloc_test: ^10.0.0
+  flutter_test:
+    sdk: flutter
+  mocktail: ^1.0.5

@@ -262,6 +262,7 @@ Enum$__DirectiveLocation fromJson$Enum$__DirectiveLocation(String value) {
 
 const possibleTypesMap = <String, Set<String>>{
   'SignInResult': {'SignInSuccess', 'InvalidName'},
+  'OrderResult': {'Order', 'OrderNotFound'},
   'CheckoutSessionResult': {'CheckoutSession', 'SessionNotFound'},
   'SetPaymentMethodResult': {
     'CheckoutSession',

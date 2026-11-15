@@ -3,6 +3,7 @@ import 'package:auth/auth.dart';
 import 'package:catalog/catalog.dart';
 import 'package:checkout/checkout.dart';
 import 'package:get_it/get_it.dart';
+import 'package:orders/orders.dart';
 import 'package:storage/storage.dart';
 
 /// configureDependencies is the composition root: packages first, then modules.
@@ -14,4 +15,5 @@ Future<void> configureDependencies(GetIt sl) async {
   registerAuthModule(sl);
   registerCatalogModule(sl);
   registerCheckoutModule(sl);
+  registerOrdersModule(sl);
 }

@@ -5,10 +5,12 @@ import 'package:storage/storage.dart';
 import '../domain/auth/auth_repository.dart';
 import '../domain/catalog/catalog_repository.dart';
 import '../domain/checkout/checkout_repository.dart';
+import '../domain/orders/order_repository.dart';
 import 'graphql_client.dart';
 import 'repositories/graphql_auth_repository.dart';
 import 'repositories/graphql_catalog_repository.dart';
 import 'repositories/graphql_checkout_repository.dart';
+import 'repositories/graphql_order_repository.dart';
 import 'repositories/token_store.dart';
 import 'server/local_server.dart';
 
@@ -29,5 +31,8 @@ void registerApiData(GetIt sl) {
     )
     ..registerLazySingleton<CheckoutRepository>(
       () => GraphqlCheckoutRepository(client: sl()),
+    )
+    ..registerLazySingleton<OrderRepository>(
+      () => GraphqlOrderRepository(client: sl()),
     );
 }
