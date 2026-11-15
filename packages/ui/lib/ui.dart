@@ -1,3 +1,6 @@
+// Modules import Material through ui only (ADR-0001).
+export 'package:material_ui/material_ui.dart';
+
 export 'src/layout/window_size_class.dart';
 export 'src/theme/app_theme.dart';
 export 'src/theme/app_tokens.dart';
@@ -8,4 +11,5 @@ export 'src/tokens/app_spacing.dart';
 export 'src/widgets/adaptive_scaffold.dart';
 export 'src/widgets/app_button.dart';
 export 'src/widgets/app_card.dart';
+export 'src/widgets/app_text_field.dart';
 export 'src/widgets/state_view.dart';

@@ -6,3 +6,6 @@ analyzer:
     - .agents/**
     # Patrol regenerates these on every run; a stale copy imports deleted journeys.
     - "**/test_bundle.dart"
+    # Generated code is committed (ADR-0013) but not ours to lint.
+    - "**/*.graphql.dart"
+    - "**/*.g.dart"

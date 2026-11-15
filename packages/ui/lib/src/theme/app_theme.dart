@@ -50,6 +50,10 @@ abstract final class AppTheme {
     final rounded = RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(AppRadius.md),
     );
+    OutlineInputBorder field(Color color, double width) => OutlineInputBorder(
+      borderRadius: BorderRadius.circular(AppRadius.md),
+      borderSide: BorderSide(color: color, width: width),
+    );
 
     return base.copyWith(
       scaffoldBackgroundColor: c.surface,
@@ -102,6 +106,15 @@ abstract final class AppTheme {
         ),
       ),
       dividerTheme: DividerThemeData(color: c.outline, thickness: 1),
+      inputDecorationTheme: InputDecorationTheme(
+        labelStyle: text.bodyLarge?.copyWith(color: c.onSurfaceVariant),
+        errorStyle: text.bodyMedium?.copyWith(color: c.error),
+        border: field(c.onSurfaceVariant, 1),
+        enabledBorder: field(c.onSurfaceVariant, 1),
+        focusedBorder: field(c.primary, 2),
+        errorBorder: field(c.error, 1),
+        focusedErrorBorder: field(c.error, 2),
+      ),
     );
   }
 

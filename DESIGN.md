@@ -123,6 +123,7 @@ Material 3 window size classes, by window width.
 | `AppButton` | Every button | `primary` for the main action, one per view. `secondary` for alternatives. `ghost` for low-emphasis actions. Show `loading` while an action runs; the button ignores taps then. |
 | `AppCard` | Grouped content | Flat, `outline` border, `md` radius, `lg` padding. |
 | `StateView` | Empty, error and loading states | Always offer an action on error. Use `error` colours for the icon only. |
+| `AppTextField` | Every text input | Always pass a visible `label`; it is also the semantic label. Show validation errors inline through `errorText`, under the field in `error`. `md` radius. `onSurfaceVariant` border, because `outline` falls below 3:1 for a field edge. `primary` border on focus, `error` border on error. |
 
 Later slices add components here when they first use them.
 

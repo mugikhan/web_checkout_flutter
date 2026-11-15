@@ -1,0 +1,25 @@
+type Query {
+  "The viewer the request's token belongs to, or null without a valid token."
+  viewer: Viewer
+}
+
+type Mutation {
+  "Signs in with a name of more than 3 characters after trimming."
+  signIn(name: String!): SignInResult!
+}
+
+type Viewer {
+  id: ID!
+  name: String!
+}
+
+type SignInSuccess {
+  viewer: Viewer!
+  token: String!
+}
+
+type InvalidName {
+  minLength: Int!
+}
+
+union SignInResult = SignInSuccess | InvalidName
