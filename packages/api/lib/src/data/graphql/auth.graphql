@@ -1,0 +1,25 @@
+fragment ViewerFields on Viewer {
+  id
+  name
+}
+
+mutation SignIn($name: String!) {
+  signIn(name: $name) {
+    __typename
+    ... on SignInSuccess {
+      token
+      viewer {
+        ...ViewerFields
+      }
+    }
+    ... on InvalidName {
+      minLength
+    }
+  }
+}
+
+query Viewer {
+  viewer {
+    ...ViewerFields
+  }
+}
