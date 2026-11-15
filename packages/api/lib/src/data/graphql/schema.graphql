@@ -4,11 +4,31 @@ type Query {
 
   "Every bag the store sells, in catalog order."
   bags: [Bag!]!
+
+  "The viewer's checkout session. Another viewer's session reads as not found."
+  checkoutSession(id: ID!): CheckoutSessionResult!
+
+  "The viewer's saved cards, or none without a viewer."
+  savedCards: [SavedCard!]!
 }
 
 type Mutation {
   "Signs in with a name of more than 3 characters after trimming."
   signIn(name: String!): SignInResult!
+
+  "Starts a checkout session owned by the viewer. It expires after 15 minutes."
+  createCheckoutSession: CheckoutSession!
+
+  "Stores one of the viewer's saved cards on an open session."
+  setPaymentMethod(sessionId: ID!, cardId: ID!): SetPaymentMethodResult!
+
+  "Creates at most one order per session. A repeat returns the existing order."
+  confirmCheckout(
+    sessionId: ID!
+    bagIds: [ID!]!
+    "The collection window start, as an ISO-8601 UTC instant."
+    slotStart: String!
+  ): ConfirmCheckoutResult!
 }
 
 type Viewer {
@@ -42,3 +62,86 @@ type Bag {
   worthCents: Int!
   store: Store!
 }
+
+enum CheckoutSessionStatus {
+  OPEN
+  COMPLETED
+  EXPIRED
+}
+
+type CheckoutSession {
+  id: ID!
+  status: CheckoutSessionStatus!
+  "An ISO-8601 UTC instant, 15 minutes after creation."
+  expiresAt: String!
+  "Set once the session is COMPLETED."
+  orderId: ID
+  paymentMethod: SavedCard
+  "The windows the customer can pick, empty unless the session is OPEN."
+  collectionWindows: [CollectionWindow!]!
+}
+
+type CollectionWindow {
+  "An ISO-8601 UTC instant."
+  startsAt: String!
+  "An ISO-8601 UTC instant."
+  endsAt: String!
+}
+
+type SavedCard {
+  id: ID!
+  brand: String!
+  last4: String!
+}
+
+enum OrderStatus {
+  CREATED
+  PENDING
+  CONFIRMED
+  FAILED
+}
+
+type Order {
+  id: ID!
+  status: OrderStatus!
+}
+
+type SessionNotFound {
+  sessionId: ID!
+}
+
+type SessionExpired {
+  sessionId: ID!
+}
+
+type SlotUnavailable {
+  slotStart: String!
+}
+
+type PaymentMethodMissing {
+  sessionId: ID!
+}
+
+type InvalidBags {
+  maxBags: Int!
+}
+
+type CardNotFound {
+  cardId: ID!
+}
+
+union CheckoutSessionResult = CheckoutSession | SessionNotFound
+
+union SetPaymentMethodResult =
+  | CheckoutSession
+  | SessionNotFound
+  | SessionExpired
+  | CardNotFound
+
+union ConfirmCheckoutResult =
+  | Order
+  | SessionExpired
+  | SlotUnavailable
+  | PaymentMethodMissing
+  | InvalidBags
+  | SessionNotFound

@@ -1,0 +1,83 @@
+fragment SavedCardFields on SavedCard {
+  id
+  brand
+  last4
+}
+
+fragment CheckoutSessionFields on CheckoutSession {
+  id
+  status
+  expiresAt
+  orderId
+  paymentMethod {
+    ...SavedCardFields
+  }
+  collectionWindows {
+    startsAt
+    endsAt
+  }
+}
+
+query CheckoutSession($id: ID!) {
+  checkoutSession(id: $id) {
+    __typename
+    ... on CheckoutSession {
+      ...CheckoutSessionFields
+    }
+    ... on SessionNotFound {
+      sessionId
+    }
+  }
+  savedCards {
+    ...SavedCardFields
+  }
+}
+
+mutation CreateCheckoutSession {
+  createCheckoutSession {
+    id
+  }
+}
+
+mutation SetPaymentMethod($sessionId: ID!, $cardId: ID!) {
+  setPaymentMethod(sessionId: $sessionId, cardId: $cardId) {
+    __typename
+    ... on CheckoutSession {
+      ...CheckoutSessionFields
+    }
+    ... on SessionNotFound {
+      sessionId
+    }
+    ... on SessionExpired {
+      sessionId
+    }
+    ... on CardNotFound {
+      cardId
+    }
+  }
+}
+
+mutation ConfirmCheckout($sessionId: ID!, $bagIds: [ID!]!, $slotStart: String!) {
+  confirmCheckout(sessionId: $sessionId, bagIds: $bagIds, slotStart: $slotStart) {
+    __typename
+    ... on Order {
+      id
+      status
+    }
+    ... on SessionExpired {
+      sessionId
+    }
+    ... on SlotUnavailable {
+      slotStart
+    }
+    ... on PaymentMethodMissing {
+      sessionId
+    }
+    ... on InvalidBags {
+      maxBags
+    }
+    ... on SessionNotFound {
+      sessionId
+    }
+  }
+}
