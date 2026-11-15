@@ -53,7 +53,12 @@ void main() {
     await $.pumpAndSettle();
     await $.tester.ensureVisible(find.byKey(CatalogKeys.notice));
     await $.pumpAndSettle();
-    await $('Some bags from the link were left out.').waitUntilVisible();
+    await $('A max of 2 bags can be selected, some bags were removed')
+        .waitUntilVisible();
+    expect(
+      $.tester.widget<InlineNotice>(find.byKey(CatalogKeys.notice)).tone,
+      InlineNoticeTone.error,
+    );
     expect(tile($, 'bag_cafe').selected, isTrue);
     expect(tile($, 'bag_bakery').selected, isTrue);
     expect(tile($, 'bag_grocery').selected, isFalse);

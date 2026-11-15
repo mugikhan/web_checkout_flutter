@@ -59,7 +59,10 @@ void main() {
     expect(tile(tester, 'bag_cafe').selected, isTrue);
     expect(tile(tester, 'bag_bakery').selected, isTrue);
     expect(tile(tester, 'bag_grocery').selected, isFalse);
-    expect(find.text('Some bags from the link were left out.'), findsOneWidget);
+    expect(
+      find.text('A max of 2 bags can be selected, some bags were removed'),
+      findsOneWidget,
+    );
   });
 
   testWidgets('a link with only unknown ids is cleaned to /', (tester) async {

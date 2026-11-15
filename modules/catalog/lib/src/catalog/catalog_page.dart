@@ -119,7 +119,9 @@ class _Catalog extends StatelessWidget {
                       const SizedBox(height: AppSpacing.lg),
                       InlineNotice(
                         key: CatalogKeys.notice,
-                        message: 'Some bags from the link were left out.',
+                        message:
+                            'A max of ${BagSelection.maxBags} bags can be selected, some bags were removed',
+                        tone: InlineNoticeTone.error,
                         dismissKey: CatalogKeys.noticeDismiss,
                         onDismiss: () => context.read<CatalogBloc>().add(
                           const CatalogNoticeDismissed(),
