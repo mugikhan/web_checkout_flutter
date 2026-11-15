@@ -16,28 +16,26 @@ A module never imports another module. A script in `melos run analyze` fails the
 
 ## Decisions
 
-Each row is a choice I made or confirmed: what I chose, what I rejected, and what it cost.
+Each bullet is a choice I made or confirmed: what I chose and what I rejected.
 
-| Area | Chose | Rejected | Cost |
-|---|---|---|---|
-| Toolchain | Flutter 3.47.9 pinned with FVM, Melos 7 | A global Flutter; Melos 8 | Reviewers need FVM, and Melos must run through `fvm exec` |
-| UI layer | The material/cupertino split, `material_ui` only | Adaptive Cupertino widgets | No native iOS look |
-| Structure | Pub workspace: packages → modules → app | One package with folders | More pubspecs and wiring per feature |
-| Data | Clean architecture in `packages/api`; blocs call repositories | Use cases; a repository per module | The api package grows with every feature |
-| GraphQL | graphql_codegen with an in-app `LocalLink` and a fake "server" | An in-process GraphQL executor; a real backend | Hand-written resolvers repeat the schema's rules |
-| Generated code | Committed to the repo | Generating it in CI | A stale generated file can slip through |
-| Failures | Typed result unions in the schema | Error codes in `extensions` | Wordier operations |
-| State and DI | bloc with bloc_concurrency; plain get_it | injectable | Manual wiring in one composition root |
-| Routing | go_router, path URLs; the URL holds the draft (bags, window) | Hash URLs; a draft in local storage | Every URL value needs validating |
-| Idempotency | A server-issued checkout session as the key; unknown and expired sessions are rejected; the card is stored on the "server", never in the URL | Accepting unknown sessions from the URL | Wiping all browser storage also wipes the "server" |
-| Auth | Simulated `signIn(name)`, token in a request header, ownership checked by the "server" | Passing the user in each mutation | Extra plumbing for a fake login |
-| Design | Tokens from refreshi.co.za in `DESIGN.md`, DM Sans via google_fonts, light and dark, AA contrast fixes | Bundled fonts; `ColorScheme.fromSeed` | A short font swap on the first web load |
-| Navigation | Material 3 window sizes: bar, rail, extended rail; Bags and Account only | An orders list | No order history |
-| Product rules | Up to 2 different bags; windows 09:00–22:00, today and tomorrow; 15-minute sessions; one declining card; no retry | Quantities; a retry button | A failed payment means a new checkout |
-| Error states | Visible notices for a bad bag link, a stale window and a declined payment; "Page not found" and "Order not found" pages | Silent clean-ups and redirects | More states to build and test |
-| Testing | A patrol journey per slice on web, Android and iOS; bloc_test; mocked repositories in module tests; recordings committed | integration_test; patrol in CI | Slower local verification, and the repo grows with videos |
-| CI | Analyze and unit tests on PRs to `main`, only when code changes | Running codegen or patrol in CI | No device tests in CI |
-| Process | OpenSpec slices, each signed off from recordings; ADRs only for architecture; one PR per slice into `main` | A `develop` branch; twenty ADRs | More ceremony than the brief's 6–8 hours. With agentic development, hours are a different measure |
+- Chose Flutter 3.47.9 pinned with FVM and Melos 7, rejected Melos 8.
+- Chose `material_ui` only as it was easier to theme with a custom design system. Rejected `cupertino_ui` direct usage.
+- Chose Pub workspace: packages → modules → app for maintainability and ease of future development. Rejected one package with folders as well as all features in the app.
+- Chose Clean architecture in `packages/api`; everything depends on the domain models in pure dart. Rejected use cases and a repository per module.
+- Chose `graphql_codegen` with an in-app `LocalLink` and a fake "server". Rejected an in-process GraphQL executor; a real backend.
+- Chose to commit generated code as it is quicker and cheaper on CI.
+- Chose typed result unions in the schema for failures to map to domain failures. Rejected error codes in `extensions`. Cost: wordier operations.
+- Chose bloc with bloc_concurrency and get_it, bloc handles streams, blocking state updates using transformers and I am familiar with it. Rejected `injectable` as it is not necessary and makes it harder to see at a glance what is registered.
+- Chose `go_router` as it supports deep linking on web and supports mobile.
+- Chose a server-issued checkout session as the idempotency key stored in the url, unknown and expired sessions are rejected. Rejected the card token in the url.
+- Chose a simulated auth using a token in a request header, ownership checked by the "server". Rejected passing the user in each mutation.
+- Chose to pull design tokens from refreshi.co.za in `DESIGN.md`, DM Sans font via google_fonts. Also added support for light and dark mode.
+- Chose Material 3 window sizes, bottom nav bar on mobile, compact rail on tablet and an extended rail on desktop.
+- Chose to show the Bags and Account screens only. Rejected an orders list as it was not required by the assignment.
+- Chose visible notices for a bad bag link, a stale window and a declined payment; "Page not found" and "Order not found" pages. Rejected silent clean-ups and redirects.
+- Chose a `patrol` journey (E2E test) per slice on web, Android and iOS; `bloc_test` and `mocktail` for unit testing business logic. Recordings committed as slices were completed. Rejected integration_test; patrol in CI as it would slow it down a lot and increase cost.
+- Chose to set up an `analyze and unit test` GH workflow on PRs to `main`.
+- Chose OpenSpec slices, each signed off from recordings; ADRs only for architecture; one PR per slice into `main`. More ceremony than the brief's 6–8 hours however with agentic development, hours are a different measure.
 
 ## Repeated actions and refresh
 
@@ -53,18 +51,20 @@ The trade-off: the "server" lives in the app. Its one-at-a-time rule holds withi
 
 ## Optional item
 
-I chose tests over a web performance change. The most meaningful are the resolver test "two confirms at once create one order" and the checkout journey, which double-taps Confirm on three platforms and finds one stored order. I deferred the performance work, such as deferred loading or bundled fonts.
+I chose tests over a web performance change. The most meaningful are the resolver test "two confirms at once create one order" and the checkout journey, which double-taps Confirm on three platforms and finds one stored order.
 
 ## AI usage
 
-- **Tools:** Claude Code with OpenSpec. A local, gitignored prompt log keeps every prompt.
+- **Tools:** Claude Code with OpenSpec.
   - The Opus main session handled planning, specs and orchestration.
-  - Opus, Sonnet and Fable subagents handled implementation, blind verification and chores.
+  - Opus and Sonnet subagents handled implementation, blind verification and chores.
   - I used my own run-patrol-test skill for recordings.
 - **Planning:** a "grill me" session turned my stack choices into answered questions. ADRs and the oracle record the answers.
-- **Implementation:** one subagent per slice built from the OpenSpec change. Implementation later moved from Opus to Sonnet to cut usage after an Opus agent hit its limit.
+- **Implementation:** one subagent per slice built from the OpenSpec change.
 - **Review:** a separate Sonnet verifier saw only the spec and the branch, never the implementer's notes. It recorded each journey and opened the PR.
-- **Debugging:** agents found and fixed issues: a browser history entry left behind by go_router's `replace`, a Melos prompt that crashed once a second package joined, and a page flash on "Back to bags". I spotted the Flutter startup lock that failed CI, and an agent fixed it.
+- **Debugging:** agents found and fixed issues: a browser history entry left behind by go_router's `replace`, a Melos prompt that crashed once a second package joined, and a page flash on "Back to bags".
+
+### Agent suggestions
 
 **Accepted:**
 - The server-issued checkout session design.
@@ -80,13 +80,12 @@ I chose tests over a web performance change. The most meaningful are the resolve
 **Rejected:**
 - A suggestion to accept unknown sessions from the URL.
 - Putting the card token in the URL.
-- A `develop` branch.
-- Melos 8.
 - Agent README edits I had not asked for.
 - Twenty ADRs, which I cut to thirteen and moved the rest into the oracle.
 
-**How I verified:**
+## Verification
+
 - Every slice passed `openspec validate --strict`, analyze, format and tests, and CI on its PR.
-- The blind verifier re-ran every patrol journey on web, Android and iOS.
-- I watched the recordings of each slice before signing off.
+- The blind verifier agent re-ran every patrol journey on web, Android and iOS.
+- I watched the recordings of each slice and tested locally on Web before signing off.
 - I tested breakpoints and dark mode locally.
