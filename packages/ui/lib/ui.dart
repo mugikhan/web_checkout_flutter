@@ -13,4 +13,7 @@ export 'src/widgets/adaptive_scaffold.dart';
 export 'src/widgets/app_button.dart';
 export 'src/widgets/app_card.dart';
 export 'src/widgets/app_text_field.dart';
+export 'src/widgets/bag_tile.dart';
+export 'src/widgets/inline_notice.dart';
+export 'src/widgets/price_text.dart';
 export 'src/widgets/state_view.dart';
