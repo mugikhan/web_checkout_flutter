@@ -1,5 +1,4 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:material_ui/material_ui.dart';
 import 'package:ui/ui.dart';
 
 import '../support/test_text_theme.dart';
@@ -39,6 +38,19 @@ void main() {
           expect(contrast(fg, bg), greaterThanOrEqualTo(4.5));
         });
       }
+    });
+  }
+
+  for (final (name, theme) in [
+    ('light', AppTheme.light(textTheme: testTextTheme)),
+    ('dark', AppTheme.dark(textTheme: testTextTheme)),
+  ]) {
+    test('$name text field border meets 3:1 on surface', () {
+      final border = theme.inputDecorationTheme.enabledBorder!.borderSide;
+      expect(
+        contrast(border.color, theme.colorScheme.surface),
+        greaterThanOrEqualTo(3),
+      );
     });
   }
 
