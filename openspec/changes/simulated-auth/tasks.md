@@ -37,13 +37,13 @@
 
 - [x] 6.1 Add `configureDependencies` and make `main` async; depend on `storage`, `api`, `auth`, `flutter_bloc` and `get_it`; verify `fvm flutter build web` succeeds
 - [x] 6.2 Add `authRedirect`, the `/sign-in` route, the session-driven `refreshListenable` and the loading gate; replace `AccountPlaceholderPage` with `AccountPage`; verify unit tests for every `authRedirect` case
-- [x] 6.3 Update the router and app widget tests with a fake `AuthRepository`, and verify tests for the guard, the return to `from`, a signed-in viewer on `/sign-in`, sign out to `/` and the unknown URL
+- [x] 6.3 Update the router and app widget tests with a mocked `AuthRepository` with mocktail, and verify tests for the guard, the return to `from`, a signed-in viewer on `/sign-in`, sign out to `/` and the unknown URL
 
 ## 7. Patrol
 
-- [ ] 7.1 Update the navigation journey for the guard: Account redirects to sign-in, the back action returns to Bags; verify it passes on Chrome, the Android emulator and the iOS simulator
-- [ ] 7.2 Add the sign-in journey: Account signed out, a 3-character name shows the error, a valid name lands on Account, sign out returns to Bags; check URLs on web; verify it passes on all three platforms
-- [ ] 7.3 Update `README.md` for `melos run codegen` and the journey names, and verify the documented commands run as written
+- [x] 7.1 Update the navigation journey for the guard: Account redirects to sign-in, the back action returns to Bags; verify it passes on Chrome, the Android emulator and the iOS simulator
+- [x] 7.2 Add the sign-in journey: Account signed out, a 3-character name shows the error, a valid name lands on Account, sign out returns to Bags; check URLs on web; verify it passes on all three platforms
+- [x] 7.3 Update `README.md` for `melos run codegen` and the journey names, and verify the documented commands run as written
 
 ## 8. Verification
 

@@ -154,7 +154,7 @@ Sign out: the Account page adds `SignOutRequested` and calls `onSignOut`, which 
 - `registerAuthModule(GetIt)` registers `SessionBloc` and `SignInBloc` as factories.
 - `configureDependencies(GetIt)` in the app calls the three in order. It resets the locator first, so a second `main()` in one patrol process does not throw.
 
-The app creates one `SessionBloc` in `BagCheckoutApp` and provides it with `BlocProvider.value`. The `/sign-in` route creates `SignInBloc` in `BlocProvider(create: …)`. Only the composition root, the app widget and route builders read get_it. Widget tests build the app with a fresh `GetIt.asNewInstance()` and a fake `AuthRepository`.
+The app creates one `SessionBloc` in `BagCheckoutApp` and provides it with `BlocProvider.value`. The `/sign-in` route creates `SignInBloc` in `BlocProvider(create: …)`. Only the composition root, the app widget and route builders read get_it. Widget tests build the app with a fresh `GetIt.asNewInstance()` and a mocktail `AuthRepository`.
 
 ### Material re-export
 
@@ -162,12 +162,12 @@ The app creates one `SessionBloc` in `BagCheckoutApp` and provides it with `Bloc
 
 ### AppTextField
 
-`AppTextField` wraps `TextField` with a required `label`, an optional `errorText`, and `onChanged` and `onSubmitted` callbacks. `AppTheme` gains an `inputDecorationTheme`: `md` radius, `outline` border, `primary` focused border, `error` border and error text. `DESIGN.md` gets the component row first.
+`AppTextField` wraps `TextField` with a required `label`, an optional `errorText`, and `onChanged` and `onSubmitted` callbacks. `AppTheme` gains an `inputDecorationTheme`: `md` radius, `onSurfaceVariant` border, `primary` focused border, `error` border and error text. `DESIGN.md` gets the component row first.
 
 ### Generated code and tooling
 
 - `packages/api/build.yaml` configures graphql_codegen for the `graphql` client and writes `*.graphql.dart` next to each source.
-- Melos `codegen`: `melos exec --depends-on=build_runner -- dart run build_runner build --delete-conflicting-outputs`.
+- Melos `codegen`: `melos exec -c 1 --depends-on=build_runner -- dart run build_runner build`.
 - `analysis_options.yaml` excludes `**/*.graphql.dart` and `**/*.g.dart`.
 - `format:check:lib` and `format:check:test` list files with `find` and skip the same two patterns, because `dart format` has no exclude flag.
 - `tool/check_imports.dart` scans `modules/**/*.dart` for imports or exports of `package:api/data/` or `package:api/src/`, and for relative paths into `packages/api/lib/`. It prints `file:line` for each hit and exits 1. `melos run analyze` runs it after the Flutter analysis. CI `paths` gains `tool/**`.
@@ -180,9 +180,9 @@ The app creates one `SessionBloc` in `BagCheckoutApp` and provides it with `Bloc
 
 - `packages/storage`: namespaces stay apart, read, write and delete, and values survive a new store over the same preferences.
 - `packages/api`: resolvers (valid, trimmed, too short, viewer with and without a token), `LocalLink` (routing, unknown operation, every operation in the `.graphql` files has a resolver), and `GraphqlAuthRepository` end to end over `MemoryStore`.
-- `modules/auth`: `bloc_test` for `SessionBloc` and `SignInBloc`, including `droppable` on submit. Widget tests for the inline error and the Account page.
+- `modules/auth`: `bloc_test` for `SessionBloc` and `SignInBloc`, including `droppable` on submit, with mocktail mocks of `AuthRepository`. Widget tests for the inline error and the Account page.
 - `packages/ui`: `AppTextField` label, error colour and semantics.
-- `apps/web_checkout`: `authRedirect` cases, and router tests with a fake repository for the guard, the return to `from` and sign out.
+- `apps/web_checkout`: `authRedirect` cases, and router tests with a mocktail repository for the guard, the return to `from` and sign out.
 - Patrol: a new sign-in journey, and the navigation journey updated for the guard.
 
 ## Risks / Trade-offs
@@ -192,6 +192,16 @@ The app creates one `SessionBloc` in `BagCheckoutApp` and provides it with `Bloc
 - [Patrol may run both journeys in one process on some platforms] → `configureDependencies` resets get_it. Each journey clears preferences before `main()`.
 - [The navigation journey now meets the guard] → It checks the sign-in redirect and returns to Bags through the back action. Its web-only resize and dark-mode checks stay on `/`.
 - [`find`-based format check differs from the plain `dart format lib`] → It checks the same files minus generated ones. A test-run failure on purpose proves it still names a bad file.
+
+## Found during implementation
+
+- `graphql_codegen` 3.0.2 needs `build` 4, and `bloc_test` pulls in `test`, which caps the analyzer. The solver settles on build_runner 2.16.1, so `packages/api` pins `build_runner: ^2.16.1`.
+- build_runner 2.16 removed `--delete-conflicting-outputs`, so the `codegen` script drops it.
+- The text field border uses `onSurfaceVariant`. `outline` reads about 1.4:1 on cream, below the 3:1 a field edge needs. `DESIGN.md` and the `design-language` delta say so, and a contrast test checks it.
+- The browser shows `/sign-in?from=/account`, not `%2Faccount`, because `/` is legal in a query. The `app-navigation` scenarios name the decoded `from` value.
+- On web, patrol skips its fix for typing into the same field twice (flutter#134604). The sign-in journey types through `EditableTextState` on web only.
+- `Bloc.close()` never completes when awaited inside a widget test's fake-async zone. Widget tests let a `BlocProvider` own the bloc, or close it in a plain `tearDown`.
+- The user asked for mocktail mid-slice. Module and app tests mock `AuthRepository` with it. The api tests stay end to end over `MemoryStore`, with no mocks.
 
 ## Open for sign-off
 

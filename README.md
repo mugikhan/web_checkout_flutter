@@ -38,6 +38,16 @@ fvm exec melos run format:check
 fvm exec melos run test
 ```
 
+`analyze` also fails when a module imports `package:api/data/` or `package:api/src/` ([ADR-0005](docs/adr/0005-clean-architecture-in-api.md)).
+
+### Regenerate GraphQL code
+
+The generated `*.graphql.dart` files are committed ([ADR-0020](docs/adr/0020-commit-generated-code.md)). After you change a `.graphql` file in `packages/api`, run this and commit the output:
+
+```sh
+fvm exec melos run codegen
+```
+
 ### Run patrol tests
 
 ```sh
@@ -45,7 +55,7 @@ cd apps/web_checkout
 fvm exec patrol test --device chrome
 ```
 
-Add `--web-headless` to run without a browser window. The first run installs Playwright.
+This runs every journey in `patrol_test/`: `navigation_test.dart` and `sign_in_test.dart`. Add `--target patrol_test/sign_in_test.dart` to run one. Add `--web-headless` to run without a browser window. The first run installs Playwright.
 
 For Android or iOS, pass the emulator id from `adb devices` or the simulator UDID from `xcrun simctl list devices` to `--device`.
 
@@ -54,8 +64,8 @@ For Android or iOS, pass the emulator id from `adb devices` or the simulator UDI
 In Claude Code, run `/run-patrol-test` and name the test and device. Without an agent, run these from the repo root:
 
 ```sh
-fvm dart run .agents/skills/run-patrol-test/scripts/run_patrol_test.dart plan --test app_smoke
-fvm exec dart run .agents/skills/run-patrol-test/scripts/run_patrol_test.dart run --test app_smoke --device chrome
+fvm dart run .agents/skills/run-patrol-test/scripts/run_patrol_test.dart plan --test sign_in_test.dart
+fvm exec dart run .agents/skills/run-patrol-test/scripts/run_patrol_test.dart run --test sign_in_test.dart --device chrome
 ```
 
 Videos land in `apps/web_checkout/patrol_test/recordings/`. Commit them. [the oracle](docs/ORACLE.md) covers the details. Install ffmpeg to convert web videos to MP4.
