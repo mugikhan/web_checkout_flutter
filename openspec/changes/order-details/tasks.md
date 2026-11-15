@@ -26,7 +26,7 @@
 ## 5. Order journey
 
 - [x] 5.1 Add `patrol_test/order_test.dart` covering a Visa order turning Confirmed, a Mastercard order turning Failed with its reason, and `/orders/ord_missing` showing "Order not found"; verify it passes on Chrome (`--web-headless`), emulator-5554 and the iOS simulator
-- [ ] 5.2 Run all journeys (navigation, sign-in, catalog, checkout, order) on the three platforms and verify every one passes
+- [x] 5.2 Run all journeys (navigation, sign-in, catalog, checkout, order) on the three platforms and verify every one passes
 
 ## 6. Verification
 
@@ -38,7 +38,7 @@ Checks the verifier runs and the user signs off:
 - **Error cases:** the declined payment and the unknown order id.
 - **Manual, web:** refresh during the hold keeps the original hold time; refresh after the hold shows the settled status at once.
 
-- [ ] 6.1 Run every automated check above and confirm it passes
+- [x] 6.1 Run every automated check above and confirm it passes
 - [ ] 6.2 Record the order journey on web, Android and iOS and paste the output in the PR description
 - [ ] 6.3 User verifies the slice
 
