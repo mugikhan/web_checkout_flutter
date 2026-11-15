@@ -1,4 +1,4 @@
-# ADR-0002: Opt in to the material/cupertino split and use material_ui only
+# ADR-0001: Opt in to the material/cupertino split and use material_ui only
 
 **Status:** Accepted  
 **Date:** 2026-11-14  

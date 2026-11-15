@@ -38,7 +38,7 @@
 - [x] 6.3 Add patrol's iOS native setup (`RunnerUITests` target), and verify the smoke journey passes on an iPhone 18 Pro simulator
 - [x] 6.4 Install the run-patrol-test skill with `~/Documents/run-patrol-test/install.sh`, set `.patrol-runner.json` to `apps/web_checkout` and `fvm flutter`, and verify `plan --test app_smoke` prints `PLAN_STATUS=ready`
 - [x] 6.5 Record a journey with the skill on Android, and verify it saves a playable video in `apps/web_checkout/patrol_test/recordings/` that git does not ignore. Commit no smoke-journey videos: the journey ends in under a second, so the video misses the app. Recording starts with `simulated-auth`.
-- [x] 6.6 Write ADR-0017 on how patrol tests run and how to record them with the skill, link it from the README, and verify the README commands run as written
+- [x] 6.6 Write ADR-0017 (since folded into docs/ORACLE.md) on how patrol tests run and how to record them with the skill, link it from the README, and verify the README commands run as written
 
 ## 7. Verification
 

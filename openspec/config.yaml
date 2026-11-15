@@ -2,11 +2,12 @@ schema: spec-driven
 
 context: |
   Take-home assignment: a web-first checkout slice in Flutter, also running on iOS and Android.
-  Decisions live in docs/adr/. Terms live in docs/GLOSSARY.md. Design rules live in DESIGN.md.
+  Decisions live in docs/adr/. User answers live in docs/ORACLE.md. Terms live in docs/GLOSSARY.md.
+  Design rules live in DESIGN.md. The assignment is docs/assignment-brief.pdf.
   Link them; do not restate them.
   Follow the prose and comment rules in AGENTS.md for every artifact.
 
-  Stack (fixed, see ADRs 0001-0016):
+  Stack (fixed; see docs/adr/ and docs/ORACLE.md):
   - Flutter 3.47.9 pinned with FVM. Run every flutter and dart command through `fvm`.
   - Material/cupertino split: depend on material_ui only. Modules never import it directly; they use packages/ui.
   - Pub workspace with Melos 7. Default flutter_lints analysis options.
@@ -29,7 +30,7 @@ context: |
   Process:
   - One OpenSpec change per slice. Implement one slice at a time.
   - Do not start a slice until the user signs off the previous one. The user decides what counts as sign-off.
-  - Branch feat/<change-name> off main, one PR back to main (ADR-0019). Conventional Commits in small logical steps.
+  - Branch feat/<change-name> off main, one PR back to main. Conventional Commits in small logical steps.
   - Ask the user before any new foundational decision, then record it as an ADR in docs/adr/.
 
   Roadmap (write each proposal only after the previous slice is verified):

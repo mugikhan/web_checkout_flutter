@@ -1,4 +1,4 @@
-# ADR-0008: bloc with bloc_concurrency transformers
+# ADR-0006: bloc with bloc_concurrency transformers
 
 **Status:** Accepted  
 **Date:** 2026-11-14  
@@ -21,4 +21,4 @@ The brief asks for a clear split between UI and state, and safe handling of repe
 
 - Concurrency rules sit next to the handler, not in widgets.
 - `bloc_test` covers each rule.
-- The client guard complements the server guard in ADR-0010; it does not replace it.
+- The client guard complements the server guard in ADR-0008; it does not replace it.

@@ -1,4 +1,4 @@
-# ADR-0003: Pub workspace: packages, modules, app
+# ADR-0002: Pub workspace: packages, modules, app
 
 **Status:** Accepted  
 **Date:** 2026-11-14  

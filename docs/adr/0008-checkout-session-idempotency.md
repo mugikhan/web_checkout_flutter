@@ -1,4 +1,4 @@
-# ADR-0010: Server-issued checkout session as the idempotency key
+# ADR-0008: Server-issued checkout session as the idempotency key
 
 **Status:** Accepted  
 **Date:** 2026-11-14  

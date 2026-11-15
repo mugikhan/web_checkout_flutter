@@ -1,4 +1,4 @@
-# ADR-0006: graphql_codegen with an in-app LocalLink
+# ADR-0004: graphql_codegen with an in-app LocalLink
 
 **Status:** Accepted  
 **Date:** 2026-11-14  

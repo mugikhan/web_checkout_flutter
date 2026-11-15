@@ -1,4 +1,4 @@
-# ADR-0005: Clean architecture in packages/api
+# ADR-0003: Clean architecture in packages/api
 
 **Status:** Accepted  
 **Date:** 2026-11-14  

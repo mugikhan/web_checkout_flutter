@@ -1,4 +1,4 @@
-# ADR-0015: Testing with bloc_test and patrol per slice
+# ADR-0012: Testing with bloc_test and patrol per slice
 
 **Status:** Accepted  
 **Date:** 2026-11-14  

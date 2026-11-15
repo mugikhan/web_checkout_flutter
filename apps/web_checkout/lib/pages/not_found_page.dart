@@ -5,7 +5,7 @@ import 'package:ui/ui.dart';
 import '../app_keys.dart';
 import '../router/app_routes.dart';
 
-/// NotFoundPage shows for any URL that matches no route (ADR-0018).
+/// NotFoundPage shows for any URL that matches no route.
 class NotFoundPage extends StatelessWidget {
   const NotFoundPage({super.key});
 

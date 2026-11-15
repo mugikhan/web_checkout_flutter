@@ -96,7 +96,7 @@ Alternative: separate journeys per platform. Rejected, because every later slice
 
 ### Recording patrol runs
 
-Install the user's run-patrol-test skill with its `install.sh`, at `.agents/skills/run-patrol-test` with a link from `.claude/skills`. That matches where OpenSpec put its skills. `.patrol-runner.json` sets `defaultProject: apps/web_checkout` and `flutterCommand: fvm flutter`, so patrol builds with the pinned Flutter. Videos go to the skill's default folder, `apps/web_checkout/patrol_test/recordings/`, and are committed. ADR-0017 records the process.
+Install the user's run-patrol-test skill with its `install.sh`, at `.agents/skills/run-patrol-test` with a link from `.claude/skills`. That matches where OpenSpec put its skills. `.patrol-runner.json` sets `defaultProject: apps/web_checkout` and `flutterCommand: fvm flutter`, so patrol builds with the pinned Flutter. Videos go to the skill's default folder, `apps/web_checkout/patrol_test/recordings/`, and are committed. ADR-0017 recorded the process; it has since been folded into docs/ORACLE.md.
 
 Alternative: Git LFS for the videos. Not adopted now. The user wants plain committed files, and the videos are short.
 
