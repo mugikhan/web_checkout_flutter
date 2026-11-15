@@ -25,7 +25,7 @@
 
 ## 5. Order journey
 
-- [ ] 5.1 Add `patrol_test/order_test.dart` covering a Visa order turning Confirmed, a Mastercard order turning Failed with its reason, and `/orders/ord_missing` showing "Order not found"; verify it passes on Chrome (`--web-headless`), emulator-5554 and the iOS simulator
+- [x] 5.1 Add `patrol_test/order_test.dart` covering a Visa order turning Confirmed, a Mastercard order turning Failed with its reason, and `/orders/ord_missing` showing "Order not found"; verify it passes on Chrome (`--web-headless`), emulator-5554 and the iOS simulator
 - [ ] 5.2 Run all journeys (navigation, sign-in, catalog, checkout, order) on the three platforms and verify every one passes
 
 ## 6. Verification

@@ -95,6 +95,26 @@ class _OrderDetailsState extends State<_OrderDetails> {
                 style: theme.textTheme.titleMedium,
               ),
               const SizedBox(height: AppSpacing.xl),
+              Text('Status', style: theme.textTheme.titleLarge),
+              const SizedBox(height: AppSpacing.md),
+              AppCard(
+                child: StatusTimeline(
+                  key: OrdersKeys.timeline,
+                  steps: _steps(order),
+                ),
+              ),
+              if (order.status == OrderStatus.failed && !_reasonDismissed) ...[
+                const SizedBox(height: AppSpacing.lg),
+                InlineNotice(
+                  key: OrdersKeys.declineNotice,
+                  message: _declineReason,
+                  tone: InlineNoticeTone.error,
+                  icon: Icons.error_outline,
+                  dismissKey: OrdersKeys.declineDismiss,
+                  onDismiss: () => setState(() => _reasonDismissed = true),
+                ),
+              ],
+              const SizedBox(height: AppSpacing.xl),
               Text('Store', style: muted),
               Text(
                 order.store,
@@ -151,26 +171,6 @@ class _OrderDetailsState extends State<_OrderDetails> {
                 key: OrdersKeys.card,
                 style: theme.textTheme.titleMedium,
               ),
-              const SizedBox(height: AppSpacing.xl),
-              Text('Status', style: theme.textTheme.titleLarge),
-              const SizedBox(height: AppSpacing.md),
-              AppCard(
-                child: StatusTimeline(
-                  key: OrdersKeys.timeline,
-                  steps: _steps(order),
-                ),
-              ),
-              if (order.status == OrderStatus.failed && !_reasonDismissed) ...[
-                const SizedBox(height: AppSpacing.lg),
-                InlineNotice(
-                  key: OrdersKeys.declineNotice,
-                  message: _declineReason,
-                  tone: InlineNoticeTone.error,
-                  icon: Icons.error_outline,
-                  dismissKey: OrdersKeys.declineDismiss,
-                  onDismiss: () => setState(() => _reasonDismissed = true),
-                ),
-              ],
               if (order.isSettled) ...[
                 const SizedBox(height: AppSpacing.xl),
                 AppButton(
